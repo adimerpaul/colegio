@@ -1,0 +1,44 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateEstudiantesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('estudiantes', function (Blueprint $table) {
+            $table->id();
+            $table->string('carnet');
+            $table->string('domicilio');
+            $table->string('paterno');
+            $table->string('materno');
+            $table->string('nombres');
+            $table->string('celular');
+            $table->string('fechanac');
+            $table->string('curso');
+            $table->string('tipo')->default('NUEVO');
+            $table->string('paralelo');
+            $table->date('fecha');
+            $table->string('estado')->default('ACTIVO');
+            $table->string('imagen')->default('user.png');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('estudiantes');
+    }
+}
