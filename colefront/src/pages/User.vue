@@ -19,12 +19,39 @@
               <div class="col-6">
                 <q-input
                   filled
-                  v-model="dato.name"
+                  v-model="dato.carnet"
                   type="text"
-                  label="Nombre "
-                  hint="Ingresar Nombre"
+                  label="Carnet"
+                  hint="Ingresar Cedula"
                   lazy-rules
                   :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"
+                />
+                <q-select v-model="dato.expedido" :options="['OR','LP','CH','PT','PN','SC','CB','TJ','BN']" label="Expedido" />
+
+                <q-input
+                  filled
+                  v-model="dato.nombres"
+                  type="text"
+                  label="Nombres"
+                  hint="Ingresar Nombres"
+                  lazy-rules
+                  :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"
+                />
+              <q-input
+                  filled
+                  v-model="dato.apellidos"
+                  type="text"
+                  label="Apellidos "
+                  hint="Ingresar Apelldos"
+                  lazy-rules
+                  :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"
+                />
+                                <q-input
+                  filled
+                  label="Fecha Nac"
+                  type="date"
+                  hint="Fecha Nac"
+                  v-model="dato.fechanac"
                 />
                 <!--                <q-input-->
                 <!--                  filled-->
@@ -35,6 +62,7 @@
                 <!--                  lazy-rules-->
                 <!--                  :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"-->
                 <!--                />-->
+                <q-select v-model="dato.tipo" :options="['ADMINISTRADOR','PROFESOR','SECRETARIA','USUARIO']" label="Tipo Usuario" />
 
                 <q-input
                   filled
@@ -46,34 +74,8 @@
                   :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"
                 />
 
-                  <q-input
-                    filled
-                    v-model="dato.carnet"
-                    type="text"
-                    label="Carnet identidad"
-                    hint="Carnet identidad"
-                    lazy-rules
-                    :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"
-                  />
 
-                <q-select
-                  filled
-                  v-model="dato.unit"
-                  label="Unidad"
-                  :options="units"
-                  hint="Selecionar unidad"
-                  option-label="nombre"
-                />
 
-                <!--                <q-input-->
-                <!--                  filled-->
-                <!--                  v-model="dato.celular"-->
-                <!--                  type="text"-->
-                <!--                  label="Celular"-->
-                <!--                  hint="Celular persona"-->
-                <!--                  lazy-rules-->
-                <!--                  :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"-->
-                <!--                />-->
                 <q-input
                   filled
                   v-model="dato.password"
@@ -266,15 +268,6 @@
               lazy-rules
               :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"
             />
-            <!--            <q-input-->
-            <!--              filled-->
-            <!--              v-model="dato2.codigo"-->
-            <!--              type="text"-->
-            <!--              label="Codigo "-->
-            <!--              hint="Ingresar codigo"-->
-            <!--              lazy-rules-->
-            <!--              :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"-->
-            <!--            />-->
             <q-input
               filled
               v-model="dato2.email"
