@@ -1,9 +1,10 @@
 import Login from "pages/Login";
-import Recepcion from "pages/Recepcion";
+// import Recepcion from "pages/Recepcion";
 import User from "pages/User";
-import Seguimiento from "pages/Seguimiento";
-import Asignacion from "pages/Asignacion";
-import Misrecepciones from "pages/Misrecepciones";
+// import Seguimiento from "pages/Seguimiento";
+// import Asignacion from "pages/Asignacion";
+// import Misrecepciones from "pages/Misrecepciones";
+import Biblioteca from "pages/Biblioteca";
 
 const routes = [
   {
@@ -11,11 +12,12 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: Login },
-      { path: '/recepcion', component: Recepcion,meta: {requiresAuth: true,} },
+
       { path: '/user', component: User,meta: {requiresAuth: true,} },
-      { path: '/seguimiento', component: Seguimiento,meta: {requiresAuth: true,} },
-      { path: '/asiganacion', component: Asignacion,meta: {requiresAuth: true,} },
-      { path: '/misrecepciones', component: Misrecepciones,meta: {requiresAuth: true,} },
+      { path: '/biblioteca', component: Biblioteca,meta: {requiresAuth: true,} },
+      // { path: '/seguimiento', component: Seguimiento,meta: {requiresAuth: true,} },
+      // { path: '/asiganacion', component: Asignacion,meta: {requiresAuth: true,} },
+      // { path: '/misrecepciones', component: Misrecepciones,meta: {requiresAuth: true,} },
     ]
   },
 

@@ -15,17 +15,17 @@
         </q-toolbar-title>
 
         <div>
-        <q-btn v-if="$store.getters['login/isLoggedIn']" label="Salir" @click="logout"  color="negative" icon="logout" size="xs" />
+          <q-btn v-if="$store.getters['login/isLoggedIn']" label="Salir" @click="logout"  color="negative" icon="logout" size="xs" />
         </div>
       </q-toolbar>
       <div class="q-px-lg q-pt-xs q-mb-md" >
         <div class="text-h5 text-bold">
-          <template v-if="!$store.getters['login/isLoggedIn']">
-          Correspondencia
-          </template>
-          <template v-else>
-            Unidad: {{$store.state.login.user.unit.nombre}}
-          </template>
+          <!--          <template v-if="!$store.getters['login/isLoggedIn']">-->
+          UE Santa Rosa 2
+          <!--          </template>-->
+          <!--          <template v-else>-->
+          <!--            Unidad: {{$store.state.login.user.unit.nombre}}-->
+          <!--          </template>-->
         </div>
         <div class="text-subtitle1">{{ now }}</div>
       </div>
@@ -178,10 +178,10 @@
 
       <q-img class="absolute-top" src="img/fondo.jpg" style="height: 130px">
         <div class="absolute-bottom bg-transparent ">
-          <!--          <q-avatar size="56px" class="q-mb-sm">-->
-          <!--            <img src="https://cdn.quasar.dev/img/boy-avatar.png">-->
-          <!--          </q-avatar>-->
-          <div class="text-weight-bold">Correspondencia </div>
+          <q-avatar size="56px" class="q-mb-sm">
+            <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+          </q-avatar>
+          <div class="text-weight-bold">UE Santa Rosa 2 </div>
           <div>Menu</div>
         </div>
       </q-img>
@@ -195,7 +195,12 @@
 
 <script>
 import {date} from 'quasar'
+import EssentialLink from 'components/EssentialLink.vue'
+// import e from 'c'
 export default {
+  components:{
+    EssentialLink
+  },
   data(){
     return{
       leftDrawerOpen : false,
