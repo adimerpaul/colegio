@@ -14,7 +14,7 @@ class EstudianteController extends Controller
      */
     public function index()
     {
-        //
+        return Estudiante::all();
     }
 
     /**
@@ -35,7 +35,20 @@ class EstudianteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $estudiante=new Estudiante();
+        $estudiante->carnet=$request->carnet;
+        $estudiante->domicilio=$request->domicilio;
+        $estudiante->paterno=$request->paterno;
+        $estudiante->materno=$request->materno;
+        $estudiante->nombres=$request->nombres;
+        $estudiante->celular=$request->celular;
+        $estudiante->fechanac=$request->fechanac;
+//        $estudiante->tipo=$request->tipo;
+        $estudiante->fecha=date('Y-m-d');
+//        $estudiante->estado=$request->estado;
+//        $estudiante->imagen=$request->imagen;
+        $estudiante->curso_id=$request->curso_id;
+        $estudiante->save();
     }
 
     /**

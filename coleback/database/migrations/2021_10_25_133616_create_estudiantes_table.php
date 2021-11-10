@@ -22,12 +22,14 @@ class CreateEstudiantesTable extends Migration
             $table->string('nombres');
             $table->string('celular');
             $table->string('fechanac');
-            $table->string('curso');
+//            $table->string('curso');
             $table->string('tipo')->default('NUEVO');
-            $table->string('paralelo');
+//            $table->string('paralelo');
             $table->date('fecha');
             $table->string('estado')->default('ACTIVO');
             $table->string('imagen')->default('user.png');
+            $table->unsignedBigInteger('curso_id');
+            $table->foreign('curso_id')->references('id')->on('cursos');
             $table->timestamps();
         });
     }

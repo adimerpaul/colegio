@@ -23,12 +23,13 @@ class EstudianteSeeder extends Seeder
                 'nombres'=>'ARON',
                 'celular'=>'',
                 'fechanac'=>'2000-01-01',
-                'curso'=>'PRIMERO A',
+//                'curso'=>'PRIMERO A',
                 'tipo'=>'NUEVO',
-                'paralelo'=>'A',
+//                'paralelo'=>'A',
                 'fecha'=>'2021-10-25',
                 'estado'=>'ACTIVO',
                 'imagen'=>'user.png',
+                'curso_id'=>1
             ],
             [
                 'carnet'=>'222223',
@@ -38,12 +39,13 @@ class EstudianteSeeder extends Seeder
                 'nombres'=>'ARIANA',
                 'celular'=>'',
                 'fechanac'=>'2000-01-01',
-                'curso'=>'PRIMERO A',
+//                'curso'=>'PRIMERO A',
                 'tipo'=>'NUEVO',
-                'paralelo'=>'A',
+//                'paralelo'=>'A',
                 'fecha'=>'2021-10-25',
                 'estado'=>'ACTIVO',
                 'imagen'=>'user.png',
+                'curso_id'=>1
             ]
         ]);
     }
