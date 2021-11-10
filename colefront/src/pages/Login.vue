@@ -14,7 +14,7 @@
             narrow-indicator
           >
             <q-tab name="login" label="Ingresar" />
-            <q-tab name="registro" label="Registrarse" />
+<!--            <q-tab name="registro" label="Registrarse" />-->
           </q-tabs>
           <q-separator />
           <q-tab-panels v-model="tab" animated>
@@ -46,9 +46,9 @@
                   </div>
                   <div class="col-12 q-py-md">
                     <q-btn label="INGRESAR" color="primary" icon="login" class="full-width" type="submit"/>
-                    <q-btn label="Registrate" color="secondary" icon="how_to_reg" @click="tab='registro'" class="full-width q-mt-xs" />
+<!--                    <q-btn label="Registrate" color="secondary" icon="how_to_reg" @click="tab='registro'" class="full-width q-mt-xs" />-->
                     <div class="text-caption q-py-xs">
-                      <a target="_blank" href="https://api.whatsapp.com/send?phone=59169603027&text=olvide mi contraseña">Olvidate tu contraseña?</a>
+                      <a target="_blank" href="https://api.whatsapp.com/send?phone=59169603027&text=olvide mi contraseña santa rosa">Olvidate tu contraseña?</a>
                     </div>
 
                   </div>
@@ -151,13 +151,13 @@ export default {
       this.$router.push('/biblioteca')
     }
 
-    this.$q.loading.show()
-    this.$axios.get(process.env.API+'/unit').then(res=>{
-      this.units=res.data
-      this.units2=res.data
-      // this.user.unit=res.data[0]
-      this.$q.loading.hide()
-    })
+    // this.$q.loading.show()
+    // this.$axios.get(process.env.API+'/unit').then(res=>{
+    //   this.units=res.data
+    //   this.units2=res.data
+    //   // this.user.unit=res.data[0]
+    //   this.$q.loading.hide()
+    // })
 
   },
   methods: {
@@ -214,15 +214,15 @@ export default {
         this.$q.loading.hide()
         this.$router.push('/biblioteca')
       })
-        .catch(err => {
-          this.$q.loading.hide();
-          console.log(err.response.data.res)
-          this.$q.notify({
-            message:err.response.data.res,
-            color:'red',
-            icon:'error'
-          })
-        })
+        // .catch(err => {
+        //   this.$q.loading.hide();
+        //   console.log(err.response.data.res)
+        //   this.$q.notify({
+        //     message:err.response.data.res,
+        //     color:'red',
+        //     icon:'error'
+        //   })
+        // })
     },
   },
 }

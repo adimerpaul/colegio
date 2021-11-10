@@ -5,6 +5,7 @@ import User from "pages/User";
 // import Asignacion from "pages/Asignacion";
 // import Misrecepciones from "pages/Misrecepciones";
 import Biblioteca from "pages/Biblioteca";
+import Estudiante from "pages/Estudiante";
 
 const routes = [
   {
@@ -15,6 +16,7 @@ const routes = [
 
       { path: '/user', component: User,meta: {requiresAuth: true,} },
       { path: '/biblioteca', component: Biblioteca,meta: {requiresAuth: true,} },
+      { path: '/estudiante', component: Estudiante,meta: {requiresAuth: true,} },
       // { path: '/seguimiento', component: Seguimiento,meta: {requiresAuth: true,} },
       // { path: '/asiganacion', component: Asignacion,meta: {requiresAuth: true,} },
       // { path: '/misrecepciones', component: Misrecepciones,meta: {requiresAuth: true,} },

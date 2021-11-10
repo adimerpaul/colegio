@@ -9,11 +9,21 @@ export function auth_success(state, data){
   state.status = 'success'
   state.token = data.token
   state.user = data.user
-  state.boolusuarios=data.user.permisos.find(p=>p.id===1)!=undefined
-  state.boolrecepcion=data.user.permisos.find(p=>p.id===2)!=undefined
-  state.booldesignacion=data.user.permisos.find(p=>p.id===3)!=undefined
-  state.boolseguimiento=data.user.permisos.find(p=>p.id===4)!=undefined
-  state.boolmisrecepciones=data.user.permisos.find(p=>p.id===5)!=undefined
+  state.boolgestionarusuarios=data.user.permisos.find(p=>p.id===1)!=undefined
+  state.boolgestionarprofesores=data.user.permisos.find(p=>p.id===2)!=undefined
+  state.boolgestionarcursos=data.user.permisos.find(p=>p.id===3)!=undefined
+  state.boolgestionarmaterias=data.user.permisos.find(p=>p.id===4)!=undefined
+  state.boolgestionarbiblioteca=data.user.permisos.find(p=>p.id===5)!=undefined
+  state.boolregistrocalificaciones=data.user.permisos.find(p=>p.id===6)!=undefined
+  state.boolgestionargestion=data.user.permisos.find(p=>p.id===7)!=undefined
+  state.boolinscripbirestudiante=data.user.permisos.find(p=>p.id===8)!=undefined
+  state.boolinformeinscritos=data.user.permisos.find(p=>p.id===9)!=undefined
+  state.boolgestionarcalificaciones=data.user.permisos.find(p=>p.id===10)!=undefined
+  // state.boolusuarios=data.user.permisos.find(p=>p.id===1)!=undefined
+  // state.boolrecepcion=data.user.permisos.find(p=>p.id===2)!=undefined
+  // state.booldesignacion=data.user.permisos.find(p=>p.id===3)!=undefined
+  // state.boolseguimiento=data.user.permisos.find(p=>p.id===4)!=undefined
+  // state.boolmisrecepciones=data.user.permisos.find(p=>p.id===5)!=undefined
   // state.inventario=data.user.permisos.find(p=>p.id===4)!=undefined
   // state.ventadetalle=data.user.permisos.find(p=>p.id===5)!=undefined
   // state.historialventadetalle=data.user.permisos.find(p=>p.id===6)!=undefined
@@ -32,12 +42,16 @@ export function   auth_error(state){
 export function salir(state){
   state.status = ''
   state.token = ''
-  state.boolusuarios=false
-  state.boolrecepcion=false
-  state.boolseguimiento=false
-  state.user={unit:{}}
-  state.booldesignacion=false
-  state.boolmisrecepciones=false
+  state.boolgestionarusuarios=false
+  state.boolgestionarprofesores=false
+  state.boolgestionarcursos=false
+  state.boolgestionarmaterias=false
+  state.boolgestionarbiblioteca=false
+  state.boolregistrocalificaciones=false
+  state.boolgestionargestion=false
+  state.boolinscripbirestudiante=false
+  state.boolinformeinscritos=false
+  state.boolgestionarcalificaciones=false
   // state.ventadetalle=false
   // state.historialventadetalle=false
   // state.ventalocal=false

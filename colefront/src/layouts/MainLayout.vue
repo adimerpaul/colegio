@@ -60,7 +60,7 @@
           </q-item>
 
           <q-item
-            v-if="$store.state.login.boolusuarios"
+            v-if="$store.state.login.boolgestionarusuarios"
             clickable
             to="/user"
           >
@@ -71,17 +71,17 @@
             </q-item-section>
 
             <q-item-section>
-              <q-item-label>Usuarios</q-item-label>
+              <q-item-label>usuarios</q-item-label>
               <q-item-label caption>
-                Control de usuarios
+                usuarios
               </q-item-label>
             </q-item-section>
           </q-item>
 
           <q-item
-            v-if="$store.state.login.boolrecepcion"
+            v-if="$store.state.login.boolgestionarprofesores"
             clickable
-            to="/recepcion"
+            to="/profesor"
           >
             <q-item-section
               avatar
@@ -90,16 +90,16 @@
             </q-item-section>
 
             <q-item-section>
-              <q-item-label>Registro de correspondencia</q-item-label>
+              <q-item-label>Profesores</q-item-label>
               <q-item-label caption>
-                Recepciones de correspondencia
+                Profesores
               </q-item-label>
             </q-item-section>
           </q-item>
           <q-item
-            v-if="$store.state.login.booldesignacion"
+            v-if="$store.state.login.boolgestionarcursos"
             clickable
-            to="/asiganacion"
+            to="/curso"
           >
             <q-item-section
               avatar
@@ -108,17 +108,17 @@
             </q-item-section>
 
             <q-item-section>
-              <q-item-label>Mis asignaciones</q-item-label>
+              <q-item-label>Cursos</q-item-label>
               <q-item-label caption>
-                Mis asignaciones
+                Cursos
               </q-item-label>
             </q-item-section>
           </q-item>
 
           <q-item
-            v-if="$store.state.login.boolseguimiento"
+            v-if="$store.state.login.boolgestionarmaterias"
             clickable
-            to="/seguimiento"
+            to="/materias"
           >
             <q-item-section
               avatar
@@ -127,17 +127,17 @@
             </q-item-section>
 
             <q-item-section>
-              <q-item-label>Seguimiento</q-item-label>
+              <q-item-label>Materias</q-item-label>
               <q-item-label caption>
-                Seguimiento de archivos
+                Materias
               </q-item-label>
             </q-item-section>
           </q-item>
 
           <q-item
-            v-if="$store.state.login.boolmisrecepciones"
+            v-if="$store.state.login.boolgestionarbiblioteca"
             clickable
-            to="/misrecepciones"
+            to="/biblioteca"
           >
             <q-item-section
               avatar
@@ -146,9 +146,103 @@
             </q-item-section>
 
             <q-item-section>
-              <q-item-label>Mis recepciones</q-item-label>
+              <q-item-label>Biblioteca</q-item-label>
               <q-item-label caption>
-                Historial de mis recepciones
+                Biblioteca
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item
+            v-if="$store.state.login.boolregistrocalificaciones"
+            clickable
+            to="/calificacion"
+          >
+            <q-item-section
+              avatar
+            >
+              <q-icon name="receipt_long" />
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label>Calificacion</q-item-label>
+              <q-item-label caption>
+                Calificacion
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item
+            v-if="$store.state.login.boolgestionargestion"
+            clickable
+            to="/gestion"
+          >
+            <q-item-section
+              avatar
+            >
+              <q-icon name="touch_app" />
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label>Gestion</q-item-label>
+              <q-item-label caption>
+                Gestion
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item
+            v-if="$store.state.login.boolinscripbirestudiante"
+            clickable
+            to="/estudiante"
+          >
+            <q-item-section
+              avatar
+            >
+              <q-icon name="assignment_ind" />
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label>Inscribir estudiante</q-item-label>
+              <q-item-label caption>
+                Inscribir estudiante
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item
+            v-if="$store.state.login.boolinformeinscritos"
+            clickable
+            to="/inscritos"
+          >
+            <q-item-section
+              avatar
+            >
+              <q-icon name="supervisor_account" />
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label>Inscritos</q-item-label>
+              <q-item-label caption>
+                Inscritos
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item
+            v-if="$store.state.login.boolgestionarcalificaciones"
+            clickable
+            to="/calificaciones"
+          >
+            <q-item-section
+              avatar
+            >
+              <q-icon name="note_add" />
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label>Calificaciones</q-item-label>
+              <q-item-label caption>
+                Calificaciones
               </q-item-label>
             </q-item-section>
           </q-item>
@@ -195,12 +289,9 @@
 
 <script>
 import {date} from 'quasar'
-import EssentialLink from 'components/EssentialLink.vue'
 // import e from 'c'
 export default {
-  components:{
-    EssentialLink
-  },
+
   data(){
     return{
       leftDrawerOpen : false,
