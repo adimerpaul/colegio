@@ -67,7 +67,6 @@ class UserController extends Controller
         }
         $permiso = Permiso::find($permisos);
         $user->permisos()->attach($permiso);
-
     }
     public function update(Request $request,User $user){
 //        return $request->all();

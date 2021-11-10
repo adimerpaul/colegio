@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Estudiante;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class EstudianteController extends Controller
@@ -49,6 +50,8 @@ class EstudianteController extends Controller
 //        $estudiante->imagen=$request->imagen;
         $estudiante->curso_id=$request->curso_id;
         $estudiante->save();
+        $user=User::find($request->padre_id);
+        $estudiante->users()->attach($request->padre_id,['relacion'=>$user->tipo]);
     }
 
     /**
