@@ -45,7 +45,7 @@ class UserSeeder extends Seeder
                 'unit_id'=>1,
             ],
             [
-                'tipo'=>'TUTOR',
+                'tipo'=>'PADRE',
                 'nombres'=>'MARIA',
                 'apellidos'=>'CALLE LOPEZ',
                 'carnet'=>'222222',

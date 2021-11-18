@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md">
 
-    <q-table :filter="filter" title="LISTA DE PROFESORES" :rows="data" :columns="columns" row-key="name" :rows-per-page-options="[50,100]">
+    <q-table dense :filter="filter" title="LISTA DE PROFESORES" :rows="data" :columns="columns" row-key="name" :rows-per-page-options="[50,100]">
       <template v-slot:top-right>
         <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
           <template v-slot:append>
@@ -254,7 +254,7 @@ export default {
       this.dato2 = item.row;
       this.dialog_del = true;
     },
-    
+
     onMod() {
       if (this.dato2.unit=='' || this.dato2.unit==undefined){
         this.$q.notify({

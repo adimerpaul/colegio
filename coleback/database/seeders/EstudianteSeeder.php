@@ -16,7 +16,7 @@ class EstudianteSeeder extends Seeder
     {
         DB::table('estudiantes')->insert([
             [
-                'carnet'=>'222223',
+                'carnet'=>'1010',
                 'domicilio'=>'CALLE X',
                 'paterno'=>'TANTACHUCO',
                 'materno'=>'LIMACHI',
@@ -32,7 +32,7 @@ class EstudianteSeeder extends Seeder
                 'curso_id'=>1
             ],
             [
-                'carnet'=>'222223',
+                'carnet'=>'2020',
                 'domicilio'=>'CALLE X',
                 'paterno'=>'TANTACHUCO',
                 'materno'=>'LIMACHI',

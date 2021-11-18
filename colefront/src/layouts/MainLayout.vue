@@ -11,7 +11,7 @@
           @click="toggleLeftDrawer"
         />
         <q-toolbar-title>
-          {{$store.state.login.user.name}}
+          {{$store.state.login.user.nombres}}
         </q-toolbar-title>
 
         <div>
@@ -71,7 +71,7 @@
             </q-item-section>
 
             <q-item-section>
-              <q-item-label>usuarios</q-item-label>
+              <q-item-label>Usuarios</q-item-label>
               <q-item-label caption>
                 Users/Adm/Prof/Sria
               </q-item-label>

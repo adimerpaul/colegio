@@ -6,9 +6,9 @@
       <q-card-section class="q-pt-none">
         <q-form @submit.prevent="guardarpadre">
           <div class="row">
-            <div class="col-12 col-sm-2 q-pa-xs ">
-              <q-select dense outlined label="Tipo" v-model="newpadre.tipo" :options="['PADRE','TUTOR']" />
-            </div>
+<!--            <div class="col-12 col-sm-2 q-pa-xs ">-->
+<!--              <q-select dense outlined label="Tipo" v-model="newpadre.tipo" :options="['PADRE','TUTOR']" />-->
+<!--            </div>-->
             <div class="col-12 col-sm-2 q-pa-xs ">
               <q-input dense outlined label="nombres" v-model="newpadre.nombres" />
             </div>
@@ -51,7 +51,7 @@
             <q-btn dense color="primary" icon="add_circle" label="DATOS PADRE/MADRE/TUTOR" @click="dialogpadre=true"/>
           </div>
           <div class="col-12 col-sm-2 q-pa-xs ">
-            <q-input dense outlined label="Carnet" v-model="dato.carnet" />
+            <q-input dense outlined label="Carnet" v-model="dato.carnet" @keyup="buscarestudiante" />
           </div>
           <div class="col-12 col-sm-2 q-pa-xs ">
             <q-input dense outlined label="Domicilio" v-model="dato.domicilio" />
@@ -116,6 +116,22 @@ export default {
     })
   },
   methods:{
+    buscarestudiante(){
+
+      this.$axios.get(process.env.API+'/estudiante/'+this.dato.carnet).then(res=>{
+        if (res.data!=''){
+          this.dato.domicilio=res.data.domicilio
+          this.dato.paterno=res.data.paterno
+          this.dato.materno=res.data.materno
+          this.dato.nombres=res.data.nombres
+          this.dato.celular=res.data.celular
+          this.dato.fechanac=res.data.fechanac
+          this.dato.domicilio=res.data.domicilio
+          this.dato.domicilio=res.data.domicilio
+        }
+        // console.log(res.data)
+      })
+    },
     guardar(){
       this.$q.loading.show()
       this.dato.curso_id=this.curso.id;
@@ -141,6 +157,7 @@ export default {
     },
     guardarpadre(){
       this.$q.loading.show()
+      this.newpadre.tipo='PADRE'
       this.$axios.post(process.env.API+'/padre',this.newpadre).then(res=>{
         this.newpadre={ expedido:'OR',fechanac: date.formatDate(Date.now(),'YYYY-MM-DD'),tipo:'PADRE'}
         this.mispadres()

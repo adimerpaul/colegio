@@ -60,9 +60,9 @@ class EstudianteController extends Controller
      * @param  \App\Models\Estudiante  $estudiante
      * @return \Illuminate\Http\Response
      */
-    public function show(Estudiante $estudiante)
+    public function show($carnet)
     {
-        //
+        return Estudiante::where('carnet',$carnet)->first();
     }
 
     /**
