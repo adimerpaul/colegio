@@ -29,10 +29,12 @@ Route::group(['middleware'=>'auth:sanctum'],function (){
     Route::resource('/asignacion',\App\Http\Controllers\AsignacionController::class);
     Route::post('/misremetentes',[\App\Http\Controllers\UserController::class,'misremetentes']);
     Route::post('/usuarios',[\App\Http\Controllers\UserController::class,'usuarios']);
+    Route::post('/listprofesor',[\App\Http\Controllers\UserController::class,'listprofesor']);
     Route::resource('/permiso',\App\Http\Controllers\PermisoController::class);
 
     Route::resource('/estudiante',\App\Http\Controllers\EstudianteController::class);
     Route::resource('/curso',\App\Http\Controllers\CursoController::class);
     Route::resource('/padre',\App\Http\Controllers\PadreController::class);
+    Route::resource('/materia',\App\Http\Controllers\MateriaController::class);
 });
 

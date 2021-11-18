@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -99,5 +100,9 @@ class UserController extends Controller
     public function me(Request $request){
         $user=User::where('id',$request->user()->id)->with('unit')->with('permisos')->firstOrFail();
         return $user;
+    }
+
+    public function listprofesor(){
+        return DB::SELECT('SELECT id,nombres,apellidos,carnet,expedido,email,fechalimite from users where tipo="PROFESOR"');
     }
 }

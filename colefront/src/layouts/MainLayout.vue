@@ -73,7 +73,7 @@
             <q-item-section>
               <q-item-label>usuarios</q-item-label>
               <q-item-label caption>
-                usuarios
+                Users/Adm/Prof/Sria
               </q-item-label>
             </q-item-section>
           </q-item>
@@ -96,6 +96,7 @@
               </q-item-label>
             </q-item-section>
           </q-item>
+
           <q-item
             v-if="$store.state.login.boolgestionarcursos"
             clickable
@@ -118,7 +119,7 @@
           <q-item
             v-if="$store.state.login.boolgestionarmaterias"
             clickable
-            to="/materias"
+            to="/materia"
           >
             <q-item-section
               avatar

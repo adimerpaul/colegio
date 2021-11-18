@@ -126,8 +126,11 @@
       </template>
       <template v-slot:body="props">
         <q-tr :props="props">
-          <q-td key="name" :props="props">
-            {{props.row.name}}
+          <q-td key="nombres" :props="props">
+            {{props.row.nombres}}
+          </q-td>
+          <q-td key="apellidos" :props="props">
+            {{props.row.apellidos}}
           </q-td>
           <!--          <q-td key="unid" :props="props">-->
           <!--            {{props.row.unid.nombre}}-->
@@ -261,10 +264,19 @@
           <q-form @submit="onMod" class="q-gutter-md">
             <q-input
               filled
-              v-model="dato2.name"
+              v-model="dato2.nombres"
               type="text"
               label="Nombre "
               hint="Ingresar Nombre"
+              lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"
+            />
+            <q-input
+              filled
+              v-model="dato2.apellidos"
+              type="text"
+              label="apellidos "
+              hint="Ingresar apellidos"
               lazy-rules
               :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"
             />
@@ -391,13 +403,13 @@ export default {
       modelpermiso:false,
       uni:{},
       columns: [
-        {name: "name", align: "left", label: "NOMBRE ", field: "name", sortable: true,},
+        {name: "nombres", align: "left", label: "NOMBRE ", field: "nombres", sortable: true,},
+        {name: "apellidos", align: "left", label: "APELLIDOS ", field: "apellidos", sortable: true,},
         // {name: "celular", align: "left", label: "Celular ", field: "celular", sortable: true,},
         // {name: "carnet", align: "left", label: "Carnet ", field: "carnet", sortable: true,},
         // {name: "unid", align: "left", label: "Unidad", field: "unid", sortable: true,},
         // {name: "codigo", align: "left", label: "Codigo", field: "codigo", sortable: true,},
         {name: "email", align: "left", label: "E-MAIL", field: "email", sortable: true,},
-        {name: "unit", align: "left", label: "UNIDAD", field: "unit", sortable: true,},
         {name: "permisos", align: "left", label: "PERMISOS", field: "permisos", sortable: true,},
         {name: "fechalimite", align: "left", label: "FECHA LÍMITE", field: "fechalimite", sortable: true,},
         {name: "tipo", align: "left", label: "TIPO", field: "tipo", sortable: true,},

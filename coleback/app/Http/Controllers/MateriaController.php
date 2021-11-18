@@ -15,6 +15,7 @@ class MateriaController extends Controller
     public function index()
     {
         //
+        return Materia::all();
     }
 
     /**
@@ -36,6 +37,10 @@ class MateriaController extends Controller
     public function store(Request $request)
     {
         //
+        $materia=new Materia ;
+        $materia->nombre=$request->nombre;
+        $materia->codigo=$request->codigo;
+        $materia->save();
     }
 
     /**
@@ -70,6 +75,10 @@ class MateriaController extends Controller
     public function update(Request $request, Materia $materia)
     {
         //
+        $materia=Materia::find($request->id) ;
+        $materia->nombre=$request->nombre;
+        $materia->codigo=$request->codigo;
+        $materia->save();
     }
 
     /**
@@ -78,8 +87,10 @@ class MateriaController extends Controller
      * @param  \App\Models\Materia  $materia
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Materia $materia)
+    public function destroy($id)
     {
         //
+        $materia=Materia::find($id);
+        $materia->delete();
     }
 }
