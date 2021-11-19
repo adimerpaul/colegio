@@ -36,6 +36,10 @@ class CursoController extends Controller
     public function store(Request $request)
     {
         //
+        $curso=new Curso;
+        $curso->nombre=$request->nombre;
+        $curso->paralelo=$request->paralelo;
+        $curso->save();
     }
 
     /**
@@ -70,6 +74,10 @@ class CursoController extends Controller
     public function update(Request $request, Curso $curso)
     {
         //
+        $curso= Curso::find($request->id);
+        $curso->nombre=$request->nombre;
+        $curso->paralelo=$request->paralelo;
+        $curso->save();
     }
 
     /**

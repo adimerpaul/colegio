@@ -71,9 +71,7 @@
           <div class="col-12 col-sm-2 q-pa-xs ">
             <q-input dense outlined label="Fecha nacimiento" type="date" v-model="dato.fechanac" />
           </div>
-          <div class="col-12 col-sm-2 q-pa-xs ">
-            <q-select dense outlined label="Tipo" v-model="dato.tipo" :options="['NUEVO','OTROS']" />
-          </div>
+
           <div class="col-12 col-sm-3 q-pa-xs ">
             <q-select outlined dense label="Curso" v-model="curso" :options="cursos"  />
           </div>
@@ -98,7 +96,8 @@ export default {
       newpadre:{ expedido:'OR',fechanac: date.formatDate(Date.now(),'YYYY-MM-DD'),tipo:'PADRE'},
       dialogpadre:false,
       cursos:[],
-      curso:{}
+      curso:{},
+      estudiantes:[]
     }
   },
   created() {
@@ -108,7 +107,7 @@ export default {
       this.cursos=[]
       res.data.forEach(r=>{
         let d= r
-        d.label=r.nombre
+        d.label=r.nombre +' ' + r.paralelo
         this.cursos.push(d)
       })
       this.curso=this.cursos[0]
@@ -116,6 +115,12 @@ export default {
     })
   },
   methods:{
+    listado(){
+      this.$axios.get(process.env.API+'/estudiante').then(res=>{
+        this.estudiantes=res.data;
+      })
+
+    },
     buscarestudiante(){
 
       this.$axios.get(process.env.API+'/estudiante/'+this.dato.carnet).then(res=>{

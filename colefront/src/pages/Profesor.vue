@@ -36,22 +36,7 @@
               @click="editRow(props)"
               icon="edit"
             />
-            <q-btn
-              dense
-              round
-              flat
-              color="positive"
-              @click="cambiopass(props)"
-              icon="vpn_key"
-            />
-            <q-btn
-              dense
-              round
-              flat
-              color="green-10"
-              @click="mispermisos(props)"
-              icon="post_add"
-            />
+
             <q-btn
               dense
               round
