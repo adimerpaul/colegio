@@ -22,15 +22,15 @@ class CreateEstudiantesTable extends Migration
             $table->string('nombres');
             $table->string('celular');
             $table->date('fechanac');
-            $table->string('rude');
+            $table->string('rude')->nullable()->default('');
 //            $table->string('curso');
           //  $table->string('tipo')->default('NUEVO');
 //            $table->string('paralelo');
             $table->date('fecha');
             $table->string('estado')->default('ACTIVO');
             $table->string('imagen')->default('user.png');
-            //$table->unsignedBigInteger('curso_id');
-           // $table->foreign('curso_id')->references('id')->on('cursos');
+            $table->unsignedBigInteger('curso_id')->default(1);
+            $table->foreign('curso_id')->references('id')->on('cursos');
             $table->timestamps();
         });
     }

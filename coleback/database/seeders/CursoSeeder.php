@@ -15,20 +15,20 @@ class CursoSeeder extends Seeder
     public function run()
     {
         DB::table("cursos")->insert([
-            ["nombre"=>"PRIMERO", "paralelo"=>"A"],
-            ["nombre"=>"PRIMERO", "paralelo"=>"B"],
+            ["nombre"=>"PRIMERO A", "paralelo"=>"A"],
+            ["nombre"=>"PRIMERO B", "paralelo"=>"B"],
 //            ["nombre"=>"PRIMERO C", "paralelo"=>"C"],
 //            ["nombre"=>"PRIMERO D", "paralelo"=>"D"],
-            ["nombre"=>"SEGUNDO", "paralelo"=>"A"],
-            ["nombre"=>"SEGUNDO", "paralelo"=>"B"],
+            ["nombre"=>"SEGUNDO A", "paralelo"=>"A"],
+            ["nombre"=>"SEGUNDO B", "paralelo"=>"B"],
 //            ["nombre"=>"SEGUNDO C", "paralelo"=>"C"],
 //            ["nombre"=>"SEGUNDO D", "paralelo"=>"D"],
-            ["nombre"=>"TERCERO", "paralelo"=>"A"],
-            ["nombre"=>"TERCERO", "paralelo"=>"B"],
+            ["nombre"=>"TERCERO A", "paralelo"=>"A"],
+            ["nombre"=>"TERCERO B", "paralelo"=>"B"],
 //            ["nombre"=>"TERCERO C", "paralelo"=>"C"],
 //            ["nombre"=>"TERCERO D", "paralelo"=>"D"],
-            ["nombre"=>"CUARTO", "paralelo"=>"A"],
-            ["nombre"=>"CUARTO", "paralelo"=>"B"],
+            ["nombre"=>"CUARTO A", "paralelo"=>"A"],
+            ["nombre"=>"CUARTO B", "paralelo"=>"B"],
 
         ]);
     }
