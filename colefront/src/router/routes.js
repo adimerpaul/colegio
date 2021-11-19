@@ -9,6 +9,7 @@ import Curso from "pages/Curso";
 import Biblioteca from "pages/Biblioteca";
 import Estudiante from "pages/Estudiante";
 import Inscritos from "pages/Inscritos";
+import Calificaiones from "pages/Calificaiones";
 
 const routes = [
   {
@@ -24,6 +25,7 @@ const routes = [
       { path: '/materia', component: Materia,meta: {requiresAuth: true,} },
       { path: '/curso', component: Curso,meta: {requiresAuth: true,} },
       { path: '/inscritos', component: Inscritos,meta: {requiresAuth: true,} },
+      { path: '/calificaciones', component: Calificaiones,meta: {requiresAuth: true,} },
       // { path: '/asiganacion', component: Asignacion,meta: {requiresAuth: true,} },
       // { path: '/misrecepciones', component: Misrecepciones,meta: {requiresAuth: true,} },
     ]

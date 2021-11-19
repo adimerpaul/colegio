@@ -15,10 +15,10 @@ class GrupoSeeder extends Seeder
     public function run()
     {
         DB::table('grupos')->insert([
-           ['nombre'=>'COMUNIDAD Y SOCIEDAD'],
-            ['nombre'=>'CIENCIA, TECNOLOGIA Y PRODUCCIÓN '],
-            ['nombre'=>'VIDA TIERRA TERRITORIO'],
-            ['nombre'=>'COSMOS Y PENSAMIENTO '],
+           ['nombre'=>'COMUNIDAD Y SOCIEDAD',"color"=>"green-10"],
+            ['nombre'=>'CIENCIA, TECNOLOGIA Y PRODUCCIÓN ',"color"=>"deep-purple-10"],
+            ['nombre'=>'VIDA TIERRA TERRITORIO',"color"=>"deep-orange-10"],
+            ['nombre'=>'COSMOS Y PENSAMIENTO ',"color"=>"pink-10"],
         ]);
     }
 }
