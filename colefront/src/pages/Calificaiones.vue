@@ -1,9 +1,11 @@
 <template>
 <q-page>
+<br>
   <div class="row">
     <div v-for="c in cursos" :key="c.id" class="col-4 col-sm-1 flex flex-center">
       <q-btn :label="c.nombre" size="xs" color="primary"/>
     </div>
+<br>
     <div class="col-12 flex flex-center">
       <div class="text-h6">Areas</div>
       <q-select outlined dense v-model="trimestre" label="Seleccionar trimestre" :options="['PRIMER TRIMESTRE','SEGUNDO TRIMESTRE','TERCER TRIMESTRE',]" />

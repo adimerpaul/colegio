@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Estudiante;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EstudianteController extends Controller
 {
@@ -16,6 +17,10 @@ class EstudianteController extends Controller
     public function index()
     {
         return Estudiante::all();
+    }
+
+    public function listado(request $request){
+        return Estudiante::with('curso')->get();
     }
 
     /**

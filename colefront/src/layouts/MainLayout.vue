@@ -153,24 +153,8 @@
               </q-item-label>
             </q-item-section>
           </q-item>
-          <q-item
-            v-if="$store.state.login.boolregistrocalificaciones"
-            clickable
-            to="/calificacion"
-          >
-            <q-item-section
-              avatar
-            >
-              <q-icon name="receipt_long" />
-            </q-item-section>
 
-            <q-item-section>
-              <q-item-label>Calificacion</q-item-label>
-              <q-item-label caption>
-                Calificacion
-              </q-item-label>
-            </q-item-section>
-          </q-item>
+
 
           <q-item
             v-if="$store.state.login.boolgestionargestion"

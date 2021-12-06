@@ -73,13 +73,15 @@
           </div>
 
           <div class="col-12 col-sm-3 q-pa-xs ">
-            <q-select outlined dense label="Curso" v-model="curso" :options="cursos"  />
+            <q-select outlined dense label="Curso" v-model="curso" :options="cursos"  @update:model-value="listado"/>
           </div>
           <div class="col-12 col-sm-3 q-pa-xs flex flex-center">
             <q-btn dense color="primary"  class="full-width full-height" icon="add_circle" label="Crear" type="submit"/>
           </div>
         </div>
       </q-form>
+      <q-table title="Estudiantes" :rows="estudiantes" :columns="columns" row-key="name" />
+      
     </div>
   </div>
 </q-page>
@@ -97,7 +99,22 @@ export default {
       dialogpadre:false,
       cursos:[],
       curso:{},
-      estudiantes:[]
+      estudiantes:[],
+      columns: [
+  {
+    name: 'carnet',
+    required: true,
+    label: 'Carnet',
+    align: 'left',
+    field: 'carnet',
+    sortable: true
+  },
+  { name: 'nombres', align: 'center', label: 'nombres', field: 'nombres', sortable: true },
+  { name: 'paterno', align: 'center', label: 'paterno', field: 'paterno', sortable: true },
+  { name: 'materno', align: 'center', label: 'materno', field: 'materno', sortable: true },
+  { name: 'curso', align: 'center', label: 'curso', field: row=>row.nombre, sortable: true },
+  { name: 'paralelo', align: 'center', label: 'paralelo', field: row=>row.paralelo, sortable: true },
+]
     }
   },
   created() {
@@ -110,28 +127,29 @@ export default {
         d.label=r.nombre +' ' + r.paralelo
         this.cursos.push(d)
       })
+      console.log(this.cursos)
       this.curso=this.cursos[0]
       this.$q.loading.hide()
-    })
+    }),
+    this.listado()
   },
   methods:{
     listado(){
-      this.$axios.get(process.env.API+'/estudiante').then(res=>{
-        this.estudiantes=res.data;
-      })
+      this.$axios.post(process.env.API+'/listado').then(res=>{
 
+        this.estudiantes=res.data;
+        console.log(this.estudiantes)
+      })
     },
     buscarestudiante(){
 
       this.$axios.get(process.env.API+'/estudiante/'+this.dato.carnet).then(res=>{
         if (res.data!=''){
-          this.dato.domicilio=res.data.domicilio
           this.dato.paterno=res.data.paterno
           this.dato.materno=res.data.materno
           this.dato.nombres=res.data.nombres
           this.dato.celular=res.data.celular
           this.dato.fechanac=res.data.fechanac
-          this.dato.domicilio=res.data.domicilio
           this.dato.domicilio=res.data.domicilio
         }
         // console.log(res.data)
