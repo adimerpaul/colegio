@@ -2,7 +2,7 @@
 <q-page>
   <div class="row">
     <div class="col-3 q-pa-xs">
-      <q-select dense label="Seleccionar Curso" :options="cursos" v-model="curso" option-label="nombre" @update:model-value="actualizar"></q-select>
+      <q-select outlined dense label="Seleccionar Curso" :options="cursos" v-model="curso" @update:model-value="actualizar"></q-select>
 <!--      <pre>{{cursos}}</pre>-->
     </div>
     <div class="col-12">
@@ -99,7 +99,15 @@ export default {
   created() {
     this.$q.loading.show()
     this.$api.get('/curso').then(res=>{
-      this.cursos=res.data
+
+      this.cursos=[]
+      res.data.forEach(r=>{
+        let d={}
+        d=r
+        d.label=r.nombre+' '+r.paralelo
+        this.cursos.push(d)
+      })
+      // this.cursos=res.data
       this.curso=this.cursos[0]
       this.misalumnos(this.curso.id)
     })

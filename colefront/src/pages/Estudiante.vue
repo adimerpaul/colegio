@@ -80,8 +80,18 @@
           </div>
         </div>
       </q-form>
-      <q-table title="Estudiantes" :rows="estudiantes" :columns="columns" row-key="name" />
-      
+      <q-table title="Estudiantes" :rows="estudiantes" :columns="columns"  >
+        <template v-slot:body-cell-curso="props">
+          <q-td :props="props">
+            {{props.row.curso.nombre}}
+          </q-td>
+        </template>
+        <template v-slot:body-cell-paralelo="props">
+          <q-td :props="props">
+            {{props.row.curso.paralelo}}
+          </q-td>
+        </template>
+      </q-table>
     </div>
   </div>
 </q-page>
@@ -136,7 +146,6 @@ export default {
   methods:{
     listado(){
       this.$axios.post(process.env.API+'/listado').then(res=>{
-
         this.estudiantes=res.data;
         console.log(this.estudiantes)
       })
@@ -162,6 +171,7 @@ export default {
       this.$axios.post(process.env.API+'/estudiante',this.dato).then(res=>{
         this.dato={ fechanac: date.formatDate(Date.now(),'YYYY-MM-DD'),tipo:'PADRE'}
         // this.mispadres()
+        this.listado()
         this.$q.loading.hide()
         // this.dialogpadre=false
         this.$q.notify({
