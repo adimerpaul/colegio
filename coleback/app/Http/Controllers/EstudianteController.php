@@ -91,6 +91,16 @@ class EstudianteController extends Controller
     public function update(Request $request, Estudiante $estudiante)
     {
         //
+        $estudiante=Estudiante::find($request->id);
+        $estudiante->domicilio=$request->domicilio;
+        $estudiante->paterno=$request->paterno;
+        $estudiante->materno=$request->materno;
+        $estudiante->nombres=$request->nombres;
+        $estudiante->celular=$request->celular;
+        $estudiante->fechanac=$request->fechanac;
+        $estudiante->fecha=date('Y-m-d');
+        $estudiante->curso_id=$request->curso_id;
+        $estudiante->save();
     }
 
     /**

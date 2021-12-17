@@ -76,7 +76,8 @@
             <q-select outlined dense label="Curso" v-model="curso" :options="cursos"  @update:model-value="listado"/>
           </div>
           <div class="col-12 col-sm-3 q-pa-xs flex flex-center">
-            <q-btn dense color="primary"  class="full-width full-height" icon="add_circle" label="Crear" type="submit"/>
+            <q-btn dense color="warning" v-if="dato.id>0" class="full-width full-height" icon="edit" label="Editar" type="submit"/>
+            <q-btn dense color="primary"  v-else class="full-width full-height" icon="add_circle" label="Crear" type="submit"/>
           </div>
         </div>
       </q-form>
@@ -154,6 +155,7 @@ export default {
 
       this.$axios.get(process.env.API+'/estudiante/'+this.dato.carnet).then(res=>{
         if (res.data!=''){
+          this.dato.id=res.data.id
           this.dato.paterno=res.data.paterno
           this.dato.materno=res.data.materno
           this.dato.nombres=res.data.nombres
@@ -161,6 +163,7 @@ export default {
           this.dato.fechanac=res.data.fechanac
           this.dato.domicilio=res.data.domicilio
         }
+        else {this.dato={carnet:this.dato.carnet, fechanac: date.formatDate(Date.now(),'YYYY-MM-DD')}}
         // console.log(res.data)
       })
     },
@@ -168,6 +171,29 @@ export default {
       this.$q.loading.show()
       this.dato.curso_id=this.curso.id;
       this.dato.padre_id=this.padre.id;
+      if(this.dato.id>0)
+      {
+      this.$axios.put(process.env.API+'/estudiante/'+this.dato.id,this.dato).then(res=>{
+        this.dato={ fechanac: date.formatDate(Date.now(),'YYYY-MM-DD'),tipo:'PADRE'}
+        // this.mispadres()
+        this.listado()
+        this.$q.loading.hide()
+        // this.dialogpadre=false
+        this.$q.notify({
+          message:"Estudiante modificado!!!",
+          color:'green',
+          icon:'done'
+        })
+      }).catch(err=>{
+        this.$q.notify({
+          message:err.response.data.message,
+          color:'red',
+          icon:'red'
+        })
+        this.$q.loading.hide()
+      })}
+      else
+      {
       this.$axios.post(process.env.API+'/estudiante',this.dato).then(res=>{
         this.dato={ fechanac: date.formatDate(Date.now(),'YYYY-MM-DD'),tipo:'PADRE'}
         // this.mispadres()
@@ -186,7 +212,7 @@ export default {
           icon:'red'
         })
         this.$q.loading.hide()
-      })
+      })}
     },
     guardarpadre(){
       this.$q.loading.show()
