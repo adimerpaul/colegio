@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Estudiante;
+use App\Models\Periodo;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -55,6 +56,10 @@ class EstudianteController extends Controller
 //        $estudiante->imagen=$request->imagen;
         $estudiante->curso_id=$request->curso_id;
         $estudiante->save();
+        $periodo=Periodo::where('estado',"ACTIVO")->get()[0];
+        DB::table('curso_estudiante')->insert([ ["estudiante_id"=>$estudiante->id],
+       ["curso_id"=>$request->curso_id],["periodo_id"=>$periodo->id],["user_id"=>$request->user()->id]]);
+
         $user=User::find($request->padre_id);
         $estudiante->users()->attach($request->padre_id,['relacion'=>$user->tipo]);
     }
@@ -101,6 +106,13 @@ class EstudianteController extends Controller
         $estudiante->fecha=date('Y-m-d');
         $estudiante->curso_id=$request->curso_id;
         $estudiante->save();
+        $periodo=Periodo::where('estado',"ACTIVO")->get()[0];
+        $curest=DB::table('curso_estudiante')->where("estudiante_id",$estudiante->id)->where("periodo_id",$periodo->id)->get();
+        if(sizeof($curest)>0){
+        DB::table('curso_estudiante')->where("estudiante_id",$estudiante->id)->where("periodo_id",$periodo->id)->update(["curso_id"=>$request->curso_id]);}
+       else
+        {DB::table('curso_estudiante')->insert(["estudiante_id"=>$request->id,
+        "curso_id"=>$request->curso_id,"periodo_id"=>$periodo->id,"user_id"=>$request->user()->id]);}
     }
 
     /**

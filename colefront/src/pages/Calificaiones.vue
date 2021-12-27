@@ -3,7 +3,7 @@
 <br>
   <div class="row">
     <div v-for="c in cursos" :key="c.id" class="col-4 col-sm-1 flex flex-center">
-      <q-btn :label="c.nombre" size="xs" color="primary"/>
+      <q-btn :label="c.nombre" size="xs" color="primary" @click="listado(c)"/>
     </div>
 <br>
     <div class="col-12 flex flex-center">

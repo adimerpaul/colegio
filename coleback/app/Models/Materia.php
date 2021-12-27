@@ -11,5 +11,6 @@ class Materia extends Model
     protected $fillable=[
         'nombre',
         'codigo',
+        'grupo_id'
     ];
 }

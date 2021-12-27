@@ -17,6 +17,8 @@ class CreateMateriasTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('codigo');
+            $table->unsignedBigInteger('grupo_id');
+            $table->foreign('grupo_id')->references('id')->on('grupos');
             $table->timestamps();
         });
     }
