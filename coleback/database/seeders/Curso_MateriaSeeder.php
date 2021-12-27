@@ -18,7 +18,7 @@ class Curso_MateriaSeeder extends Seeder
             [
                 'materia_id'=>"1",
                 'curso_id'=>"1",
-                'grupo_id'=>"1"
+                "profesor_id"=>"4"
             ]
         ]);
     }

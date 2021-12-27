@@ -15,7 +15,7 @@ class MateriaSeeder extends Seeder
     public function run()
     {
         DB::table('materias')->insert([
-            ["nombre"=>"MATEMATICAS","codigo"=>"MAT"]
+            ["nombre"=>"MATEMATICAS","codigo"=>"MAT","grupo_id"=>2]
         ]);
     }
 }

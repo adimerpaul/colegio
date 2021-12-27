@@ -13,4 +13,8 @@ class Materia extends Model
         'codigo',
         'grupo_id'
     ];
+    
+    public function grupo(){
+        return $this->belongsTo(Grupo::class);
+    }
 }

@@ -34,6 +34,9 @@
                   lazy-rules
                   :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"
                 />
+
+                <q-select outlined v-model="grupo" :options="grupos" label="Grupo" 
+                              />
             <div>
               <q-btn label="Agregar" type="submit" color="positive" icon="add_circle" />
               <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
@@ -101,6 +104,8 @@
               lazy-rules
               :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"
             />
+            <q-select outlined v-model="grupo" :options="grupos" label="Grupo" 
+                                 />
             <div>
               <q-btn label="Modificar" type="submit" color="positive" icon="add_circle" />
               <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
@@ -146,11 +151,14 @@ export default {
       unidades:[],
       permisos:[],
       permisos2:[],
+      grupos:[],
+      grupo:{},
       modelpermiso:false,
       uni:{},
       columns: [
         {name: "nombre", align: "left", label: "MATERIA ", field: "nombre", sortable: true,},
         {name: "codigo", align: "left", label: "codigo", field: "codigo", sortable: true,},
+        {name: "grupo", align: "left", label: "Grupo", field: row=>row.grupo['nombre'], sortable: true,},
         { name: "opcion", align:"center",label: "OPCIÓN", field: "action", sortable: false },
       ],
       data: [],
@@ -162,8 +170,19 @@ export default {
     //   // this.router.push('/')
     // }
     this.misdatos();
+    this.misgrupos();
   },
   methods: {
+    misgrupos(){
+      this.$axios.get(process.env.API + "/grupo").then((res) => {
+        res.data.forEach(element => {
+          this.grupos.push({'label':element.nombre,"grupo":element});
+          
+        });
+        this.grupo=this.grupos[0];
+      })
+
+    },
     misdatos() {
       this.$q.loading.show();
       this.$axios.get(process.env.API + "/materia").then((res) => {
@@ -174,6 +193,7 @@ export default {
     },
     editRow(item) {
       this.dato2 = item.row
+      this.grupo={"label":this.dato2.grupo.nombre,"grupo":this.dato2.grupo};
       this.dato2.unid_id = item.row.unid
       this.dialog_mod = true;
     },
@@ -183,6 +203,7 @@ export default {
     },
     onSubmit() {
       this.$q.loading.show();
+      this.dato.grupo_id=this.grupo.grupo.id;
       this.$axios.post(process.env.API + "/materia", this.dato).then((res) => {
         // console.log(res.data)
         this.alert=false;
@@ -204,9 +225,8 @@ export default {
       })
     },
     onMod() {
-
-
       this.$q.loading.show();
+      this.dato2.grupo_id=this.grupo.grupo.id;
       this.$axios.put(process.env.API + "/materia/" + this.dato2.id, this.dato2).then((res) => {
         // console.log(res.daa)
         this.$q.notify({

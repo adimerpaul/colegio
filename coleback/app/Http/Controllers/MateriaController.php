@@ -15,7 +15,7 @@ class MateriaController extends Controller
     public function index()
     {
         //
-        return Materia::all();
+        return Materia::with('grupo')->get();
     }
 
     /**
@@ -40,6 +40,7 @@ class MateriaController extends Controller
         $materia=new Materia ;
         $materia->nombre=$request->nombre;
         $materia->codigo=$request->codigo;
+        $materia->grupo_id=$request->grupo_id;
         $materia->save();
     }
 
@@ -78,6 +79,7 @@ class MateriaController extends Controller
         $materia=Materia::find($request->id) ;
         $materia->nombre=$request->nombre;
         $materia->codigo=$request->codigo;
+        $materia->grupo_id=$request->grupo_id;
         $materia->save();
     }
 
