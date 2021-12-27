@@ -20,7 +20,7 @@ class CreateEstudiantesTable extends Migration
             $table->string('paterno');
             $table->string('materno');
             $table->string('nombres');
-            $table->string('celular');
+            $table->string('celular')->nullable()->default('');
             $table->date('fechanac');
             $table->string('rude')->nullable()->default('');
 //            $table->string('curso');

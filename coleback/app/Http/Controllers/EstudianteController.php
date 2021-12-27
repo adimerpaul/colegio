@@ -42,12 +42,13 @@ class EstudianteController extends Controller
      */
     public function store(Request $request)
     {
+//        return $request;
         $estudiante=new Estudiante();
         $estudiante->carnet=$request->carnet;
         $estudiante->domicilio=$request->domicilio;
-        $estudiante->paterno=$request->paterno;
-        $estudiante->materno=$request->materno;
-        $estudiante->nombres=$request->nombres;
+        $estudiante->paterno= strtoupper($request->paterno);
+        $estudiante->materno=strtoupper($request->materno);
+        $estudiante->nombres=strtoupper($request->nombres);
         $estudiante->celular=$request->celular;
         $estudiante->fechanac=$request->fechanac;
 //        $estudiante->tipo=$request->tipo;
@@ -57,8 +58,18 @@ class EstudianteController extends Controller
         $estudiante->curso_id=$request->curso_id;
         $estudiante->save();
         $periodo=Periodo::where('estado',"ACTIVO")->get()[0];
-        DB::table('curso_estudiante')->insert([ ["estudiante_id"=>$estudiante->id],
-       ["curso_id"=>$request->curso_id],["periodo_id"=>$periodo->id],["user_id"=>$request->user()->id]]);
+//        return [
+//            "estudiante_id"=>$estudiante->id,
+//            "curso_id"=>$request->curso_id,
+//            "periodo_id"=>$periodo->id,
+//            "user_id"=>$request->user()->id,
+//        ];
+        DB::table('curso_estudiante')->insert([
+            "estudiante_id"=>$estudiante->id,
+            "curso_id"=>$request->curso_id,
+            "periodo_id"=>$periodo->id,
+            "user_id"=>$request->user()->id,
+        ]);
 
         $user=User::find($request->padre_id);
         $estudiante->users()->attach($request->padre_id,['relacion'=>$user->tipo]);

@@ -52,7 +52,7 @@
         </q-input>
       </template>
       <template v-slot:body-cell-opcion="props">
-        <q-tr :props="props">
+<!--        <q-tr :props="props">-->
           <q-td key="opcion" :props="props">
             <q-btn
               dense
@@ -72,7 +72,7 @@
             ></q-btn>
           </q-td>
 
-        </q-tr>
+<!--        </q-tr>-->
       </template>
     </q-table>
 

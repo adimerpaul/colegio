@@ -57,13 +57,13 @@
             <q-input dense outlined label="Domicilio" v-model="dato.domicilio" />
           </div>
           <div class="col-12 col-sm-2 q-pa-xs ">
-            <q-input dense outlined label="Paterno" v-model="dato.paterno" />
+            <q-input dense outlined label="Paterno" v-model="dato.paterno" style="text-transform: uppercase" />
           </div>
           <div class="col-12 col-sm-2 q-pa-xs ">
-            <q-input dense outlined label="Materno" v-model="dato.materno" />
+            <q-input dense outlined label="Materno" v-model="dato.materno" style="text-transform: uppercase" />
           </div>
           <div class="col-12 col-sm-2 q-pa-xs ">
-            <q-input dense outlined label="Nombres" v-model="dato.nombres" />
+            <q-input dense outlined label="Nombres" v-model="dato.nombres" style="text-transform: uppercase" />
           </div>
           <div class="col-12 col-sm-2 q-pa-xs ">
             <q-input dense outlined label="Celular" v-model="dato.celular" />
@@ -81,7 +81,7 @@
           </div>
         </div>
       </q-form>
-      <q-table title="Estudiantes" :rows="estudiantes" :columns="columns"  >
+      <q-table  title="Estudiantes" :rows="estudiantes" :columns="columns"       :filter="filter" :rows-per-page-options="[50,100,200,0]">
         <template v-slot:body-cell-curso="props">
           <q-td :props="props">
             {{props.row.curso.nombre}}
@@ -91,6 +91,19 @@
           <q-td :props="props">
             {{props.row.curso.paralelo}}
           </q-td>
+        </template>
+        <template v-slot:body-cell-opcion="props">
+          <q-td :props="props">
+<!--            {{props.row}}-->
+            <q-btn label="Boleta" size="xs" icon="print" @click="imprimir(props.row)" color="primary"/>
+          </q-td>
+        </template>
+        <template v-slot:top-right>
+          <q-input outlined dense debounce="300" v-model="filter" placeholder="Buscar..">
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
         </template>
       </q-table>
     </div>
@@ -103,6 +116,7 @@ import {date} from 'quasar'
 export default {
   data(){
     return{
+      filter:'',
       dato:{ fechanac: date.formatDate(Date.now(),'YYYY-MM-DD')},
       padres:[],
       padre:{},
@@ -112,19 +126,20 @@ export default {
       curso:{},
       estudiantes:[],
       columns: [
-  {
-    name: 'carnet',
-    required: true,
-    label: 'Carnet',
-    align: 'left',
-    field: 'carnet',
-    sortable: true
-  },
-  { name: 'nombres', align: 'center', label: 'nombres', field: 'nombres', sortable: true },
-  { name: 'paterno', align: 'center', label: 'paterno', field: 'paterno', sortable: true },
-  { name: 'materno', align: 'center', label: 'materno', field: 'materno', sortable: true },
-  { name: 'curso', align: 'center', label: 'curso', field: row=>row.nombre, sortable: true },
-  { name: 'paralelo', align: 'center', label: 'paralelo', field: row=>row.paralelo, sortable: true },
+        {
+          name: 'carnet',
+          required: true,
+          label: 'Carnet',
+          align: 'left',
+          field: 'carnet',
+          sortable: true
+        },
+        { name: 'nombres', align: 'center', label: 'nombres', field: 'nombres', sortable: true },
+        { name: 'paterno', align: 'center', label: 'paterno', field: 'paterno', sortable: true },
+        { name: 'materno', align: 'center', label: 'materno', field: 'materno', sortable: true },
+        { name: 'curso', align: 'center', label: 'curso', field: row=>row.nombre, sortable: true },
+        { name: 'paralelo', align: 'center', label: 'paralelo', field: row=>row.paralelo, sortable: true },
+        { name: 'opcion', align: 'center', label: 'opcion', field: 'opcion', sortable: true },
 ]
     }
   },
@@ -138,13 +153,32 @@ export default {
         d.label=r.nombre +' ' + r.paralelo
         this.cursos.push(d)
       })
-      console.log(this.cursos)
+      // console.log(this.cursos)
       this.curso=this.cursos[0]
       this.$q.loading.hide()
     }),
     this.listado()
   },
   methods:{
+    imprimir(estudiante){
+      console.log(estudiante)
+      var myWindow = window.open("", "myWindow", "width=1200,height=500");
+      myWindow.document.write("<style>" +
+        "*{" +
+        "padding: 0px," +
+        "margin: 0px," +
+        "border: 0px," +
+        "}" +
+        "</style>" +
+        "<div style='font-weight: bold;font-size: 12px;text-align: center'>BOLETA DE INSCRIPCION</div><hr>" +
+        "<table style='border-collapse: collapse;border: 1px solid black'>" +
+        "<tr></tr>" +
+        "</table>");
+      myWindow.document.close();
+      myWindow.focus();
+      myWindow.print();
+      myWindow.close();
+    },
     listado(){
       this.$axios.post(process.env.API+'/listado').then(res=>{
         this.estudiantes=res.data;
@@ -192,9 +226,10 @@ export default {
         })
         this.$q.loading.hide()
       })}
-      else
-      {
+      else {
       this.$axios.post(process.env.API+'/estudiante',this.dato).then(res=>{
+        // console.log(res.data)
+        // return false
         this.dato={ fechanac: date.formatDate(Date.now(),'YYYY-MM-DD'),tipo:'PADRE'}
         // this.mispadres()
         this.listado()
