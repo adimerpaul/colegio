@@ -25,6 +25,8 @@ class PermisoSeeder extends Seeder
             ["id"=>8,"nombre"=>'Inscribir estudiante'],
             ["id"=>9,"nombre"=>'Informe inscritos'],
             ["id"=>10,"nombre"=>'Gestionar calificaciones'],
+            ["id"=>11,"nombre"=>'Asignar docente materia'],
+            ["id"=>12,"nombre"=>'Ver Notas'],
         ]);
     }
 }
