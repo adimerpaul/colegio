@@ -12,4 +12,6 @@ class Curso extends Model
         'nombre',
         'paralelo',
     ];
+
+    
 }
