@@ -28,8 +28,8 @@ class PadreController extends Controller
     {
         $user= new User();
         $user->tipo=$request->tipo;
-        $user->nombres=$request->nombres;
-        $user->apellidos=$request->apellidos;
+        $user->nombres=strtoupper($request->nombres);
+        $user->apellidos=strtoupper($request->apellidos);
         $user->carnet=$request->carnet;
         $user->expedido=$request->expedido;
         $user->fechanac=$request->fechanac;

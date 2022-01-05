@@ -10,10 +10,10 @@
 <!--              <q-select dense outlined label="Tipo" v-model="newpadre.tipo" :options="['PADRE','TUTOR']" />-->
 <!--            </div>-->
             <div class="col-12 col-sm-2 q-pa-xs ">
-              <q-input dense outlined label="nombres" v-model="newpadre.nombres" />
+              <q-input dense outlined style="text-transform: uppercase" label="nombres" v-model="newpadre.nombres" />
             </div>
             <div class="col-12 col-sm-2 q-pa-xs ">
-              <q-input dense outlined label="apellidos" v-model="newpadre.apellidos" />
+              <q-input dense outlined style="text-transform: uppercase" label="apellidos" v-model="newpadre.apellidos" />
             </div>
             <div class="col-12 col-sm-2 q-pa-xs ">
               <q-input dense outlined label="carnet" v-model="newpadre.carnet" />
@@ -45,7 +45,25 @@
       <q-form @submit.prevent="guardar">
         <div class="row">
           <div class="col-12 col-sm-8 q-pa-xs ">
-            <q-select outlined dense label="Padre de familia" v-model="padre" :options="padres"  />
+<!--            <q-select outlined dense label="Padre de familia" v-model="padre" :options="padres"  />-->
+            <q-select
+              outlined
+              dense
+              v-model="padre"
+              use-input
+              input-debounce="0"
+              label="Padre de familia"
+              :options="padres"
+              @filter="filterFn"
+            >
+              <template v-slot:no-option>
+                <q-item>
+                  <q-item-section class="text-grey">
+                    No exite padre
+                  </q-item-section>
+                </q-item>
+              </template>
+            </q-select>
           </div>
           <div class="col-12 col-sm-4 q-pa-xs flex flex-center">
             <q-btn dense color="primary" icon="add_circle" label="DATOS PADRE/MADRE/TUTOR" @click="dialogpadre=true"/>
@@ -81,7 +99,7 @@
           </div>
         </div>
       </q-form>
-      <q-table  title="Estudiantes" :rows="estudiantes" :columns="columns"       :filter="filter" :rows-per-page-options="[50,100,200,0]">
+      <q-table dense  title="Estudiantes" :rows="estudiantes" :columns="columns"       :filter="filter" >
         <template v-slot:body-cell-curso="props">
           <q-td :props="props">
             {{props.row.curso.nombre}}
@@ -99,7 +117,21 @@
           </q-td>
         </template>
         <template v-slot:top-right>
-          <q-input outlined dense debounce="300" v-model="filter" placeholder="Buscar..">
+          <q-input outlined dense debounce="300" v-model="filter" placeholder="Buscar alumno">
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+        </template>
+      </q-table>
+      <q-table dense title="Alumnos por cursos" :rows="cantidadcursos" :columns="columnscursos" :filter="filercursos" >
+        <template v-slot:body-cell-nombre="props">
+          <q-td :props="props">
+            {{props.row.nombre}} {{props.row.paralelo}}
+          </q-td>
+        </template>
+        <template v-slot:top-right>
+          <q-input outlined dense debounce="300" v-model="filercursos" placeholder="Buscar curso">
             <template v-slot:append>
               <q-icon name="search" />
             </template>
@@ -119,12 +151,20 @@ export default {
       filter:'',
       dato:{ fechanac: date.formatDate(Date.now(),'YYYY-MM-DD')},
       padres:[],
+      padres2:[],
       padre:{},
       newpadre:{ expedido:'OR',fechanac: date.formatDate(Date.now(),'YYYY-MM-DD'),tipo:'PADRE'},
       dialogpadre:false,
       cursos:[],
       curso:{},
+      cantidadcursos:[],
       estudiantes:[],
+      filercursos:'',
+      columnscursos:[
+        { name: 'nombre', align: 'left', label: 'Curso', field: 'nombre', sortable: true, },
+        { name: 'cantidad', align: 'left', label: 'cantidad', field: 'cantidad', sortable: true, },
+        { name: 'opciones', align: 'left', label: 'opciones', field: 'opciones', sortable: true, },
+      ],
       columns: [
         {
           name: 'carnet',
@@ -160,6 +200,21 @@ export default {
     this.listado()
   },
   methods:{
+    filterFn (val, update) {
+      if (val === '') {
+        update(() => {
+          this.padres = this.padres
+          // here you have access to "ref" which
+          // is the Vue reference of the QSelect
+        })
+        return
+      }
+
+      update(() => {
+        const needle = val.toLowerCase()
+        this.padres =  this.padres2.filter(v => v.label.toLowerCase().indexOf(needle) > -1)
+      })
+    },
     imprimir(estudiante){
       console.log(estudiante)
       var myWindow = window.open("", "myWindow", "width=1200,height=500");
@@ -255,7 +310,7 @@ export default {
       this.$axios.post(process.env.API+'/padre',this.newpadre).then(res=>{
         this.newpadre={ expedido:'OR',fechanac: date.formatDate(Date.now(),'YYYY-MM-DD'),tipo:'PADRE'}
         this.mispadres()
-        this.$q.loading.hide()
+        // this.$q.loading.hide()
         this.dialogpadre=false
         this.$q.notify({
           message:"Padre tutor inscrito!!!",
@@ -272,13 +327,18 @@ export default {
       })
     },
     mispadres(){
-      this.$axios.get(process.env.API+'/padre').then(res=>{
+      this.$axios.get(process.env.API+'/estudiante/create').then(res=>{
+        // console.log(res.data)
+        this.cantidadcursos=res.data
+      })
+        this.$axios.get(process.env.API+'/padre').then(res=>{
         this.padres=[]
         res.data.forEach(r=>{
           let d= r
           d.label=r.nombres+' '+r.apellidos
           this.padres.push(d)
         })
+        this.padres2=this.padres
         this.padre=this.padres[0]
       })
     }

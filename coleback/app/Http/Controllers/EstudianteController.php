@@ -31,7 +31,7 @@ class EstudianteController extends Controller
      */
     public function create()
     {
-        //
+        return DB::select("select c.id,c.nombre,c.paralelo,count(*) as cantidad from cursos c INNER JOIN estudiantes e ON e.curso_id=c.id GROUP BY c.id,c.nombre,c.paralelo");
     }
 
     /**
@@ -109,9 +109,9 @@ class EstudianteController extends Controller
         //
         $estudiante=Estudiante::find($request->id);
         $estudiante->domicilio=$request->domicilio;
-        $estudiante->paterno=$request->paterno;
-        $estudiante->materno=$request->materno;
-        $estudiante->nombres=$request->nombres;
+        $estudiante->paterno=strtoupper($request->paterno);
+        $estudiante->materno=strtoupper($request->materno);
+        $estudiante->nombres=strtoupper($request->nombres);
         $estudiante->celular=$request->celular;
         $estudiante->fechanac=$request->fechanac;
         $estudiante->fecha=date('Y-m-d');
