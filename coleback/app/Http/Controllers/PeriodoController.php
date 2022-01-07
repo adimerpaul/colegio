@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Periodo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PeriodoController extends Controller
 {
@@ -15,6 +16,7 @@ class PeriodoController extends Controller
     public function index()
     {
         //
+        return Periodo::all();
     }
 
     /**
@@ -36,6 +38,22 @@ class PeriodoController extends Controller
     public function store(Request $request)
     {
         //
+        $res=Periodo::where('gestion',$request->gestion)->get();
+        if(sizeof($res)==0){
+            $periodo=new Periodo;
+            $periodo->gestion=$request->gestion;
+            $periodo->save();
+            $curmat=DB::table('curso_materia')->where('periodo_id',$periodo->id - 1);
+            foreach ($curmat as $row) {
+                DB::table('curso_materia')->insert([
+
+                    'curso_id'=>$row->curso_id,
+            'materia_id'=>$row->materia_id,
+            'profesor_id'=>$row->profesor_id,
+            'periodo_id'=>$periodo->id
+                ]);
+            }
+        }
     }
 
     /**
@@ -70,6 +88,11 @@ class PeriodoController extends Controller
     public function update(Request $request, Periodo $periodo)
     {
         //
+        DB::table('periodos')->update(['estado'=>'INACTIVO']);
+        $periodo=Periodo::find($request->id);
+        $periodo->estado='ACTIVO';
+        $periodo->save();
+
     }
 
     /**

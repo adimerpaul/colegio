@@ -17,6 +17,8 @@ class CreateCursoMateriaTable extends Migration
             $table->id();
             $table->unsignedBigInteger('curso_id');
             $table->foreign('curso_id')->references('id')->on('cursos');
+            $table->unsignedBigInteger('periodo_id');
+            $table->foreign('periodo_id')->references('id')->on('periodos');
             $table->unsignedBigInteger('materia_id');
             $table->foreign('materia_id')->references('id')->on('materias');
             $table->unsignedBigInteger('profesor_id');
