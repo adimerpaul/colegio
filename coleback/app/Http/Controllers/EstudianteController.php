@@ -31,7 +31,15 @@ class EstudianteController extends Controller
      */
     public function create()
     {
-        return DB::select("select c.id,c.nombre,c.paralelo,count(*) as cantidad from cursos c INNER JOIN estudiantes e ON e.curso_id=c.id GROUP BY c.id,c.nombre,c.paralelo");
+//        return DB::select("select c.id,c.nombre,c.paralelo,count(*) as cantidad from cursos c INNER JOIN estudiantes e ON e.curso_id=c.id GROUP BY c.id,c.nombre,c.paralelo");
+        return DB::select("
+                select c.id,c.nombre,c.paralelo,count(*) as cantidad , (
+        SELECT count(*) from estudiantes where curso_id=c.id AND sexo='M'
+        ) as m,(SELECT count(*) from estudiantes where curso_id=c.id AND sexo='F'
+        ) as f
+        from cursos c INNER JOIN estudiantes e ON e.curso_id=c.id
+        GROUP BY c.id,c.nombre,c.paralelo
+        ");
     }
 
     /**
@@ -50,6 +58,7 @@ class EstudianteController extends Controller
         $estudiante->materno=strtoupper($request->materno);
         $estudiante->nombres=strtoupper($request->nombres);
         $estudiante->celular=$request->celular;
+        $estudiante->sexo=$request->sexo;
         $estudiante->fechanac=$request->fechanac;
 //        $estudiante->tipo=$request->tipo;
         $estudiante->fecha=date('Y-m-d');
@@ -145,24 +154,36 @@ class EstudianteController extends Controller
         margin: 0px,
         border: 0px,
         }
-        </style><table><tr><td>
-        <div style='font-weight: bold;font-size: 12px;text-align: center'>BOLETA DE INSCRIPCION</div><hr>
-        <table style='border-collapse: collapse;border: 1px solid black'>
-        <tr><td>Familiar:</td><td>$datos->tnom $datos->apellidos</td></tr>
-        <tr><td>Correo:</td><td>$datos->email </td></tr>
-        <tr><td>Password:</td><td>$datos->tci </td></tr>
-        <tr><td>Estudiante:</td><td>$datos->nombres $datos->paterno $datos->materno </td></tr>
-        <tr><td>Curso:</td><td>$datos->curs $datos->paralelo </td></tr>
-        </table></td>
-        
+        </style>
+        <table>
+        <tr>
         <td>
         <div style='font-weight: bold;font-size: 12px;text-align: center'>BOLETA DE INSCRIPCION</div><hr>
-        <table style='border-collapse: collapse;border: 1px solid black'>
-        <tr><td>Familiar:</td><td>$datos->tnom $datos->apellidos</td></tr>
-        <tr><td>Correo:</td><td>$datos->email </td></tr>
-        <tr><td>Password:</td><td>$datos->tci </td></tr>
-        <tr><td>Estudiante:</td><td>$datos->nombres $datos->paterno $datos->materno </td></tr>
-        <tr><td>Curso:</td><td>$datos->curs $datos->paralelo </td></tr></td></tr>";
+            <table style='border-collapse: collapse;border: 1px solid black'>
+            <tr><td><b>Pagina de notas:</b></td><td>https://uesantarosa2.gq</td></tr>
+            <tr><td><b>Familiar:</b></td><td>$datos->tnom $datos->apellidos</td></tr>
+            <tr><td><b>Correo:</b></td><td>$datos->email </td></tr>
+            <tr><td><b>Password:</b></td><td>$datos->tci </td></tr>
+            <tr><td><b>Estudiante:</b></td><td>$datos->nombres $datos->paterno $datos->materno </td></tr>
+            <tr><td><b>Curso:</b></td><td>$datos->curs $datos->paralelo </td></tr></td></tr>
+            <tr><td><b>Consultas:</b></td><td>77159262 </td></tr>
+            </table>
+        </td>
+        <td>
+        <div style='font-weight: bold;font-size: 12px;text-align: center'>BOLETA DE INSCRIPCION</div><hr>
+            <table style='border-collapse: collapse;border: 1px solid black'>
+            <tr><td><b>Pagina de notas:</b></td><td>https://uesantarosa2.gq</td></tr>
+            <tr><td><b>Familiar:</b></td><td>$datos->tnom $datos->apellidos</td></tr>
+            <tr><td><b>Correo:</b></td><td>$datos->email </td></tr>
+            <tr><td><b>Password:</b></td><td>$datos->tci </td></tr>
+            <tr><td><b>Estudiante:</b></td><td>$datos->nombres $datos->paterno $datos->materno </td></tr>
+            <tr><td><b>Curso:</b></td><td>$datos->curs $datos->paralelo </td></tr></td></tr>
+            <tr><td><b>Consultas:</b></td><td>77159262 </td></tr>
+            </table>
+        </td>
+        </tr>
+        </table>";
+
         return $cadena;
     }
 }

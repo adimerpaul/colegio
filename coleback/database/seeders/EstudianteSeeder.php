@@ -30,7 +30,7 @@ class EstudianteSeeder extends Seeder
                 'estado'=>'ACTIVO',
                 'imagen'=>'user.png',
                 'curso_id'=>1,
-                'sexo'=>'MASCULINO'
+                'sexo'=>'M'
             ],
             [
                 'carnet'=>'2020',
@@ -47,7 +47,7 @@ class EstudianteSeeder extends Seeder
                 'estado'=>'ACTIVO',
                 'imagen'=>'user.png',
                 'curso_id'=>1,
-                'sexo'=>'MASCULINO'
+                'sexo'=>'M'
             ]
         ]);
     }

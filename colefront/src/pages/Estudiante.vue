@@ -40,6 +40,12 @@
   </q-dialog>
   <div class="row">
     <div class="col-12">
+<!--      <div class="text-h6"  color="primary" >Padre familia</div>-->
+      <q-badge color="primary" class="full-width text-center">
+        Padre de familia
+      </q-badge>
+    </div>
+    <div class="col-12">
       <q-form @submit.prevent="guardar">
         <div class="row">
           <div class="col-12 col-sm-8 q-pa-xs ">
@@ -65,6 +71,11 @@
           </div>
           <div class="col-12 col-sm-4 q-pa-xs flex flex-center">
             <q-btn dense color="primary" icon="add_circle" label="DATOS PADRE/MADRE/TUTOR" @click="dialogpadre=true"/>
+          </div>
+          <div class="col-12">
+            <q-badge color="primary" class="full-width text-center">
+              Datos estudiante
+            </q-badge>
           </div>
           <div class="col-12 col-sm-2 q-pa-xs ">
             <q-input dense outlined label="Carnet" v-model="dato.carnet" @keyup="buscarestudiante" />
@@ -134,6 +145,11 @@
             {{props.row.nombre}} {{props.row.paralelo}}
           </q-td>
         </template>
+        <template v-slot:body-cell-cantidad="props">
+          <q-td :props="props">
+            <q-badge :color="props.row.cantidad<10?'positive':props.row.cantidad<20?'warning':'negative'">{{props.row.cantidad}}</q-badge>
+          </q-td>
+        </template>
         <template v-slot:top-right>
           <q-input outlined dense debounce="300" v-model="filercursos" placeholder="Buscar curso">
             <template v-slot:append>
@@ -167,6 +183,8 @@ export default {
       columnscursos:[
         { name: 'nombre', align: 'left', label: 'Curso', field: 'nombre', sortable: true, },
         { name: 'cantidad', align: 'left', label: 'cantidad', field: 'cantidad', sortable: true, },
+        { name: 'm', align: 'left', label: 'Varon', field: 'm', sortable: true, },
+        { name: 'f', align: 'left', label: 'Mujer', field: 'f', sortable: true, },
         { name: 'opciones', align: 'left', label: 'opciones', field: 'opciones', sortable: true, },
       ],
       columns: [
@@ -189,7 +207,7 @@ export default {
   },
   created() {
     this.mispadres()
-    this.$q.loading.show()
+
     this.$axios.get(process.env.API+'/curso').then(res=>{
       this.cursos=[]
       res.data.forEach(r=>{
@@ -199,7 +217,7 @@ export default {
       })
       // console.log(this.cursos)
       this.curso=this.cursos[0]
-      this.$q.loading.hide()
+
     }),
     this.listado()
   },
@@ -220,28 +238,42 @@ export default {
       })
     },
     imprimir(estudiante){
-      console.log(estudiante)
-      var myWindow = window.open("", "myWindow", "width=1200,height=500");
-      myWindow.document.write("<style>" +
-        "*{" +
-        "padding: 0px," +
-        "margin: 0px," +
-        "border: 0px," +
-        "}" +
-        "</style><table><tr><td>" +
-        "<div style='font-weight: bold;font-size: 12px;text-align: center'>BOLETA DE INSCRIPCION</div><hr>" +
-        "<table style='border-collapse: collapse;border: 1px solid black'>" +
-        "<tr><td>Tutor:</td><td></td></tr>" +
-        "</table></td><td></td></tr>");
-      myWindow.document.close();
-      myWindow.focus();
-      myWindow.print();
-      myWindow.close();
+      // console.log(estudiante)
+      // var myWindow = window.open("", "myWindow", "width=1200,height=500");
+      // myWindow.document.write("<style>" +
+      //   "*{" +
+      //   "padding: 0px," +
+      //   "margin: 0px," +
+      //   "border: 0px," +
+      //   "}" +
+      //   "</style><table><tr><td>" +
+      //   "<div style='font-weight: bold;font-size: 12px;text-align: center'>BOLETA DE INSCRIPCION</div><hr>" +
+      //   "<table style='border-collapse: collapse;border: 1px solid black'>" +
+      //   "<tr><td>Tutor:</td><td></td></tr>" +
+      //   "</table></td><td></td></tr>");
+      // myWindow.document.close();
+      // myWindow.focus();
+      // myWindow.print();
+      // myWindow.close();
+      this.$axios.get(process.env.API+'/boleta/'+estudiante.id).then(res=>{
+        var myWindow = window.open("", "myWindow", "width=1200,height=500");
+        myWindow.document.write(res.data);
+        myWindow.document.close();
+        myWindow.focus();
+        myWindow.print();
+        myWindow.close();
+      })
     },
     listado(){
+      this.$q.loading.show()
       this.$axios.post(process.env.API+'/listado').then(res=>{
         this.estudiantes=res.data;
-        console.log(this.estudiantes)
+        this.$q.loading.hide()
+        // console.log(this.estudiantes)
+      })
+      this.$axios.get(process.env.API+'/estudiante/create').then(res=>{
+        // console.log(res.data)
+        this.cantidadcursos=res.data
       })
     },
     buscarestudiante(){
@@ -269,10 +301,11 @@ export default {
       if(this.dato.id>0)
       {
       this.$axios.put(process.env.API+'/estudiante/'+this.dato.id,this.dato).then(res=>{
+        // console.log(res.data)
         this.dato={ fechanac: date.formatDate(Date.now(),'YYYY-MM-DD'),tipo:'PADRE'}
         // this.mispadres()
         this.listado()
-        this.$q.loading.hide()
+        // this.$q.loading.hide()
         // this.dialogpadre=false
         this.$q.notify({
           message:"Estudiante modificado!!!",
@@ -294,7 +327,7 @@ export default {
         this.dato={ fechanac: date.formatDate(Date.now(),'YYYY-MM-DD'),tipo:'PADRE'}
         // this.mispadres()
         this.listado()
-        this.$q.loading.hide()
+        // this.$q.loading.hide()
         // this.dialogpadre=false
         this.$q.notify({
           message:"Estudiante inscrito!!!",
@@ -316,7 +349,7 @@ export default {
       this.$axios.post(process.env.API+'/padre',this.newpadre).then(res=>{
         this.newpadre={ expedido:'OR',fechanac: date.formatDate(Date.now(),'YYYY-MM-DD'),tipo:'PADRE'}
         this.mispadres()
-        // this.$q.loading.hide()
+        this.$q.loading.hide()
         this.dialogpadre=false
         this.$q.notify({
           message:"Padre tutor inscrito!!!",
@@ -333,10 +366,7 @@ export default {
       })
     },
     mispadres(){
-      this.$axios.get(process.env.API+'/estudiante/create').then(res=>{
-        // console.log(res.data)
-        this.cantidadcursos=res.data
-      })
+
         this.$axios.get(process.env.API+'/padre').then(res=>{
         this.padres=[]
         res.data.forEach(r=>{
