@@ -33,9 +33,9 @@ class PadreController extends Controller
         $user->carnet=$request->carnet;
         $user->expedido=$request->expedido;
         $user->fechanac=$request->fechanac;
-        $user->email=$request->email;
+        $user->email=substr(strtoupper($request->nombres),0,1) . str_replace(' ','',strtoupper($request->apellidos)) .'@santarosa2.com';
         $user->fechalimite=date('Y-m-d', strtotime(date("Y-m-d"). ' + 350 days'));;
-        $user->password=Hash::make('123456');
+        $user->password=Hash::make($request->carnet);
         $user->save();
 
 //        $user->tipo=$request->tipo;

@@ -24,9 +24,7 @@
             <div class="col-12 col-sm-2 q-pa-xs ">
               <q-input dense outlined label="Fecha nacimiento" type="date" v-model="newpadre.fechanac" />
             </div>
-            <div class="col-12 col-sm-2 q-pa-xs ">
-              <q-input dense outlined label="email" v-model="newpadre.email" />
-            </div>
+
             <div class="col-12 col-sm-12 q-pa-xs ">
               <q-card-actions align="right" class="bg-white text-teal">
                 <q-btn type="submit" dense icon="send" label="Crear" color="positive"/>
@@ -84,10 +82,16 @@
             <q-input dense outlined label="Nombres" v-model="dato.nombres" style="text-transform: uppercase" />
           </div>
           <div class="col-12 col-sm-2 q-pa-xs ">
+              <q-select dense outlined label="Genero" v-model="dato.sexo" :options="['F','M']" />
+          </div>
+          <div class="col-12 col-sm-2 q-pa-xs ">
             <q-input dense outlined label="Celular" v-model="dato.celular" />
           </div>
           <div class="col-12 col-sm-2 q-pa-xs ">
             <q-input dense outlined label="Fecha nacimiento" type="date" v-model="dato.fechanac" />
+          </div>
+          <div class="col-12 col-sm-2 q-pa-xs ">
+            <q-input dense outlined label="RUDE" type="text" v-model="dato.rude" />
           </div>
 
           <div class="col-12 col-sm-3 q-pa-xs ">
@@ -224,11 +228,11 @@ export default {
         "margin: 0px," +
         "border: 0px," +
         "}" +
-        "</style>" +
+        "</style><table><tr><td>" +
         "<div style='font-weight: bold;font-size: 12px;text-align: center'>BOLETA DE INSCRIPCION</div><hr>" +
         "<table style='border-collapse: collapse;border: 1px solid black'>" +
-        "<tr></tr>" +
-        "</table>");
+        "<tr><td>Tutor:</td><td></td></tr>" +
+        "</table></td><td></td></tr>");
       myWindow.document.close();
       myWindow.focus();
       myWindow.print();
@@ -251,6 +255,8 @@ export default {
           this.dato.celular=res.data.celular
           this.dato.fechanac=res.data.fechanac
           this.dato.domicilio=res.data.domicilio
+          this.dato.rude=res.data.rude
+          this.dato.sexo=res.data.sexo
         }
         else {this.dato={carnet:this.dato.carnet, fechanac: date.formatDate(Date.now(),'YYYY-MM-DD')}}
         // console.log(res.data)

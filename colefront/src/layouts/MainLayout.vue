@@ -41,6 +41,7 @@
         <q-list padding>
           <q-item
             clickable
+            active-class="my-menu-link"
             exact
             to="/"
             v-if="!$store.getters['login/isLoggedIn']"
@@ -63,6 +64,7 @@
             v-if="$store.state.login.boolgestionarusuarios"
             clickable
             to="/user"
+            active-class="my-menu-link"
           >
             <q-item-section
               avatar
@@ -82,6 +84,7 @@
             v-if="$store.state.login.boolgestionarprofesores"
             clickable
             to="/profesor"
+            active-class="my-menu-link"
           >
             <q-item-section
               avatar
@@ -101,6 +104,7 @@
             v-if="$store.state.login.boolgestionarcursos"
             clickable
             to="/curso"
+            active-class="my-menu-link"
           >
             <q-item-section
               avatar
@@ -120,6 +124,7 @@
             v-if="$store.state.login.boolgestionarmaterias"
             clickable
             to="/materia"
+            active-class="my-menu-link"
           >
             <q-item-section
               avatar
@@ -139,6 +144,7 @@
             v-if="$store.state.login.boolgestionarbiblioteca"
             clickable
             to="/biblioteca"
+            active-class="my-menu-link"
           >
             <q-item-section
               avatar
@@ -160,6 +166,7 @@
             v-if="$store.state.login.boolgestionargestion"
             clickable
             to="/gestion"
+            active-class="my-menu-link"
           >
             <q-item-section
               avatar
@@ -179,6 +186,7 @@
             v-if="$store.state.login.boolinscripbirestudiante"
             clickable
             to="/estudiante"
+            active-class="my-menu-link"
           >
             <q-item-section
               avatar
@@ -198,6 +206,7 @@
             v-if="$store.state.login.boolinformeinscritos"
             clickable
             to="/inscritos"
+            active-class="my-menu-link"
           >
             <q-item-section
               avatar
@@ -217,6 +226,7 @@
             v-if="$store.state.login.boolgestionarcalificaciones"
             clickable
             to="/calificaciones"
+            active-class="my-menu-link"
           >
             <q-item-section
               avatar
@@ -315,4 +325,9 @@ export default {
   opacity: 0.2;
   filter: grayscale(100%);
 }
+</style>
+<style lang="sass">
+.my-menu-link
+  color: white
+  background: #21BA45
 </style>

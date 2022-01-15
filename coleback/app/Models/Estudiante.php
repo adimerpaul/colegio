@@ -16,6 +16,7 @@ class Estudiante extends Model
         'nombres',
         'celular',
         'fechanac',
+        'sexo',
         'tipo',
         'fecha',
         'estado',
@@ -29,4 +30,6 @@ class Estudiante extends Model
     public function curso(){
         return $this->belongsTo(Curso::class);
     }
+
+
 }

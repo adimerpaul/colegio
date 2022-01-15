@@ -136,4 +136,33 @@ class EstudianteController extends Controller
     {
         //
     }
+
+    public function boleta($id){
+        $datos= DB::SELECT("SELECT e.carnet,e.nombres,e.paterno,e.materno,u.nombres as tnom,u.apellidos,u.email,u.carnet as tci,c.nombre as curs,c.paralelo  From estudiantes e inner join estudiante_user es on e.id=es.estudiante_id inner join users u on u.id=es.user_id inner join cursos c on e.curso_id=c.id where e.id=$id")[0];
+        $cadena="<style>
+        *{
+        padding: 0px,
+        margin: 0px,
+        border: 0px,
+        }
+        </style><table><tr><td>
+        <div style='font-weight: bold;font-size: 12px;text-align: center'>BOLETA DE INSCRIPCION</div><hr>
+        <table style='border-collapse: collapse;border: 1px solid black'>
+        <tr><td>Familiar:</td><td>$datos->tnom $datos->apellidos</td></tr>
+        <tr><td>Correo:</td><td>$datos->email </td></tr>
+        <tr><td>Password:</td><td>$datos->tci </td></tr>
+        <tr><td>Estudiante:</td><td>$datos->nombres $datos->paterno $datos->materno </td></tr>
+        <tr><td>Curso:</td><td>$datos->curs $datos->paralelo </td></tr>
+        </table></td>
+        
+        <td>
+        <div style='font-weight: bold;font-size: 12px;text-align: center'>BOLETA DE INSCRIPCION</div><hr>
+        <table style='border-collapse: collapse;border: 1px solid black'>
+        <tr><td>Familiar:</td><td>$datos->tnom $datos->apellidos</td></tr>
+        <tr><td>Correo:</td><td>$datos->email </td></tr>
+        <tr><td>Password:</td><td>$datos->tci </td></tr>
+        <tr><td>Estudiante:</td><td>$datos->nombres $datos->paterno $datos->materno </td></tr>
+        <tr><td>Curso:</td><td>$datos->curs $datos->paralelo </td></tr></td></tr>";
+        return $cadena;
+    }
 }

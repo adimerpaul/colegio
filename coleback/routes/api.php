@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login',[\App\Http\Controllers\UserController::class,'login']);
 Route::post('/register',[\App\Http\Controllers\UserController::class,'register']);
 Route::resource('/unit',\App\Http\Controllers\UnitController::class);
+Route::get('/boleta/{id}',[\App\Http\Controllers\EstudianteController::class,'boleta']);
+
 Route::group(['middleware'=>'auth:sanctum'],function (){
     Route::post('/logout',[\App\Http\Controllers\UserController::class,'logout']);
     Route::post('/me',[\App\Http\Controllers\UserController::class,'me']);
