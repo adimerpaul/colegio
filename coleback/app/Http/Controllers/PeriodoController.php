@@ -43,11 +43,11 @@ class PeriodoController extends Controller
             $periodo=new Periodo;
             $periodo->gestion=$request->gestion;
             $periodo->save();
-            $curmat=DB::table('curso_materia')->where('periodo_id',$periodo->id - 1);
+            $curmat=DB::table('curso_materia')->where('periodo_id',intval($periodo->id) - 1);
             foreach ($curmat as $row) {
                 DB::table('curso_materia')->insert([
 
-                    'curso_id'=>$row->curso_id,
+            'curso_id'=>$row->curso_id,
             'materia_id'=>$row->materia_id,
             'profesor_id'=>$row->profesor_id,
             'periodo_id'=>$periodo->id
