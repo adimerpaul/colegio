@@ -40,15 +40,23 @@ class LibroController extends Controller
 
 
         $nombreArchivo='';
+        if ($request->hasFile('archivo')) {
+            $file=$request->file('archivo');
+            $nombreArchivo = $file->getClientOriginalName();
+            $file->move(\public_path('archivos'), $nombreArchivo);
+        }
+
         if ($request->hasFile('imagen')) {
             $file=$request->file('imagen');
-            $nombreArchivo = $file->getClientOriginalName();
-            $file->move(\public_path('imagenes'), $nombreArchivo);
+            $nombreimagen = $file->getClientOriginalName();
+            $file->move(\public_path('imagenes'), $nombreimagen);
         }
+
         $libro=new Libro;
         $libro->titulo=$request->titulo;
         $libro->autor=$request->autor;
         $libro->archivo=$nombreArchivo;
+        $libro->imagen=$nombreimagen;
         $libro->editorial=$request->editorial;
         $libro->fecha=date('Y-m-d');
         $libro->materia_id=$request->materia_id;
@@ -57,15 +65,28 @@ class LibroController extends Controller
 
     public function uparchivo(Request $request){
         $nombreArchivo='';
+        if ($request->hasFile('archivo')) {
+            $file=$request->file('archivo');
+            $nombreArchivo = $file->getClientOriginalName();
+            $file->move(\public_path('archivos'), $nombreArchivo);
+        }
+        $libro=Libro::find($request->id);
+        $libro->archivo=$nombreArchivo;
+        $libro->save();
+     }
+     
+    public function upimagen(Request $request){
+        $nombreArchivo='';
         if ($request->hasFile('imagen')) {
             $file=$request->file('imagen');
             $nombreArchivo = $file->getClientOriginalName();
             $file->move(\public_path('imagenes'), $nombreArchivo);
         }
         $libro=Libro::find($request->id);
-        $libro->archivo=$nombreArchivo;
+        $libro->imagen=$nombreArchivo;
         $libro->save();
      }
+
     /**
      * Display the specified resource.
      *

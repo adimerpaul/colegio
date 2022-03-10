@@ -11,6 +11,7 @@ import Estudiante from "pages/Estudiante";
 import Inscritos from "pages/Inscritos";
 import Calificaiones from "pages/Calificaiones";
 import Gestion from "pages/Gestion";
+import Inicio from "pages/Index";
 
 const routes = [
   {
@@ -19,6 +20,7 @@ const routes = [
     children: [
       { path: '', component: Login },
 
+      { path: '/inicio', component: Inicio,meta: {requiresAuth: true,} },
       { path: '/user', component: User,meta: {requiresAuth: true,} },
       { path: '/biblioteca', component: Biblioteca,meta: {requiresAuth: true,} },
       { path: '/estudiante', component: Estudiante,meta: {requiresAuth: true,} },

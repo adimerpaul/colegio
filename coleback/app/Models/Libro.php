@@ -13,6 +13,7 @@ class Libro extends Model
     'autor',
     'editorial',
     'archivo',
+    'imagen',
     'fecha',
     'materia_id'];
 

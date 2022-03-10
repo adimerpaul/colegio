@@ -50,8 +50,14 @@
               </div>
             <q-select outlined  v-model="materia" :options="materias" label="Materia" required/>
             </div>
-
+            <div class="col-6 ">
+              <label for="">ARCHIVO</label><br>
+              <input type="file" @change="getArch" >
+            </div>
+            <div class="col-6">
+            <label for="">IMAGEN</label>
             <input type="file" @change="getImage" >
+            </div>
             <div>
               <q-btn label="Crear" type="submit" color="positive" icon="add_circle"/>
                 <q-btn  label="Cancelar" icon="delete" color="negative" v-close-popup />
@@ -81,7 +87,12 @@
 
       <template v-slot:body-cell-archivo="props">
         <q-td key="archivo" :props="props">
-          <a :href="url+'/../imagenes/'+props.row.archivo" target="_blank">{{props.row.archivo}}</a>
+          <a :href="url+'/../archivos/'+props.row.archivo" target="_blank">{{props.row.archivo}}</a>
+        </q-td>
+      </template>
+      <template v-slot:body-cell-imagen="props">
+        <q-td key="imagen" :props="props" style="  display: flex; height: 80px; justify-content: center;">
+          <div style="width:80px;height:80px;display: block;"><q-img :src="url+'/../imagenes/'+props.row.imagen"  /></div>
         </q-td>
       </template>
       <template v-slot:body-cell-opcion="props">
@@ -89,6 +100,7 @@
             <q-btn-group>
               <q-btn dense round flat color="yellow" @click="editRow(props)" icon="edit"></q-btn>
               <q-btn dense round flat color="accent" @click="archRow(props)" icon="upload_file"></q-btn>
+              <q-btn dense round flat color="accent" @click="imgRow(props)" icon="image"></q-btn>
               <q-btn dense round flat color="red" @click="deleteRow(props)" icon="delete"></q-btn>
             </q-btn-group>
           </q-td>
@@ -166,6 +178,28 @@
             @submit="onArch"
             class="q-gutter-md"
           >
+            <input type="file" @change="getArch" >
+
+            <div>
+<br>
+              <q-btn label="Modificar" type="submit" color="positive" icon="add_circle"/>
+                <q-btn  label="Cancelar" icon="delete" color="negative" v-close-popup />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
+        <q-dialog v-model="dialog_img">
+      <q-card>
+        <q-card-section class="bg-amber-14 text-white">
+          <div class="text-h6">Imagen Subir</div>
+        </q-card-section>
+        <q-card-section class="q-pt-xs">
+          <q-form
+            @submit="onImg"
+            class="q-gutter-md"
+          >
             <input type="file" @change="getImage" >
 
             <div>
@@ -204,6 +238,7 @@ export default {
     return {
       url:process.env.API,
       imagen : null,
+      archivo : null,
       fecha:{
         inicio:date.formatDate(Date.now(),'YYYY-MM-DD'),
         fin:date.formatDate(Date.now(),'YYYY-MM-DD'),
@@ -213,6 +248,7 @@ export default {
       dialog_del:false,
       dialog_ver:false,
       dialog_arch:false,
+      dialog_img:false,
       boolmod:false,
       filter:'',
       filter2:'',
@@ -229,6 +265,7 @@ export default {
         {name: 'autor', label: 'AUTOR', align: 'left', field: 'autor', sortable: true},
         { name: 'editorial', align: 'center', label: 'EDITORIAL', field: 'editorial', sortable: true },
         { name: 'archivo', align: 'center', label: 'ARCHIVO', field: 'archivo', sortable: true },
+        { name: 'imagen', align: 'center', label: 'IMAGEN', field: 'imagen', sortable: true },
         { name: 'materia', align: 'center', label: 'MATERIA', field: row=>row.materia.nombre, sortable: true },
         { name: 'opcion', label: 'OPCION', field:'opcion'}
 
@@ -261,6 +298,11 @@ export default {
       // console.log(event.target)
       this.imagen = event.target.files[0];
     },
+    getArch(event){
+      //Asignamos la imagen a  nuestra data
+      // console.log(event.target)
+      this.archivo = event.target.files[0];
+    },
     misdatos(){
       this.$q.loading.show();
         this.$axios.get(process.env.API+'/libro').then(res=>{
@@ -286,6 +328,12 @@ export default {
         this.dato2= props.row;
         this.dialog_arch=true;
     },
+            imgRow(props){
+        // console.log(categoria.row);
+        this.onReset()
+        this.dato2= props.row;
+        this.dialog_img=true;
+    },
     verRow(categoria){
         this.dato2= categoria.row;
         // console.log(categoria.row);
@@ -303,7 +351,8 @@ export default {
 
       this.$q.loading.show();
       var data = new  FormData();
-      data.append('archivo', this.dato.titulo);
+      data.append('archivo', this.archivo);
+      data.append('imagen', this.imagen);
       data.append('titulo', this.dato.titulo);
       data.append('autor', this.dato.autor);
       data.append('editorial', this.dato.editorial);
@@ -339,9 +388,26 @@ export default {
            var data2 = new  FormData();
 
           data2.append('id', this.dato2.id);
-          data2.append('archivo', this.dato2.titulo);
-          data2.append('imagen', this.imagen);
+          data2.append('titulo', this.dato2.titulo);
+          data2.append('archivo', this.archivo);
           this.$axios.post(process.env.API+'/uparchivo', data2).then(res=>{
+                     this.$q.notify({
+          color: 'green-4',
+          textColor: 'white',
+          icon: 'cloud_done',
+          message: 'Modificado correctamente'
+        });
+        this.misdatos();
+        this.dialog_arch=false;
+          })
+    },
+        onImg(){
+           var data2 = new  FormData();
+
+          data2.append('id', this.dato2.id);
+          data2.append('titulo', this.dato2.titulo);
+          data2.append('imagen', this.imagen);
+          this.$axios.post(process.env.API+'/upimagen', data2).then(res=>{
                      this.$q.notify({
           color: 'green-4',
           textColor: 'white',
