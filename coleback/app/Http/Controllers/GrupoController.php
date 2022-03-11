@@ -14,7 +14,7 @@ class GrupoController extends Controller
      */
     public function index()
     {
-        return Grupo::all();
+        return Grupo::with('materias')->get();
     }
 
     /**

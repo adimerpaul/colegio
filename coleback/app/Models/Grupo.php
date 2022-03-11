@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Grupo extends Model
 {
     use HasFactory;
+    protected $fillable=[
+        'nombre',
+        'color',
+    ];
+
+    public function materias(){
+        return $this->hasMany(Materia::class);
+    }
+
 }

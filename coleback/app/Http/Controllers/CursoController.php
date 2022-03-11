@@ -105,4 +105,8 @@ class CursoController extends Controller
         DB::table('curso_materia')->insert([["curso_id"=>$request->curso_id],["materia_id"=>$request->materia_id],["profesor_id"=>$request->user_id]]);
     }
 
+    public function listestudiante(Request $request){
+        return DB::SELECT("SELECT e.* FROM curso_estudiante ce inner join estudiantes e on ce.estudiante_id=e.id where ce.periodo_id=(select p.id from periodos p where p.estado='ACTIVO') and ce.curso_id=$request->curso_id");
+    }
+
 }
