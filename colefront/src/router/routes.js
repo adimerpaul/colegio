@@ -6,6 +6,7 @@ import Materia from "pages/Materia";
 import Curso from "pages/Curso";
 // import Asignacion from "pages/Asignacion";
 // import Misrecepciones from "pages/Misrecepciones";
+import Libro from "pages/Libro";
 import Biblioteca from "pages/Biblioteca";
 import Estudiante from "pages/Estudiante";
 import Inscritos from "pages/Inscritos";
@@ -23,6 +24,7 @@ const routes = [
       { path: '/inicio', component: Inicio,meta: {requiresAuth: true,} },
       { path: '/user', component: User,meta: {requiresAuth: true,} },
       { path: '/biblioteca', component: Biblioteca,meta: {requiresAuth: true,} },
+      { path: '/libro', component: Libro,meta: {requiresAuth: true,} },
       { path: '/estudiante', component: Estudiante,meta: {requiresAuth: true,} },
       { path: '/profesor', component: Profesor,meta: {requiresAuth: true,} },
       { path: '/materia', component: Materia,meta: {requiresAuth: true,} },

@@ -162,6 +162,25 @@
           <q-item
             v-if="$store.state.login.boolgestionarbiblioteca"
             clickable
+            to="/libro"
+            active-class="my-menu-link"
+          >
+            <q-item-section
+              avatar
+            >
+              <q-icon name="picture_as_pdf" />
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label>Libros</q-item-label>
+              <q-item-label caption>
+                Listado
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item
+            clickable
             to="/biblioteca"
             active-class="my-menu-link"
           >
@@ -178,8 +197,6 @@
               </q-item-label>
             </q-item-section>
           </q-item>
-
-
 
           <q-item
             v-if="$store.state.login.boolgestionargestion"
