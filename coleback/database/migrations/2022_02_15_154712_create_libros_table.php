@@ -21,6 +21,8 @@ class CreateLibrosTable extends Migration
             $table->string('archivo');
             $table->string('imagen');
             $table->date('fecha');
+            $table->unsignedBigInteger('curso_id');
+            $table->foreign('curso_id')->references('id')->on('cursos');
             $table->unsignedBigInteger('materia_id');
             $table->foreign('materia_id')->references('id')->on('materias');
             $table->timestamps();

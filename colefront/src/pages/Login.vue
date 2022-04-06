@@ -96,13 +96,7 @@
                       </template>
                     </q-input>
                   </div>
-                  <div class="col-12 q-pt-md">
-                    <q-select use-input @filter="filterFn" outlined v-model="user.unit" label="Unidad*" :options="units" option-label="nombre"  hint="Porfavor ingresar unidad"  >
-                      <template v-slot:prepend>
-                        <q-icon name="home" />
-                      </template>
-                    </q-select>
-                  </div>
+
 <!--                  <div class="col-12">-->
 <!--                    <q-input outlined v-model="user.direccion" label="Direccion*" hint="Direccion de donde vives" :rules="rule">-->
 <!--                      <template v-slot:prepend>-->
@@ -142,8 +136,6 @@ export default {
       tab:'login',
       user:{},
       isPwd:true,
-      units:[],
-      units2:[],
     }
   },
   created() {
@@ -151,44 +143,12 @@ export default {
       this.$router.push('/biblioteca')
     }
 
-    // this.$q.loading.show()
-    // this.$axios.get(process.env.API+'/unit').then(res=>{
-    //   this.units=res.data
-    //   this.units2=res.data
-    //   // this.user.unit=res.data[0]
-    //   this.$q.loading.hide()
-    // })
-
   },
   methods: {
-    filterFn (val, update) {
-      if (val === '') {
-        update(() => {
-          this.units = this.units2
 
-          // here you have access to "ref" which
-          // is the Vue reference of the QSelect
-        })
-        return
-      }
-
-      update(() => {
-        const needle = val.toLowerCase()
-        this.units = this.units2.filter(v => v.nombre.toLowerCase().indexOf(needle) > -1)
-      })
-    },
     registrar(){
-      // console.log(this.user.unit_id)
-      if (this.user.unit=='' || this.user.unit==undefined){
-        this.$q.notify({
-          message:'Debes seleccionar unidad',
-          color:'red',
-          icon:'error'
-        })
-        return false
-      }
+
       this.$q.loading.show()
-      this.user.unit_id=this.user.unit.id
       this.$store.dispatch('login/register', this.user).then(() =>{
         this.$q.loading.hide()
         this.$router.push('/biblioteca')

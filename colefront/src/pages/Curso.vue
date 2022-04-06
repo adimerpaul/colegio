@@ -153,7 +153,6 @@ export default {
         { name: "opcion", align:"center",label: "OPCIÓN", field: "action", sortable: false },
       ],
       data: [],
-      units:[]
     };
   },
   created() {

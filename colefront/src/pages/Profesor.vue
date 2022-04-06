@@ -168,7 +168,6 @@ export default {
         { name: "opcion", label: "OPCIÓN", field: "action", sortable: false },
       ],
       data: [],
-      units:[]
     };
   },
   created() {
@@ -176,9 +175,7 @@ export default {
     //   // this.router.push('/')
     // }
     this.misdatos();
-    this.$axios.get(process.env.API+'/unit').then(res=>{
-      this.units=res.data
-    })
+
     this.$axios.get(process.env.API+'/permiso').then(res=>{
       res.data.forEach(r=>{
         this.permisos.push({id:r.id,nombre:r.nombre,estado:false})
@@ -241,14 +238,7 @@ export default {
     },
 
     onMod() {
-      if (this.dato2.unit=='' || this.dato2.unit==undefined){
-        this.$q.notify({
-          message:'Debeser seleccionar unidad',
-          color:'red',
-          icon:'error'
-        })
-        return false
-      }
+
 
       this.$q.loading.show();
       this.$axios.put(process.env.API + "/user/" + this.dato2.id, {
@@ -257,7 +247,6 @@ export default {
         // name:this.dato2.name,
         email:this.dato2.email,
         carnet:this.dato2.carnet,
-        unit_id:this.dato2.unit.id,
         celular:this.dato2.celular,
         tipo:this.dato2.tipo,
         fechalimite:this.dato2.fechalimite,
