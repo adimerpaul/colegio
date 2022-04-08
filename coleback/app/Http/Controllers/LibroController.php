@@ -15,7 +15,7 @@ class LibroController extends Controller
     public function index()
     {
         //
-        return Libro::with('materia')->get();
+        return Libro::with('materia')->with('curso')->get();
     }
 
     /**
@@ -60,6 +60,7 @@ class LibroController extends Controller
         $libro->editorial=$request->editorial;
         $libro->fecha=date('Y-m-d');
         $libro->materia_id=$request->materia_id;
+        $libro->curso_id=$request->curso_id;
         $libro->save();
     }
 
@@ -119,11 +120,12 @@ class LibroController extends Controller
     public function update(Request $request, Libro $libro)
     {
         //
-        $libro= Libr::find($request->id);
+        $libro= Libro::find($request->id);
         $libro->titulo=$request->titulo;
         $libro->autor=$request->autor;
         $libro->editorial=$request->editorial;
         $libro->materia_id=$request->materia_id;
+        $libro->curso_id=$request->curso_id;
         $libro->save();
     }
 

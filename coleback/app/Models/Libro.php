@@ -15,9 +15,14 @@ class Libro extends Model
     'archivo',
     'imagen',
     'fecha',
+    'curso_id',
     'materia_id'];
 
     public function materia(){
         return $this->belongsTo(Materia::class);
+    }
+
+    public function curso(){
+        return $this->belongsTo(Curso::class);
     }
 }

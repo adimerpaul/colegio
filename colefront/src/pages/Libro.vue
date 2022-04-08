@@ -49,6 +49,7 @@
               />
               </div>
             <q-select outlined  v-model="materia" :options="materias" label="Materia" required/>
+            <q-select outlined  v-model="curso" :options="cursos" label="Curso" required/>
             </div>
             <div class="col-6 ">
               <label for="">ARCHIVO</label><br>
@@ -155,6 +156,7 @@
               />
               </div>
             <q-select outlined  v-model="materia" :options="materias" label="Materia" required/>
+            <q-select outlined  v-model="curso" :options="cursos" label="Curso" required/>
 
             </div>
 
@@ -260,6 +262,8 @@ export default {
       subcat:[],
       materias:[],
       materia:{},
+            cursos:[],
+      curso:{},
       columns: [
         {name: 'titulo', label: 'TITULO', align: 'left', field: 'titulo', sortable: true},
         {name: 'autor', label: 'AUTOR', align: 'left', field: 'autor', sortable: true},
@@ -267,6 +271,7 @@ export default {
         { name: 'archivo', align: 'center', label: 'ARCHIVO', field: 'archivo', sortable: true },
         { name: 'imagen', align: 'center', label: 'IMAGEN', field: 'imagen', sortable: true },
         { name: 'materia', align: 'center', label: 'MATERIA', field: row=>row.materia.nombre, sortable: true },
+        { name: 'curso', align: 'center', label: 'CURSO', field: row=>row.curso.nombre+' '+row.curso.paralelo, sortable: true },
         { name: 'opcion', label: 'OPCION', field:'opcion'}
 
       ],
@@ -279,6 +284,7 @@ export default {
   created() {
       this.mismaterias();
     this.misdatos();
+    this.miscursos();
 
   },
   methods:{
@@ -290,6 +296,16 @@ export default {
                 this.materias.push({label:r.nombre,r});
             });
             this.materia=this.materias[0]
+        })
+
+      },
+            miscursos(){
+          this.cursos=[]
+        this.$axios.get(process.env.API+'/curso').then(res=>{
+            res.data.forEach(r => {
+                this.cursos.push({label:r.nombre+' '+r.paralelo,r});
+            });
+            this.curso=this.cursos[0]
         })
 
       },
@@ -320,6 +336,7 @@ export default {
         this.boolmod=false;
         this.dato2= props.row;
         this.materia={label:this.dato2.materia.nombre,r:this.dato2.materia}
+        this.curso={label:this.dato2.curso.nombre+' '+this.dato2.curso.paralelo,r:this.dato2.curso}
         this.dialog_mod=true;
     },
         archRow(props){
@@ -357,6 +374,7 @@ export default {
       data.append('autor', this.dato.autor);
       data.append('editorial', this.dato.editorial);
       data.append('materia_id', this.materia.r.id);
+      data.append('curso_id', this.curso.r.id);
 
       this.$axios.post(process.env.API+'/libro', data).then(res=>{
         this.$q.notify({
@@ -373,6 +391,7 @@ export default {
     onMod(){
         this.$q.loading.show();
         this.dato2.materia_id=this.materia.r.id;
+        this.dato2.curso_id=this.curso.r.id;
         this.$axios.put(process.env.API+'/libro/'+this.dato2.id,this.dato2).then(res=>{
          this.$q.notify({
           color: 'green-4',

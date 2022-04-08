@@ -1,7 +1,12 @@
 <template>
     <div class="q-pa-md">
     <div class="text-h4" align="center">BIBLIOTECA</div >
-
+    <div class="row">
+    <div class="col-3"> <q-select  outlined v-model="curso" :options="cursos" label="Curso" /></div>
+    <div class="col-3"> <q-select  outlined v-model="materia" :options="materias" label="Materia" /></div>
+    <div class="col-3">  <q-btn color="info" icon="search" label="Buscar" @click="buscar"/>
+    </div>
+    </div>
     <div class="row"  >
     <q-card  class="my-card" style="width:200px;height:200px;margin:5px"  v-for="r in data" :key="r">
       <q-img :src="url+'/../imagenes/'+r.imagen" style="width:200px;height:200px;" @click="descargar(r)">
@@ -30,6 +35,8 @@ export default {
       subcat:[],
       materias:[],
       materia:{},
+      cursos:[],
+      curso:{},
       libro:{},
       data: [
       ],
@@ -39,7 +46,7 @@ export default {
   },
   created() {
       this.mismaterias();
-        this.misdatos();
+      this.miscursos();
 
   },
   methods:{
@@ -58,7 +65,16 @@ export default {
         })
 
       },
+      miscursos(){
+          this.cursos=[]
+        this.$axios.get(process.env.API+'/curso').then(res=>{
+            res.data.forEach(r => {
+                this.cursos.push({label:r.nombre + ' '+r.paralelo,r});
+            });
+            this.curso=this.cursos[0]
+        })
 
+      },
     misdatos(){
       this.$q.loading.show();
         this.$axios.get(process.env.API+'/libro').then(res=>{
@@ -67,6 +83,10 @@ export default {
           this.$q.loading.hide();
         })
     },
+
+    buscar(){
+
+    }
 
 
   },
