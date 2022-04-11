@@ -7,6 +7,7 @@
     <div class="col-3">  <q-btn color="info" icon="search" label="Buscar" @click="buscar"/>
     </div>
     </div>
+    <br>
     <div class="row"  >
     <q-card  class="my-card" style="width:200px;height:200px;margin:5px"  v-for="r in data" :key="r">
       <q-img :src="url+'/../imagenes/'+r.imagen" style="width:200px;height:200px;" @click="descargar(r)">
