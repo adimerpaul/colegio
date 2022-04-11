@@ -27,8 +27,6 @@ export default {
   data () {
     return {
       url:process.env.API,
-      dato:{fondo:'APMT',gestion:date.formatDate(Date.now(),'YYYY'),tomo:'1',numtotal:'1'},
-      dato2:{},
       subc:{},
       modprod:{},
       cat:[],
@@ -38,10 +36,8 @@ export default {
       cursos:[],
       curso:{},
       libro:{},
-      data: [
-      ],
-      prod2: [
-      ]
+      data: [],
+      prod2: []
     }
   },
   created() {
@@ -59,7 +55,8 @@ export default {
           this.materias=[]
         this.$axios.get(process.env.API+'/materia').then(res=>{
             res.data.forEach(r => {
-                this.materias.push({label:r.nombre,r});
+                r.label=r.nombre;
+                this.materias.push(r);
             });
             this.materia=this.materias[0]
         })
@@ -69,7 +66,8 @@ export default {
           this.cursos=[]
         this.$axios.get(process.env.API+'/curso').then(res=>{
             res.data.forEach(r => {
-                this.cursos.push({label:r.nombre + ' '+r.paralelo,r});
+                r.label=r.nombre + ' '+ r.paralelo
+                this.cursos.push(r);
             });
             this.curso=this.cursos[0]
         })
@@ -85,6 +83,14 @@ export default {
     },
 
     buscar(){
+      this.$q.loading.show();
+        this.$axios.post(process.env.API+'/buscarlibro',{materia_id:this.materia.id,curso_id:this.curso.id}).then(res=>{
+            console.log(res.data)
+          //this.$q.loading.hide();
+           // return false
+           this.data=res.data;
+          this.$q.loading.hide();
+        })
 
     }
 

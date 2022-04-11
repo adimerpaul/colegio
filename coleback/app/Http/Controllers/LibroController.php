@@ -141,4 +141,14 @@ class LibroController extends Controller
         $libro=Libro::find($id);
         $libro->delete();
     }
+
+    public function buscarlibro(Request $request){
+        //return $request;
+        
+        return Libro::with('materia')->with('curso')
+        ->where('materia_id',$request->materia_id)
+        ->where('curso_id',$request->curso_id)
+        ->get();
+
+    }
 }

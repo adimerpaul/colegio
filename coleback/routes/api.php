@@ -44,6 +44,7 @@ Route::group(['middleware'=>'auth:sanctum'],function (){
     Route::resource('/grupo',\App\Http\Controllers\GrupoController::class);
     Route::resource('/libro',\App\Http\Controllers\LibroController::class);
     Route::resource('/periodo',\App\Http\Controllers\PeriodoController::class);
+    Route::post('/buscarlibro',[\App\Http\Controllers\LibroController::class,'buscarlibro']);
     Route::post('/uparchivo',[\App\Http\Controllers\LibroController::class,'uparchivo']);
     Route::post('/upimagen',[\App\Http\Controllers\LibroController::class,'upimagen']);
 });
