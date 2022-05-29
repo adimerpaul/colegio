@@ -25,6 +25,9 @@
       <q-card style="min-width: 350px">
         <q-card-section>
           <div class="text-h6">Listado de Alumnos</div>
+
+              <input type="file" @change="getArch" >
+
         </q-card-section>
 
         <q-card-section class="q-pt-none">
@@ -43,10 +46,14 @@
 </template>
 
 <script>
+import * as XLSX from 'xlsx/xlsx.mjs';
+
+/* load 'fs' for readFile and writeFile support */
 export default {
   data(){
     return{
       cursos:[],
+      XLSX : require("xlsx"),
       grupos:[],
       alumnos:[],
       materia:[],
@@ -61,6 +68,7 @@ export default {
     }
   },
   created() {
+
     this.$q.loading.show()
     this.$api.get('/curso').then(res=>{
       this.cursos=res.data
@@ -72,6 +80,34 @@ export default {
     })
   },
   methods:{
+    getArch(evt){
+      //this.archivo = event.target.files[0];
+
+        var files = evt.target.files[0]; // FileList object
+        var reader = new FileReader();
+        reader.readAsBinaryString(files)
+        reader.onload = function (e) {
+          try {
+            var data = e.target.result
+            var workbook = XLSX.read(data, { type: 'binary' })
+                         var wsname = workbook.SheetNames [0] // Tome la primera hoja
+                         var ws = XLSX.utils.sheet_to_json (workbook.Sheets[wsname]) // Generar contenido de tabla json
+        console.log(ws)
+                         } 
+          catch (e) {
+            return false
+          }
+        }
+
+      // Read in the image file as a data URL.
+      //reader.readAsDataURL(files);
+    
+        console.log(reader.ws)
+        
+        //var xl2json = XLSX.utils.sheet_to_json(files.Sheets[0])
+        //xl2json.parseExcel(files[0]);
+        //console.log(XLSX.utils.sheet_to_json(reader.Sheets[reader.SheetNames[0]]))
+    },
     listado(c){
       this.$api.post('/listestudiante',{'curso_id':c.id}).then(res=>{
         this.alumnos=res.data
