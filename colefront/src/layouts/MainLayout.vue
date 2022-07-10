@@ -61,6 +61,7 @@
           </q-item>
 
           <q-item
+          v-if="$store.getters['login/isLoggedIn']"
            clickable
             to="/inicio"
             active-class="my-menu-link"
@@ -180,6 +181,7 @@
           </q-item>
 
           <q-item
+            v-if="$store.getters['login/isLoggedIn']"
             clickable
             to="/biblioteca"
             active-class="my-menu-link"
