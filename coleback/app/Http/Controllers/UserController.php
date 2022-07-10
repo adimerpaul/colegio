@@ -42,6 +42,7 @@ class UserController extends Controller
         $user->apellidos= strtoupper( $request->apellidos);
         $user->expedido=  $request->expedido;
         $user->fechanac=  $request->fechanac;
+        $user->tipo=$request->tipo;
         $user->email=$request->email;
         $user->password=Hash::make( $request->password);
         $user->carnet=$request->carnet;

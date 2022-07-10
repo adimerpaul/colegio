@@ -474,6 +474,7 @@ export default {
         expedido:this.dato.expedido,
         fechanac:this.dato.fechanac,
         password:this.dato.password,
+        tipo:this.dato.tipo,
         email:this.dato.email,
         celular:this.dato.celular,
         carnet:this.dato.carnet,
