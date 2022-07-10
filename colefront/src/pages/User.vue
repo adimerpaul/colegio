@@ -64,7 +64,7 @@
                 <!--                  lazy-rules-->
                 <!--                  :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"-->
                 <!--                />-->
-                <q-select v-model="dato.tipo" :options="['ADMINISTRADOR','PROFESOR','SECRETARIA','USUARIO']" label="Tipo Usuario" />
+                <q-select v-model="dato.tipo" :options="['ADMINISTRADOR','PROFESOR','SECRETARIA','USUARIO','BIBLIOTECA']" label="Tipo Usuario" />
 
                 <q-input
                   filled
@@ -309,7 +309,7 @@
               filled
               label="Tipo usuario"
               v-model="dato2.tipo"
-              :options="['USUARIO','SECRETARIA']"
+              :options="['USUARIO','SECRETARIA',' BIBLIOTECA']"
             />
             <div>
               <q-btn label="Modificar" type="submit" color="positive" icon="add_circle" />
@@ -469,7 +469,10 @@ export default {
 
       this.$q.loading.show();
       this.$axios.post(process.env.API + "/user", {
-        name:this.dato.name,
+        nombres:this.dato.nombres,
+        apellidos:this.dato.apellidos,
+        expedido:this.dato.expedido,
+        fechanac:this.dato.fechanac,
         password:this.dato.password,
         email:this.dato.email,
         celular:this.dato.celular,
@@ -502,7 +505,9 @@ export default {
 
       this.$q.loading.show();
       this.$axios.put(process.env.API + "/user/" + this.dato2.id, {
-        name:this.dato2.name,
+        id:this.dato2.id,
+        nombres:this.dato2.nombres,
+        apellidos:this.dato2.apellidos,
         // password:this.dato2.password,
         // name:this.dato2.name,
         email:this.dato2.email,

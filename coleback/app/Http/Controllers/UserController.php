@@ -38,7 +38,10 @@ class UserController extends Controller
             'carnet'=>'required|unique:users',
         ]);
         $user=new User();
-        $user->name= strtoupper( $request->name);
+        $user->nombres= strtoupper( $request->nombres);
+        $user->apellidos= strtoupper( $request->apellidos);
+        $user->expedido=  $request->expedido;
+        $user->fechanac=  $request->fechanac;
         $user->email=$request->email;
         $user->password=Hash::make( $request->password);
         $user->carnet=$request->carnet;
@@ -52,13 +55,17 @@ class UserController extends Controller
     }
     public function store(Request $request){
         $user=new User();
-        $user->name=$request->name;
+        $user->nombres=strtoupper($request->nombres);
+        $user->apellidos=strtoupper($request->apellidos);
+        $user->expedido=  $request->expedido;
+        $user->fechanac=  $request->fechanac;
         $user->email=$request->email;
+        $user->tipo=$request->tipo;
         $user->password= Hash::make($request->password) ;
-        $user->unit_id=$request->unit_id;
+        //$user->unit_id=$request->unit_id;
         $user->fechalimite=$request->fechalimite;
         $user->carnet=$request->carnet;
-        $user->unit_id=$request->unit_id;
+        $user->unit_id=1;
 //        $user->codigo= strtoupper( substr($request->name,0,3));
         $user->save();
         $permisos= array();
@@ -71,7 +78,21 @@ class UserController extends Controller
     }
     public function update(Request $request,User $user){
 //        return $request->all();
-        $user->update($request->all());
+        //$user->update($request->all());
+        $user=User::find($request->id);
+        $user->nombres=strtoupper($request->nombres);
+        $user->apellidos=strtoupper($request->apellidos);
+        //$user->expedido=  $request->expedido;
+        //$user->fechanac=  $request->fechanac;
+        $user->tipo=$request->tipo;
+        $user->email=$request->email;
+        //$user->password= Hash::make($request->password) ;
+       //$user->unit_id=$request->unit_id;
+        $user->fechalimite=$request->fechalimite;
+        $user->carnet=$request->carnet;
+        //$user->unit_id=1;
+//        $user->codigo= strtoupper( substr($request->name,0,3));
+        $user->save();
         return $user;
     }
     public function updatepermisos(Request $request,User $user){

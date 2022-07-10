@@ -57,6 +57,7 @@ export default {
       grupos:[],
       alumnos:[],
       materia:[],
+      calificacion:[],
       dialog_nota:false,
       trimestre:'PRIMER TRIMESTRE',
       columns:[
@@ -92,6 +93,7 @@ export default {
             var workbook = XLSX.read(data, { type: 'binary' })
                          var wsname = workbook.SheetNames [0] // Tome la primera hoja
                          var ws = XLSX.utils.sheet_to_json (workbook.Sheets[wsname]) // Generar contenido de tabla json
+                         this.calificacion=ws
         console.log(ws)
                          } 
           catch (e) {
