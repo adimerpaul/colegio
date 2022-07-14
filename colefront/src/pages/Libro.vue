@@ -6,7 +6,7 @@
     <q-dialog v-model="alert" >
       <q-card style="width: 700px; max-width: 80vw;">
         <q-card-section class="bg-green-14 text-white">
-          <div class="text-h6">Agregar Libro</div>
+          <div class="text-h6"> <q-icon name="add_circle"/> Agregar Libro</div>
         </q-card-section>
         <q-card-section class="q-pt-xs">
           <q-form
@@ -48,20 +48,24 @@
               :rules="[ val => val && val.length > 0 || 'Por favor ingresa editorial']"
               />
               </div>
-            <q-select outlined  v-model="materia" :options="materias" label="Materia" required/>
-            <q-select outlined  v-model="curso" :options="cursos" label="Curso" required/>
-            </div>
-            <div class="col-6 ">
-              <label for="">ARCHIVO</label><br>
-              <input type="file" @change="getArch" >
-            </div>
-            <div class="col-6">
+          <div class="col-3">
+            <q-select dense outlined  v-model="materia" :options="materias" label="Materia" required/>
+          </div>
+          <div class="col-3">
+            <q-select dense outlined  v-model="curso" :options="cursos" label="Curso" required/>
+          </div>
+          <div class="col-6 ">
+            <label for="">ARCHIVO</label><br>
+            <input type="file" @change="getArch" >
+          </div>
+          <div class="col-6">
             <label for="">IMAGEN</label>
             <input type="file" @change="getImage" >
-            </div>
-            <div>
-              <q-btn label="Crear" type="submit" color="positive" icon="add_circle"/>
-                <q-btn  label="Cancelar" icon="delete" color="negative" v-close-popup />
+          </div>
+          <div>
+            <q-btn label="Crear" type="submit" color="positive" icon="add_circle"/>
+            <q-btn  label="Cancelar" icon="delete" color="negative" v-close-popup />
+          </div>
             </div>
           </q-form>
         </q-card-section>
@@ -121,7 +125,7 @@
           >
             <div class="row">
                           <div class="col-6">
-              
+
             <q-input
               outlined
               dense
@@ -133,7 +137,7 @@
             />
               </div>
               <div class="col-6">
-              
+
             <q-input
               outlined
               dense
