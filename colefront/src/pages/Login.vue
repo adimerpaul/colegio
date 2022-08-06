@@ -1,8 +1,8 @@
 <template>
   <q-page class="q-pa-md">
     <div class="row">
-      <div class="col-12 col-md-2"></div>
-      <div class="col-12 col-md-8">
+      <div class="col-12 col-md-3"></div>
+      <div class="col-12 col-md-6">
         <q-card>
           <q-tabs
             v-model="tab"
@@ -48,68 +48,9 @@
                     <q-btn label="INGRESAR" color="primary" icon="login" class="full-width" type="submit"/>
 <!--                    <q-btn label="Registrate" color="secondary" icon="how_to_reg" @click="tab='registro'" class="full-width q-mt-xs" />-->
                     <div class="text-caption q-py-xs">
-                      <a target="_blank" href="https://api.whatsapp.com/send?phone=59169603027&text=olvide mi contraseña santa rosa">Olvidate tu contraseña?</a>
+                      <!--<a target="_blank" href="https://api.whatsapp.com/send?phone=59169603027&text=olvide mi contraseña santa rosa">Olvidate tu contraseña?</a>-->
                     </div>
 
-                  </div>
-                </div>
-              </q-form>
-            </q-tab-panel>
-            <q-tab-panel name="registro">
-              <div class="text-h6">Registrate </div>
-              Registro unico para usuarios de la Gamo
-              <q-form @submit.prevent="registrar">
-                <div class="row">
-                  <div class="col-12">
-                    <!--                    color="purple-12"-->
-                    <q-input outlined type="email" v-model="user.email" label="Email*" hint="Porfavor ingresar email" :rules="rule" required>
-                      <template v-slot:prepend>
-                        <q-icon name="email" />
-                      </template>
-                    </q-input>
-                  </div>
-                  <div class="col-12 q-pt-md">
-                    <q-input outlined v-model="user.carnet" label="Carnet o NIT*" hint="Porfavor ingresar carnet o nit" :rules="rule">
-                      <template v-slot:prepend>
-                        <q-icon name="credit_card" />
-                      </template>
-                    </q-input>
-                  </div>
-                  <div class="col-12 q-pt-md">
-                    <q-input outlined v-model="user.name" label="Nombre completo*" hint="Porfavor ingresar nombre completo" :rules="rule">
-                      <template v-slot:prepend>
-                        <q-icon name="people" />
-                      </template>
-                    </q-input>
-                  </div>
-                  <div class="col-12 q-pt-md">
-                    <q-input outlined v-model="user.password" label="password*" :type="isPwd ? 'password' : 'text'" hint="Porfavor ingresar carnet de identidad" :rules="rule">
-                      <template v-slot:prepend>
-                        <q-icon name="lock" />
-                      </template>
-                      <template v-slot:append>
-                        <q-icon
-                          :name="isPwd ? 'visibility_off' : 'visibility'"
-                          class="cursor-pointer"
-                          @click="isPwd = !isPwd"
-                        />
-                      </template>
-                    </q-input>
-                  </div>
-
-<!--                  <div class="col-12">-->
-<!--                    <q-input outlined v-model="user.direccion" label="Direccion*" hint="Direccion de donde vives" :rules="rule">-->
-<!--                      <template v-slot:prepend>-->
-<!--                        <q-icon name="home" />-->
-<!--                      </template>-->
-<!--                    </q-input>-->
-<!--                  </div>-->
-                  <div class="col-12 q-py-md">
-                    <q-btn label="Crea tu cuenta" color="primary" icon="login" class="full-width" type="submit"/>
-                    <q-btn label="Ingresa" color="secondary" icon="how_to_reg" @click="tab='login'" class="full-width q-mt-xs" />
-                    <div class="text-caption q-py-xs">
-                      <a target="_blank" href="https://api.whatsapp.com/send?phone=59169603027&text=olvide mi contraseña gamo">Olvidate tu contraseña?</a>
-                    </div>
                   </div>
                 </div>
               </q-form>
@@ -117,7 +58,35 @@
           </q-tab-panels>
         </q-card>
       </div>
-      <div class="col-12 col-md-2">
+      <hr><br>
+      <div>
+      <div class="col-6">
+          <q-card class="my-card" align="CENTER">
+      <q-card-section  class="bg-green-6 text-white">
+        <div class="text-h5">MISION</div>
+      </q-card-section>
+
+      <q-card-actions vertical align="CENTER">
+        <div class="">
+        La Unidad Educativa “Santa Rosa 2”es un Colegio Técnico-Humanístico, con un selecto plantel docente y administrativo, líder, comprometido con la transformación Social que vive el Estado Plurinacional de Bolivia.
+        </div>
+      </q-card-actions>
+    </q-card>
+    </div>
+      <div class="col-6">
+
+        <q-card class="my-card" align="CENTER">
+      <q-card-section class="bg-green-6 text-white">
+        <div class="text-h5">VISION</div>
+      </q-card-section>
+
+      <q-card-actions vertical align="CENTER">
+        <div class="">
+        “Formar estudiantes con diversas capacidades, técnicas y humanísticas, jóvenes y señoritas líderes, con análisis crítico y reflexivo, comunicativos con su entorno y consigo mismo, enmarcados en la práctica de valores Socio Comunitarios Productivos, con conocimientos suficientes sobre las nuevas tecnologías de información, aplicando el nuevo modelo Educativo Socio Comunitario Productivo, para vivir bien en armonía con la madre tierra”.
+        </div>
+      </q-card-actions>
+    </q-card>
+      </div>
       </div>
     </div>
   </q-page>

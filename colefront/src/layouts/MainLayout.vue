@@ -302,16 +302,17 @@
 
         </q-list>
       </q-scroll-area>
+      <div class="absolute-top" style="height: 130px;width:200px;">
+        <q-img   src="img/escudo.jpeg" style="height: 130px;width:130px;border-radius: 40%;" />
 
-      <q-img class="absolute-top" src="img/fondo.jpg" style="height: 130px">
-        <div class="absolute-bottom bg-transparent ">
-          <q-avatar size="56px" class="q-mb-sm">
+        <div class="absolute-bottom bg-transparent  " style="width:200px;  position: absolute;right: 20px;">
+          <!--<q-avatar size="56px" class="q-mb-sm">
             <img src="https://cdn.quasar.dev/img/boy-avatar.png">
-          </q-avatar>
-          <div class="text-weight-bold">UE Santa Rosa 2 </div>
-          <div>Menu</div>
+          </q-avatar>-->
+          <div class="text-weight-bold absolute-right" style="color:black; font-weight: bold;">UE Santa Rosa 2 </div>
+          
         </div>
-      </q-img>
+     </div>
     </q-drawer>
 
     <q-page-container>
