@@ -31,7 +31,16 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          <q-table title="Estudiantes" :rows="materia" :columns="columns" row-key="name" />
+          <q-table title="Estudiantes" :rows="materia" :columns="columns" row-key="name" >
+      <template v-slot:body-cell-promedio="props">
+<!--        <q-tr :props="props">-->
+          <q-td key="promedio" :props="props">
+            <q-input v-model="props.row.promedio" type="number" step="0.01" dense/>
+          </q-td>
+
+<!--        </q-tr>-->
+      </template>
+          </q-table>
           
         </q-card-section>
 
