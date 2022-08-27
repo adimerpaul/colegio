@@ -38,6 +38,11 @@ class NotaController extends Controller
         //
     }
 
+    public function listnota(Request $request){
+        return Nota::where('materia_id',$request->materia_id)->where('trimestre',$request->trimestre)->get();
+        //$table->unsignedBigInteger('periodo_id');
+        //$table->string('trimestre');
+    }
     /**
      * Display the specified resource.
      *

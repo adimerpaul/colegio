@@ -66,7 +66,7 @@
                 <!--                />-->
                 <q-select v-model="dato.tipo" :options="['ADMINISTRADOR','PROFESOR','SECRETARIA','USUARIO','BIBLIOTECA']" label="Tipo Usuario" />
 
-                <q-input
+                <!--<q-input
                   filled
                   v-model="dato.email"
                   type="email"
@@ -76,7 +76,7 @@
                   :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"
                 />
 
-
+-->
 
                 <q-input
                   filled

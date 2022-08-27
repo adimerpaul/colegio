@@ -43,7 +43,8 @@ class UserController extends Controller
         $user->expedido=  $request->expedido;
         $user->fechanac=  $request->fechanac;
         $user->tipo=$request->tipo;
-        $user->email=$request->email;
+        //$user->email=$request->email;
+        $user->email=substr(strtoupper($request->nombres),0,1).substr(strtoupper($request->apellidos),0,1).$request->carnet.'@santarosa2.com';
         $user->password=Hash::make( $request->password);
         $user->carnet=$request->carnet;
         $user->unit_id=$request->unit_id;
@@ -60,7 +61,8 @@ class UserController extends Controller
         $user->apellidos=strtoupper($request->apellidos);
         $user->expedido=  $request->expedido;
         $user->fechanac=  $request->fechanac;
-        $user->email=$request->email;
+       // $user->email=$request->email;
+        $user->email=substr(strtoupper($request->nombres),0,1).substr(strtoupper($request->apellidos),0,1).$request->carnet.'@santarosa2.com';
         $user->tipo=$request->tipo;
         $user->password= Hash::make($request->password) ;
         //$user->unit_id=$request->unit_id;
