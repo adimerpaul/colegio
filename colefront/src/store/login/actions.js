@@ -10,6 +10,7 @@ export function login({commit}, user) {
         const user = resp.data.user
         localStorage.setItem('tokencole', token)
         axios.defaults.headers.common['Authorization'] = 'Bearer '+token
+        axios.defaults.baseURL = process.env.API;
         commit('auth_success', {token, user})
         resolve(resp)
       })

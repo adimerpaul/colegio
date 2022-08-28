@@ -23,6 +23,8 @@ Route::resource('/unit',\App\Http\Controllers\UnitController::class);
 Route::get('/boleta/{id}',[\App\Http\Controllers\EstudianteController::class,'boleta']);
 
 Route::group(['middleware'=>'auth:sanctum'],function (){
+    Route::post('/upload', [\App\Http\Controllers\UploadController::class,'upload']);
+
     Route::post('/logout',[\App\Http\Controllers\UserController::class,'logout']);
     Route::post('/me',[\App\Http\Controllers\UserController::class,'me']);
     Route::put('/pass/{user}',[\App\Http\Controllers\UserController::class,'pass']);
@@ -38,7 +40,7 @@ Route::group(['middleware'=>'auth:sanctum'],function (){
     Route::post('/listado',[\App\Http\Controllers\EstudianteController::class,'listado']);
     Route::resource('/curso',\App\Http\Controllers\CursoController::class);
     Route::post('/listestudiante',[\App\Http\Controllers\CursoController::class,'listestudiante']);
-    
+
     Route::resource('/padre',\App\Http\Controllers\PadreController::class);
     Route::resource('/materia',\App\Http\Controllers\MateriaController::class);
     Route::resource('/grupo',\App\Http\Controllers\GrupoController::class);

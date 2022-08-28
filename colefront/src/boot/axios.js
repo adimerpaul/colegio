@@ -20,6 +20,7 @@ export default boot(({ app, router, store }) => {
   if (token) {
     // api.defaults.headers.common['Authorization'] = 'Bearer '+token
     app.config.globalProperties.$axios.defaults.headers.common['Authorization'] = 'Bearer '+token
+    app.config.globalProperties.$axios.defaults.baseURL = process.env.API;
     app.config.globalProperties.$axios.post(process.env.API+'/me').then(res=>{
       // console.log(res.data);
       // return false;
@@ -34,8 +35,8 @@ export default boot(({ app, router, store }) => {
     })
   }
 
-  app.config.globalProperties.$api = api
-  app.config.globalProperties.$api.defaults.headers.common['Authorization'] = 'Bearer '+token
+  // app.config.globalProperties.$api = api
+  // app.config.globalProperties.$api.defaults.headers.common['Authorization'] = 'Bearer '+token
   // ^ ^ ^ this will allow you to use this.$api (for Vue Options API form)
   //       so you can easily perform requests against your app's API
 })

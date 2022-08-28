@@ -98,7 +98,7 @@ export default {
   },
   created() {
     this.$q.loading.show()
-    this.$api.get('/curso').then(res=>{
+    this.$axios.get('/curso').then(res=>{
 
       this.cursos=[]
       res.data.forEach(r=>{
@@ -144,7 +144,7 @@ export default {
       this.misalumnos(val.id)
     },
     misalumnos(id){
-      this.$api.get('/curso/'+id).then(res=>{
+      this.$axios.get('/curso/'+id).then(res=>{
         this.$q.loading.hide()
         this.estudiantes=[]
         res.data.forEach(r=>{

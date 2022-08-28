@@ -48,8 +48,8 @@ export default {
   },
   methods:{
         descargar(lib){
-              console.log(lib) 
-              var fileName=this.url+'/../archivos/'+lib.archivo; 
+              // console.log(lib)
+              var fileName=this.url+'/../archivos/'+lib.archivo;
               window.open(fileName, 'Download');
         },
       mismaterias(){

@@ -57,6 +57,7 @@
           <div class="col-6 ">
             <label for="">ARCHIVO</label><br>
             <input type="file" @change="getArch" >
+            <div v-if="porcentaje >0" class="red">Subiendo ...{{porcentaje}}%</div>
           </div>
           <div class="col-6">
             <label for="">IMAGEN</label>
@@ -185,11 +186,9 @@
             class="q-gutter-md"
           >
             <input type="file" @change="getArch" >
-
-            <div>
-<br>
+            <div><br>
               <q-btn label="Modificar" type="submit" color="positive" icon="add_circle"/>
-                <q-btn  label="Cancelar" icon="delete" color="negative" v-close-popup />
+              <q-btn  label="Cancelar" icon="delete" color="negative" v-close-popup />
             </div>
           </q-form>
         </q-card-section>
@@ -256,6 +255,7 @@ export default {
       dialog_arch:false,
       dialog_img:false,
       boolmod:false,
+      nameFile:'',
       filter:'',
       filter2:'',
       dato:{fondo:'APMT',gestion:date.formatDate(Date.now(),'YYYY'),tomo:'1',numtotal:'1'},
@@ -282,7 +282,8 @@ export default {
       data: [
       ],
       prod2: [
-      ]
+      ],
+      porcentaje:0,
     }
   },
   created() {
@@ -322,11 +323,25 @@ export default {
       //Asignamos la imagen a  nuestra data
       // console.log(event.target)
       this.archivo = event.target.files[0];
+      this.porcentaje = 0
+      const fd = new FormData()
+      fd.append('file', this.archivo)
+
+      this.$axios.post(process.env.API+'/upload', fd, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+          onUploadProgress: (progressEvent) => {
+            this.porcentaje = Math.round((progressEvent.loaded / progressEvent.total) * 100)
+          }
+        }).then(res => {
+          this.nameFile=res.data
+          // console.log(res.data)
+        })
+
     },
     misdatos(){
       this.$q.loading.show();
         this.$axios.get(process.env.API+'/libro').then(res=>{
-            console.log(res.data)
+            // console.log(res.data)
            this.data=res.data;
           this.$q.loading.hide();
         })
@@ -372,7 +387,7 @@ export default {
 
       this.$q.loading.show();
       var data = new  FormData();
-      data.append('archivo', this.archivo);
+      data.append('archivo', this.nameFile);
       data.append('imagen', this.imagen);
       data.append('titulo', this.dato.titulo);
       data.append('autor', this.dato.autor);

@@ -36,26 +36,21 @@ class LibroController extends Controller
      */
     public function store(Request $request)
     {
-        //
-
-
         $nombreArchivo='';
-        if ($request->hasFile('archivo')) {
-            $file=$request->file('archivo');
-            $nombreArchivo = $file->getClientOriginalName();
-            $file->move(\public_path('archivos'), $nombreArchivo);
-        }
-
+//        if ($request->hasFile('archivo')) {
+//            $file=$request->file('archivo');
+//            $nombreArchivo = $file->getClientOriginalName();
+//            $file->move(\public_path('archivos'), $nombreArchivo);
+//        }
         if ($request->hasFile('imagen')) {
             $file=$request->file('imagen');
             $nombreimagen = $file->getClientOriginalName();
             $file->move(\public_path('imagenes'), $nombreimagen);
         }
-
         $libro=new Libro;
         $libro->titulo=$request->titulo;
         $libro->autor=$request->autor;
-        $libro->archivo=$nombreArchivo;
+        $libro->archivo=$request->archivo;
         $libro->imagen=$nombreimagen;
         $libro->editorial=$request->editorial;
         $libro->fecha=date('Y-m-d');
@@ -75,7 +70,7 @@ class LibroController extends Controller
         $libro->archivo=$nombreArchivo;
         $libro->save();
      }
-     
+
     public function upimagen(Request $request){
         $nombreArchivo='';
         if ($request->hasFile('imagen')) {
@@ -144,7 +139,7 @@ class LibroController extends Controller
 
     public function buscarlibro(Request $request){
         //return $request;
-        
+
         return Libro::with('materia')->with('curso')
         ->where('materia_id',$request->materia_id)
         ->where('curso_id',$request->curso_id)
