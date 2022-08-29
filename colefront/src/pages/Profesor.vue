@@ -9,6 +9,7 @@
           </template>
         </q-input>
       </template>
+
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="nombres" :props="props">
@@ -20,7 +21,16 @@
          <q-td key="carnet" :props="props">
                      {{props.row.carnet}}
           </q-td>
-
+          <q-td key="materias" :props="props">
+            <ul v-for=" m in props.row.materias" :key="m">
+            <li> {{m.nombre}}</li>
+            </ul>
+          </q-td>
+          <q-td key="cursos" :props="props">
+            <ul v-for=" c in props.row.cursos" :key="c">
+            <li> {{c.nombre}} {{c.paralelo}}</li>
+            </ul>
+          </q-td>
           <q-td key="email" :props="props">
             {{props.row.email}}
           </q-td>
@@ -28,25 +38,14 @@
                      {{props.row.fechalimite}}
           </q-td>
           <q-td key="opcion" :props="props">
-            <q-btn
-              dense
-              round
-              flat
-              color="yellow"
-              @click="editRow(props)"
-              icon="edit"
-            />
+            <q-btn dense round flat color="accent" @click="vermaterias(props.row)"  icon="menu_book"/>
+            <q-btn dense round flat color="cyan" @click="vercursos(props.row)"  icon="history_edu"/>
+            <q-btn dense round flat color="yellow" @click="editRow(props)"  icon="edit"/>
 
-            <q-btn
-              dense
-              round
-              flat
-              color="red"
-              @click="deleteRow(props)"
-              icon="delete"
-            ></q-btn>
+            <q-btn dense round flat color="red" @click="deleteRow(props)" icon="delete"/>
           </q-td>
         </q-tr>
+
       </template>
     </q-table>
 
@@ -134,6 +133,45 @@
         </q-card-section>
       </q-card>
     </q-dialog>
+
+    <q-dialog v-model="dialogMateria" >
+      <q-card style="min-width: 350px">
+        <q-card-section>
+          <div class="text-h6">MATERIAS</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+         <div class="row" >
+            <div class="col-4" v-for=" m in materias " :key="m" ><q-checkbox v-model="lmaterias" :val="m.id" :label="m.nombre" color="teal" /></div>
+         </div>
+        </q-card-section>
+
+        <q-card-actions align="right" class="text-primary">
+          <q-btn flat label="CANCELAR" v-close-popup />
+          <q-btn flat label="MODIFICAR" @click="modmateria" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="dialogCurso" >
+      <q-card style="min-width: 350px">
+        <q-card-section>
+          <div class="text-h6">CURSOS</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+         <div class="row" >
+            <div class="col-4" v-for=" c in cursos " :key="c" ><q-checkbox v-model="lcursos" :val="c.id" :label="c.nombre+' ' +c.paralelo" color="teal" /></div>
+         </div>
+        </q-card-section>
+
+        <q-card-actions align="right" class="text-primary">
+          <q-btn flat label="CANCELAR" v-close-popup />
+          <q-btn flat label="MODIFICAR" @click="modcurso" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
   </div>
 </template>
 
@@ -144,9 +182,13 @@ export default {
   data() {
     return {
       alert: false,
+      dialogMateria:false,
+      dialogCurso:false,
       dialog_mod: false,
       dialog_del: false,
       filter:'',
+      lmaterias:[],
+      lcursos:[],
       dato: {
         fechalimite:date.formatDate( addToDate(new Date(),{days:7}) , 'YYYY-MM-DD')
       },
@@ -157,12 +199,17 @@ export default {
       unidades:[],
       permisos:[],
       permisos2:[],
+      materias:[],
+      cursos:[],
+      usuario:{},
       modelpermiso:false,
       uni:{},
       columns: [
         {name: "nombres", align: "left", label: "NOMBRE", field: "nombres", sortable: true,},
         {name: "apellidos", align: "left", label: "APELLIDOS ", field: "apellidos", sortable: true,},
          {name: "carnet", align: "left", label: "CARNET ", field: "carnet", sortable: true,},
+         {name: "materias", align: "left", label: "MATERIAS ", field: row=>row.materias},
+         {name: "cursos", align: "left", label: "CURSOS ", field: row=>row.cursos},
         {name: "email", align: "left", label: "E-MAIL", field: "email", sortable: true,},
         {name: "fechalimite", align: "left", label: "FECHA LÍMITE", field: "fechalimite", sortable: true,},
         { name: "opcion", label: "OPCIÓN", field: "action", sortable: false },
@@ -182,8 +229,66 @@ export default {
         this.permisos2.push({id:r.id,nombre:r.nombre,estado:false})
       })
     })
+    this.listmaterias();
+    this.listcursos();
   },
   methods: {
+    modmateria(){
+      this.$axios.post(process.env.API+'/asignarMateria',{user:this.usuario,materias:this.lmaterias}).then(res=>{
+        console.log(res.data)
+        this.$q.notify({
+          color: "green-4",
+          textColor: "white",
+          icon: "cloud_done",
+          message: "Modificado correctamente",
+        });
+        this.dialogMateria=false
+        this.misdatos();
+      })
+
+    },
+    modcurso(){
+      this.$axios.post(process.env.API+'/asignarCurso',{user:this.usuario,cursos:this.lcursos}).then(res=>{
+        this.$q.notify({
+          color: "green-4",
+          textColor: "white",
+          icon: "cloud_done",
+          message: "Modificado correctamente",
+        });
+        this.dialogCurso=false
+        this.misdatos()
+      }) 
+    },
+    vermaterias(user){
+      this.usuario=user
+      this.lmaterias=[]
+      this.usuario.materias.forEach(r=>{
+        this.lmaterias.push(r.id)
+      })
+      console.log(this.lmaterias)
+      this.dialogMateria=true
+    },
+    vercursos(user){
+      this.usuario=user
+      this.lcursos=[]
+      console.log(this.usuario)
+      this.usuario.cursos.forEach(r=>{
+        this.lcursos.push(r.id)
+      })
+      console.log(this.lcursos)
+      this.dialogCurso=true
+    },
+    listmaterias(){
+      this.$axios.get(process.env.API+'/materia').then(res=>{
+        
+        this.materias=res.data
+      })
+    },
+    listcursos(){
+      this.$axios.get(process.env.API+'/curso').then(res=>{
+        this.cursos=res.data
+      })
+    },
     updatepermisos(){
       this.$axios.put(process.env.API+'/updatepermisos/'+this.dato2.id,{permisos:this.permisos2}).then(res=>{
         // console.log(res.data)
@@ -221,7 +326,7 @@ export default {
     misdatos() {
       this.$q.loading.show();
       this.$axios.post(process.env.API + "/listprofesor").then((res) => {
-        //console.log(res.data)
+        console.log(res.data)
         this.data = res.data;
         this.$q.loading.hide();
       });

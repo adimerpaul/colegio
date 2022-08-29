@@ -127,6 +127,23 @@ class UserController extends Controller
     }
 
     public function listprofesor(){
-        return DB::SELECT('SELECT id,nombres,apellidos,carnet,expedido,email,fechalimite from users where tipo="PROFESOR"');
+        //return DB::SELECT('SELECT id,nombres,apellidos,carnet,expedido,email,fechalimite from users where tipo="PROFESOR"');
+        return User::with('materias')->with('cursos')->where('tipo','PROFESOR')->get();
+    }
+
+    public function asignarMateria(Request $request){
+        //return $request;
+        DB::SELECT("DELETE from materia_user where user_id=".$request->user['id']);
+        foreach($request->materias as $m ){
+            DB::table('materia_user')->insert(['user_id'=>$request->user['id'],'materia_id'=>$m]);
+        }
+    }
+
+    
+    public function asignarCurso(Request $request){
+        DB::SELECT("DELETE from curso_user where user_id=".$request->user['id']);
+        foreach($request->cursos as $m ){
+            DB::table('curso_user')->insert(['user_id'=>$request->user['id'],'curso_id'=>$m]);
+        }
     }
 }

@@ -52,4 +52,12 @@ class User extends Authenticatable
     public function unit(){
         return $this->belongsTo(Unit::class);
     }
+
+    public function materias(){
+        return $this->belongsToMany(Materia::class);
+    }
+
+    public function cursos(){
+        return $this->belongsToMany(Curso::class);
+    }
 }

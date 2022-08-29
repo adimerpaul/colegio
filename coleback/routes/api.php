@@ -34,6 +34,8 @@ Route::group(['middleware'=>'auth:sanctum'],function (){
     Route::post('/misremetentes',[\App\Http\Controllers\UserController::class,'misremetentes']);
     Route::post('/usuarios',[\App\Http\Controllers\UserController::class,'usuarios']);
     Route::post('/listprofesor',[\App\Http\Controllers\UserController::class,'listprofesor']);
+    Route::post('/asignarMateria',[\App\Http\Controllers\UserController::class,'asignarMateria']);
+    Route::post('/asignarCurso',[\App\Http\Controllers\UserController::class,'asignarCurso']);
     Route::resource('/permiso',\App\Http\Controllers\PermisoController::class);
 
     Route::resource('/estudiante',\App\Http\Controllers\EstudianteController::class);
