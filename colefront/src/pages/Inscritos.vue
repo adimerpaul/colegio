@@ -6,12 +6,20 @@
 <!--      <pre>{{cursos}}</pre>-->
     </div>
     <div class="col-12">
+
       <q-table dense :title="curso.nombre" :rows="estudiantes" :columns="columns" :filter="filter">
         <template v-slot:top-right>
           <q-btn
+            color="red-9"
+            icon-right="picture_as_pdf"
+            label="Expotar a PDF"
+            no-caps
+            @click="exportarPDF"
+          />
+          <q-btn
             color="primary"
             icon-right="archive"
-            label="Export to csv"
+            label="Expotar a Excel"
             no-caps
             @click="exportTable"
           />
@@ -48,7 +56,7 @@
           </q-tr>
         </template>
       </q-table>
-<!--      <pre>{{estudiantes}}</pre>-->
+      <pre>{{estudiantes}}</pre>
     </div>
   </div>
 </q-page>
@@ -56,6 +64,7 @@
 
 <script>
 import { exportFile } from 'quasar'
+import jsPDF from "jspdf";
 
 function wrapCsvValue (val, formatFn) {
   let formatted = formatFn !== void 0
@@ -113,8 +122,46 @@ export default {
     })
   },
   methods:{
+    exportarPDF(){
+      let cm=this;
+      function header(){
+        var img = new Image()
+        img.src = 'img/escudo.jpeg'
+        doc.addImage(img, 'jpg', 0.5, 0.5, 2, 2)
+        doc.setFont(undefined,'bold')
+        doc.text(5, 1, 'LISTA DE ESTUDIANTES')
+        doc.text(5, 1.5, cm.curso.label)
+        doc.text(1, 3, 'ID')
+        doc.text(3, 3, 'NOMBRES')
+        doc.text(6, 3, 'PATERNO')
+        doc.text(9, 3, 'MATERNO')
+        doc.text(13.5, 3, 'CI/RUN/RUC')
+        doc.text(16, 3, 'CELULAR')
+        doc.setFont(undefined,'normal')
+      }
+      var doc = new jsPDF('p','cm','letter')
+      // doc.setFont("courier");
+      doc.setFontSize(8);
+      header()
+      let y=0
+      // let sumtotal=0
+      this.estudiantes.forEach(r=>{
+        console.log(r)
+        y+=0.5
+        doc.text(1, y+3, r.id+'')
+        doc.text(3, y+3, r.nombres+'')
+        doc.text(6, y+3, r.paterno+'')
+        doc.text(9, y+3, r.materno+'')
+        doc.text(13.5, y+3, r.ci+'')
+        doc.text(16, y+3, r.celular+'')
+        // sumtotal+=parseInt(r.total)
+        // doc.text(18, y+3, r.user.codigo )
+      })
+      // doc.text(12, y+4, 'TOTAL RECAUDADCION: ')
+      // doc.text(18, y+4, sumtotal+'Bs')
+      window.open(doc.output('bloburl'), '_blank');
+    },
     exportTable () {
-      // naive encoding to csv format
       const content = [this.columns.map(col => wrapCsvValue(col.label))].concat(
         this.estudiantes.map(row => this.columns.map(col => wrapCsvValue(
           typeof col.field === 'function'
