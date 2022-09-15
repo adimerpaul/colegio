@@ -53,10 +53,14 @@
 <!--              {{ props.row.imagen}}-->
               <q-img :src="url+'../../imagenes/'+props.row.imagen" width="30px"/>
             </q-td>
+            <q-td key="opciones" :props="props">
+                 <q-btn color="green" label="libreta" @click="libreta(props.row)"/>
+                
+            </q-td>
           </q-tr>
         </template>
       </q-table>
-      <pre>{{estudiantes}}</pre>
+      <!--<pre>{{estudiantes}}</pre>-->
     </div>
   </div>
 </q-page>
@@ -157,6 +161,50 @@ export default {
         // sumtotal+=parseInt(r.total)
         // doc.text(18, y+3, r.user.codigo )
       })
+      // doc.text(12, y+4, 'TOTAL RECAUDADCION: ')
+      // doc.text(18, y+4, sumtotal+'Bs')
+      window.open(doc.output('bloburl'), '_blank');
+    },
+    libreta(estud){
+      let cm=this;
+      function header(){
+        var img = new Image()
+        var img2 = new Image()
+        var img3 = new Image()
+        img.src = 'img/escudo.jpeg'
+        img2.src = 'img/EscudoBolivia.png'
+        img3.src = 'img/EscudoBolivia2.png'
+        doc.addImage(img2, 'png', 1, 0.5, 2.5, 2.5)
+        doc.addImage(img, 'jpg', 32, 0.5, 2.5, 2.5)
+        doc.addImage(img3, 'png', 6, 6, 22, 12)
+        doc.setFont(undefined,'bold')
+        doc.setFontSize(12);
+        doc.text(15, 1, 'LIBRETA ESCOLAR')
+        doc.text(14, 1.5, 'Educacion Secundaria')
+        doc.text(5, 2, 'Unidad Educativa:')
+        doc.text(5, 2.5, 'Distrito Escolar:')
+        doc.text(5, 3, 'Turno:')
+        doc.text(20, 2, 'Departamento:')
+        doc.text(20, 2.5, 'DEpendencia:')
+        doc.text(20, 3, 'Gestion:')
+        doc.setFont(undefined,'normal')
+        doc.text(10, 2, '81230294 -SANTA ROSA2')
+        doc.text(10, 2.5, 'ORURO')
+        doc.text(10, 3, 'TARDE')
+        doc.text(25, 2, 'ORURO')
+        doc.text(25, 2.5, 'FISCAL')
+        doc.text(25, 3, '2021')
+        doc.setLineWidth(0.01)
+        doc.line(1,3.2,33,3.2)
+        doc.setFont(undefined,'normal')
+      }
+      var doc = new jsPDF('L','cm','legal')
+      // doc.setFont("courier");
+      doc.setFontSize(8);
+      header()
+      let y=0
+      // let sumtotal=0
+
       // doc.text(12, y+4, 'TOTAL RECAUDADCION: ')
       // doc.text(18, y+4, sumtotal+'Bs')
       window.open(doc.output('bloburl'), '_blank');
