@@ -69,6 +69,8 @@
 <script>
 import { exportFile } from 'quasar'
 import jsPDF from "jspdf";
+import conversor from "conversor-numero-a-letras-es-ar";
+
 
 function wrapCsvValue (val, formatFn) {
   let formatted = formatFn !== void 0
@@ -166,8 +168,10 @@ export default {
       window.open(doc.output('bloburl'), '_blank');
     },
     libreta(estud){
+      this.$axios.post('/libreta',{estudiante:estud,curso:this.curso}).then(res=>{
+
+      var doc = new jsPDF('L','cm','legal')
       let cm=this;
-      function header(){
         var img = new Image()
         var img2 = new Image()
         var img3 = new Image()
@@ -185,7 +189,7 @@ export default {
         doc.text(5, 2.5, 'Distrito Escolar:')
         doc.text(5, 3, 'Turno:')
         doc.text(20, 2, 'Departamento:')
-        doc.text(20, 2.5, 'DEpendencia:')
+        doc.text(20, 2.5, 'Dependencia:')
         doc.text(20, 3, 'Gestion:')
         doc.setFont(undefined,'normal')
         doc.text(10, 2, '81230294 -SANTA ROSA2')
@@ -195,19 +199,56 @@ export default {
         doc.text(25, 2.5, 'FISCAL')
         doc.text(25, 3, '2021')
         doc.setLineWidth(0.01)
-        doc.line(1,3.2,33,3.2)
+        doc.line(1,3.1,33,3.1)
+        doc.setFont(undefined,'bold')
+        doc.text(1, 3.5, 'Codigo rude')
+        doc.text(9, 3.5, 'Apellidos Nombres')
         doc.setFont(undefined,'normal')
-      }
-      var doc = new jsPDF('L','cm','legal')
+        doc.text(3, 3.5, estud.rude)
+        doc.text(15, 3.5, estud.paterno+' '+estud.materno+' '+estud.nombres)
+        doc.line(1,3.6,33,3.6)
+        doc.setFont(undefined,'bold')
+        doc.text(4, 4,   ' AREAS CURRICULARES ')
+        doc.text(15, 4,   '1er ')
+        doc.text(18, 4,   '2do ')
+        doc.text(21, 4,   '3er ')
+        doc.text(25, 4,   'Promedio Anual')
+        doc.text(14.5, 4.5, 'Trimestre')
+        doc.text(17.5, 4.5, 'Trimestre')
+        doc.text(20.5, 4.5, 'Trimestre')
+        doc.text(24.5, 4.5, '  Numeral    ')
+        doc.text(27, 4.5, '  Literal')
+        doc.setFont(undefined,'normal')
+
+
       // doc.setFont("courier");
-      doc.setFontSize(8);
-      header()
-      let y=0
+      //doc.setFontSize(8);
+      let y=5
+      let promedio
+      let ClaseConversor = conversor.conversorNumerosALetras;
+      let miConversor = new ClaseConversor();
+      let a = ''
+      res.data.forEach(r=>{
+        y+=0.7
+        r.primero=r.primero==null?0:r.primero
+        r.segundo=r.segundo==null?0:r.segundo
+        r.tercero=r.tercero==null?0:r.tercero
+        promedio=Math.round(parseFloat(r.primero)+parseFloat(r.segundo)+parseFloat(r.tercero))
+        a=miConversor.convertToText( parseInt(promedio));
+        doc.text(2.5, y, r.nombre)
+        doc.text(15, y, r.primero+'')
+        doc.text(18, y, r.segundo+'')
+        doc.text(21, y, r.tercero+'')
+        doc.text(25, y, promedio+'')
+        doc.text(27, y, a+'')
+
+      })
+
       // let sumtotal=0
 
       // doc.text(12, y+4, 'TOTAL RECAUDADCION: ')
       // doc.text(18, y+4, sumtotal+'Bs')
-      window.open(doc.output('bloburl'), '_blank');
+      window.open(doc.output('bloburl'), '_blank');})
     },
     exportTable () {
       const content = [this.columns.map(col => wrapCsvValue(col.label))].concat(

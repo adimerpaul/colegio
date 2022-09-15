@@ -42,6 +42,7 @@ Route::group(['middleware'=>'auth:sanctum'],function (){
     Route::post('/listado',[\App\Http\Controllers\EstudianteController::class,'listado']);
     Route::resource('/curso',\App\Http\Controllers\CursoController::class);
     Route::post('/listestudiante',[\App\Http\Controllers\CursoController::class,'listestudiante']);
+    Route::post('/libreta',[\App\Http\Controllers\NotaController::class,'libreta']);
 
     Route::resource('/padre',\App\Http\Controllers\PadreController::class);
     Route::resource('/materia',\App\Http\Controllers\MateriaController::class);
