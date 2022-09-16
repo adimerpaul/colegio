@@ -158,6 +158,10 @@ export default {
         this.materia.push(r)
       });
       this.dialog_nota=true;
+      this.$axios.post('/listnota',{curso:this.curso,trimestre:this.trimestre,materia:mat}).then(res=>{
+
+      })
+
     }
   }
 }
