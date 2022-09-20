@@ -3,6 +3,8 @@
 
     <q-table dense :filter="filter" title="LISTA DE PROFESORES" :rows="data" :columns="columns" row-key="name" :rows-per-page-options="[50,100]">
       <template v-slot:top-right>
+         <q-btn color="info"  icon="print" @click="printpdf"/>
+        
         <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
           <template v-slot:append>
             <q-icon name="search" />
@@ -177,6 +179,8 @@
 
 <script>
 import { date } from 'quasar'
+import jsPDF from "jspdf";
+
 const { addToDate } = date
 export default {
   data() {
@@ -233,6 +237,50 @@ export default {
     this.listcursos();
   },
   methods: {
+    printpdf(){
+      let cm=this;
+      function header(){
+        var img = new Image()
+        img.src = 'img/escudo.jpeg'
+        doc.addImage(img, 'jpg', 0.5, 0.5, 2, 2)
+        doc.setFont(undefined,'bold')
+        doc.text(5, 1, 'LISTA DE PROFESORES')
+        doc.text(1, 3, 'ID')
+        doc.text(3, 3, 'NOMBRES')
+        doc.text(6, 3, 'APELLIDOS')
+        doc.text(9, 3, 'CI')
+        doc.text(14, 3, 'MATERIAS')
+        doc.setFont(undefined,'normal')
+      }
+      var doc = new jsPDF('p','cm','letter')
+      doc.setFontSize(10);
+      header()
+      doc.setFontSize(8);
+      let y=0 
+      this.data.forEach(r=>{
+        console.log(r)
+        y+=0.5
+        doc.text(1, y+3, r.id+'')
+        doc.text(3, y+3, r.nombres+'')
+        doc.text(6, y+3, r.apellidos+'')
+        doc.text(9, y+3, r.carnet+'')
+        r.materias.forEach(m=>{
+          doc.text(14, y+3, m.nombre+'')
+          y+=0.5
+          if(y+0.5>=27){
+            doc.addPage()
+            header()
+            y=0
+          }
+        })
+        if(y+0.5>=27){
+            doc.addPage()
+            header()
+            y=0
+          }
+      })
+      window.open(doc.output('bloburl'), '_blank');
+    },
     modmateria(){
       this.$axios.post(process.env.API+'/asignarMateria',{user:this.usuario,materias:this.lmaterias}).then(res=>{
         console.log(res.data)

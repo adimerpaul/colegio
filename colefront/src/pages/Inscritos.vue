@@ -162,6 +162,11 @@ export default {
         doc.text(16, y+3, r.celular+'')
         // sumtotal+=parseInt(r.total)
         // doc.text(18, y+3, r.user.codigo )
+        if(y+0.5>=27){
+            doc.addPage()
+            header()
+            y=0
+          }
       })
       // doc.text(12, y+4, 'TOTAL RECAUDADCION: ')
       // doc.text(18, y+4, sumtotal+'Bs')
