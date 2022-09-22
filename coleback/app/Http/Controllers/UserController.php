@@ -131,6 +131,7 @@ class UserController extends Controller
         return User::with('materias')->with('cursos')->where('tipo','PROFESOR')->get();
     }
 
+
     public function asignarMateria(Request $request){
         //return $request;
         DB::SELECT("DELETE from materia_user where user_id=".$request->user['id']);

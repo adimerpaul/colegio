@@ -50,7 +50,11 @@
 
       </template>
     </q-table>
-
+    <div class="row">
+      <div class="col-3"><q-select square outlined v-model="curso" :options="cursos" label="Curso" /></div>
+      <div class="col-3"> <q-btn color="teal" icon="print" @click="cargarcurso"/>
+      </div>
+    </div>
     <q-dialog v-model="dialog_mod">
       <q-card style="max-width: 80%; width: 50%">
         <q-card-section class="bg-warning text-white">
@@ -193,6 +197,7 @@ export default {
       filter:'',
       lmaterias:[],
       lcursos:[],
+      curso:{},
       dato: {
         fechalimite:date.formatDate( addToDate(new Date(),{days:7}) , 'YYYY-MM-DD')
       },
@@ -206,6 +211,7 @@ export default {
       materias:[],
       cursos:[],
       usuario:{},
+      cursoprofesor:[],
       modelpermiso:false,
       uni:{},
       columns: [
@@ -237,6 +243,58 @@ export default {
     this.listcursos();
   },
   methods: {
+    cargarcurso(){
+      this.cursoprofesor=[]
+      this.data.forEach(r=>{
+        r.cursos.forEach(c=>{
+             if(this.curso.id==c.id)
+              this.cursoprofesor.push(r)
+        })
+      })
+      console.log(this.cursoprofesor)
+      let cm=this;
+      function header(){
+        var img = new Image()
+        img.src = 'img/escudo.jpeg'
+        doc.addImage(img, 'jpg', 0.5, 0.5, 2, 2)
+        doc.setFont(undefined,'bold')
+        doc.text(5, 1, 'LISTA DE PROFESORES CURSO '+cm.curso.label)
+        doc.text(1, 3, 'ID')
+        doc.text(3, 3, 'NOMBRES')
+        doc.text(6, 3, 'APELLIDOS')
+        doc.text(9, 3, 'CI')
+        doc.text(14, 3, 'MATERIAS')
+        doc.setFont(undefined,'normal')
+      }
+      var doc = new jsPDF('p','cm','letter')
+      doc.setFontSize(10);
+      header()
+      doc.setFontSize(8);
+      let y=0 
+      this.cursoprofesor.forEach(r=>{
+        console.log(r)
+        y+=0.5
+        doc.text(1, y+3, r.id+'')
+        doc.text(3, y+3, r.nombres+'')
+        doc.text(6, y+3, r.apellidos+'')
+        doc.text(9, y+3, r.carnet+'')
+        r.materias.forEach(m=>{
+          doc.text(14, y+3, m.nombre+'')
+          y+=0.5
+          if(y+0.5>=27){
+            doc.addPage()
+            header()
+            y=0
+          }
+        })
+        if(y+0.5>=27){
+            doc.addPage()
+            header()
+            y=0
+          }
+      })
+      window.open(doc.output('bloburl'), '_blank');
+    },
     printpdf(){
       let cm=this;
       function header(){
@@ -334,7 +392,12 @@ export default {
     },
     listcursos(){
       this.$axios.get(process.env.API+'/curso').then(res=>{
+        res.data.forEach(r=>{
+          r.label=r.nombre+' '+r.paralelo
+        })
+
         this.cursos=res.data
+        this.curso=this.cursos[0]
       })
     },
     updatepermisos(){
