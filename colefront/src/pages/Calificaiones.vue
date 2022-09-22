@@ -44,7 +44,7 @@
 
       <q-card-actions align="right" class="text-primary">
         <q-btn flat label="Cancel" v-close-popup />
-        <q-btn flat label="Add address" v-close-popup />
+        <q-btn flat label="Registrar" @click="Registrar" />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -65,6 +65,7 @@ export default {
       materia:[],
       calificacion:[],
       dialog_nota:false,
+      mat:{},
       trimestre:'PRIMER TRIMESTRE',
       columns:[
  {   name: 'paterno',label: 'PATERNO',align: 'left',field: 'paterno',sortable: true  },
@@ -150,7 +151,8 @@ export default {
     },
     notas(mat){
       this.materia=[]
-      this.alumnos.forEach(r => {
+      this.mat=mat
+      this.alvumnos.forEach(r => {
         r.promedio=0;
         r.materia_id=mat;
         r.trimestre=this.trimestre;
@@ -159,7 +161,20 @@ export default {
       });
       this.dialog_nota=true;
       this.$axios.post('/listnota',{curso:this.curso,trimestre:this.trimestre,materia:mat}).then(res=>{
+        res.data.forEach(r=>{
+            this.materia.forEach(l=>{
+              if(r.estudiante_id==l.id){
+                l.promedio=r.promedio;
+              }
+            })
+        })
+      })
 
+    },
+
+    registrarNota(){
+      this.$axios.post('/nota',{curso:this.curso,trimestre:this.trimestre,materia:this.mat,notas:this.materia}).then(res=>{
+          
       })
 
     }
