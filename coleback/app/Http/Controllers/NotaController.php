@@ -81,6 +81,19 @@ class NotaController extends Controller
        (SELECT n.promedio from notas n where n.materia_id=m.id and n.periodo_id=$periodo->id and n.estudiante_id=".$request->estudiante['id']." and n.trimestre='TERCER TRIMESTRE') as tercero
          FROM materias m inner join curso_materia cm on m.id=cm.materia_id INNER JOIN cursos c on cm.curso_id=c.id where c.id=".$request->curso['id']." order by m.grupo_id,m.id;");
     }
+
+    public function notaMejor(Request $request){
+
+        $periodo=Periodo::where('estado','ACTIVO')->first();
+       //return Nota::with('materia')->where('estudiante_id',$request->estudiante_id)->where('periodo_id',$periodo->id)->get();
+       return DB::SELECT("SELECT m.grupo_id,m.id, m.nombre, 
+       (SELECT n.promedio from notas n where n.materia_id=m.id and n.periodo_id=$periodo->id and n.estudiante_id=".$request->estudiante['id']." and n.trimestre='PRIMER TRIMESTRE') as primero, 
+       (SELECT n.promedio from notas n where n.materia_id=m.id and n.periodo_id=$periodo->id and n.estudiante_id=".$request->estudiante['id']." and n.trimestre='SEGUNDO TRIMESTRE') as segundo,
+       (SELECT n.promedio from notas n where n.materia_id=m.id and n.periodo_id=$periodo->id and n.estudiante_id=".$request->estudiante['id']." and n.trimestre='TERCER TRIMESTRE') as tercero
+         FROM materias m inner join curso_materia cm on m.id=cm.materia_id INNER JOIN cursos c on cm.curso_id=c.id 
+         where c.id=".$request->curso['id']." order by m.grupo_id,m.id;");
+    }
+
     /**
      * Display the specified resource.
      *

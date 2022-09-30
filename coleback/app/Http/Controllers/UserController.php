@@ -12,13 +12,13 @@ use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
     public function index(){
-        return User::with('unit')->with('permisos')->where('id','!=',1)->get();
+        return User::with('permisos')->where('id','!=',1)->get();
     }
     public function usuarios(Request $request){
-        return User::with('unit')->where('id','!=',$request->user()->id)->where('id','!=',1)->orderBy('unit_id')->get();
+        return User::where('id','!=',$request->user()->id)->where('id','!=',1)->get();
     }
     public function misremetentes(Request $request){
-        return User::with('unit')->where('unit_id',$request->user()->unit_id)->where('id','!=',$request->user()->id)->where('id','!=',1)->orderBy('unit_id')->get();
+        return User::where('id','!=',$request->user()->id)->where('id','!=',1)->get();
     }
     public function login(Request $request){
         if (!Auth::attempt($request->all())){
@@ -28,7 +28,7 @@ class UserController extends Controller
             return response()->json(['res'=>'Su usuario sobre paso el limite de ingreso'],400);
         }
 
-        $user=User::where('email',$request->email)->with('unit')->with('permisos')->firstOrFail();
+        $user=User::where('email',$request->email)->with('permisos')->firstOrFail();
         $token=$user->createToken('auth_token')->plainTextToken;
         return response()->json(['token'=>$token,'user'=>$user],200);;
     }
@@ -47,7 +47,6 @@ class UserController extends Controller
         $user->email=substr(strtoupper($request->nombres),0,1).substr(strtoupper($request->apellidos),0,1).$request->carnet.'@santarosa2.com';
         $user->password=Hash::make( $request->password);
         $user->carnet=$request->carnet;
-        $user->unit_id=$request->unit_id;
         $user->fechalimite=date('Y-m-d', strtotime(now(). ' + 7 days'));;
         $user->save();
         $permiso = Permiso::find([3]);
@@ -68,7 +67,6 @@ class UserController extends Controller
         //$user->unit_id=$request->unit_id;
         $user->fechalimite=$request->fechalimite;
         $user->carnet=$request->carnet;
-        $user->unit_id=1;
 //        $user->codigo= strtoupper( substr($request->name,0,3));
         $user->save();
         $permisos= array();
@@ -122,7 +120,7 @@ class UserController extends Controller
         return response()->json(['res'=>'salido exitosamente'],200);
     }
     public function me(Request $request){
-        $user=User::where('id',$request->user()->id)->with('unit')->with('permisos')->firstOrFail();
+        $user=User::where('id',$request->user()->id)->with('permisos')->firstOrFail();
         return $user;
     }
 

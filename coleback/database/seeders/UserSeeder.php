@@ -30,7 +30,6 @@ class UserSeeder extends Seeder
             'email'=>'admin@test.com',
             'fechalimite'=>'9999-01-01',
             'password'=>Hash::make('admin'),
-            'unit_id'=>1,
         ],
             [
                 'tipo'=>'PADRE',
@@ -42,7 +41,6 @@ class UserSeeder extends Seeder
                 'email'=>'carlos@santarosa.com',
                 'fechalimite'=>'9999-01-01',
                 'password'=>Hash::make('123456'),
-                'unit_id'=>1,
             ],
             [
                 'tipo'=>'PADRE',
@@ -54,7 +52,6 @@ class UserSeeder extends Seeder
                 'email'=>'maria@santarosa.com',
                 'fechalimite'=>'9999-01-01',
                 'password'=>Hash::make('123456'),
-                'unit_id'=>1,
             ],
             [
                 'tipo'=>'PROFESOR',
@@ -66,7 +63,6 @@ class UserSeeder extends Seeder
                 'email'=>'a@santarosa.com',
                 'fechalimite'=>'9999-01-01',
                 'password'=>Hash::make('123456'),
-                'unit_id'=>1,
             ],
         ]);
     }
