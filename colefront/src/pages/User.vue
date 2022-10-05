@@ -309,7 +309,7 @@
               filled
               label="Tipo usuario"
               v-model="dato2.tipo"
-              :options="['USUARIO','SECRETARIA',' BIBLIOTECA']"
+              :options="['USUARIO','SECRETARIA',' BIBLIOTECA','PROFESOR']"
             />
             <div>
               <q-btn label="Modificar" type="submit" color="positive" icon="add_circle" />
