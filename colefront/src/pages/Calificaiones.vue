@@ -44,7 +44,7 @@
 
       <q-card-actions align="right" class="text-primary">
         <q-btn flat label="Cancel" v-close-popup />
-        <q-btn flat label="Registrar" @click="Registrar" />
+        <q-btn flat label="Registrar" @click="registrarNota" />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -182,7 +182,7 @@ export default {
       this.dialog_nota=true;
       this.$axios.post('/listnota',{curso:this.curso,trimestre:this.trimestre,materia:mat}).then(res=>{
         console.log(res.data)
-        return false
+       // return false
         res.data.forEach(r=>{
             this.materia.forEach(l=>{
               if(r.estudiante_id==l.id){
@@ -196,7 +196,7 @@ export default {
 
     registrarNota(){
       this.$axios.post('/nota',{curso:this.curso,trimestre:this.trimestre,materia:this.mat,notas:this.materia}).then(res=>{
-          
+          console.log(res.data)
       })
 
     }

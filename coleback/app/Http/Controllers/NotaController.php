@@ -37,28 +37,35 @@ class NotaController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        foreach($request->notas as $calif){
+            //return $request->curso['id'];
             $periodo=Periodo::where('estado','ACTIVO')->first();
-            $validar=Nota::where('materia_id',$request->materia['id'])->where('curso_id',$request->curso['id'])->where('periodo_id',$periodo->id)
-            ->where('trimestre',$request->trimestre)->where('estudiante_id',$calif->id)->count();
+            foreach($request->notas as $calif){
+                //return $calif['id'];
+            $validar=Nota::where('materia_id',$request->materia)
+            ->where('curso_id',$request->curso['id'])
+            ->where('periodo_id',$periodo->id)
+            ->where('trimestre',$request->trimestre)
+            ->where('estudiante_id',$calif['id'])->count();
+            //return $validar;
             if($validar>0){
-                DB::SELECT("UPDATE notas set promedio=$calif->promedio where 'materia_id'=$request->materia['id'] and 'curso_id'=$request->curso['id'] and 'periodo_id'=$periodo->id
-                'trimestre'=$request->trimestre and estudiante_id'=$calif->id");
+                DB::SELECT("UPDATE notas set promedio=".$calif['promedio']." where materia_id=$request->materia 
+                and curso_id=".$request->curso['id']." and periodo_id=$periodo->id
+                and trimestre='$request->trimestre' and estudiante_id=".$calif['id'] );
             }
             else 
             {
                 $periodo=Periodo::where('estado','ACTIVO')->first();
                 $nota=new Nota;        
-                $nota->curso_id=$request->curso['curso_id'];
-                $nota->materia_id=$request->materia['materia_id'];
+                $nota->curso_id=$request->curso['id'];
+                $nota->materia_id=$request->materia;
                 $nota->user_id=$request->user()->id;
                 $nota->periodo_id=$periodo->id;
-                $nota->estudiante_id=$calif->id;
+                $nota->estudiante_id=$calif['id'];
                 $nota->promedio=$calif->promedio;
-                $nota->trimestre=$calif->trimestre;
+                $nota->trimestre=$request->trimestre;
                 $nota->fecha=date('Y-m-d');
                 $nota->hora=date('H:i:s');
+                $nota->save();
 
             }
         }
