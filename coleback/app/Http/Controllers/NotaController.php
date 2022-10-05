@@ -61,7 +61,7 @@ class NotaController extends Controller
                 $nota->user_id=$request->user()->id;
                 $nota->periodo_id=$periodo->id;
                 $nota->estudiante_id=$calif['id'];
-                $nota->promedio=$calif->promedio;
+                $nota->promedio=$calif['promedio'];
                 $nota->trimestre=$request->trimestre;
                 $nota->fecha=date('Y-m-d');
                 $nota->hora=date('H:i:s');
