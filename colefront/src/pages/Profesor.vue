@@ -458,7 +458,9 @@ export default {
 
       this.$q.loading.show();
       this.$axios.put(process.env.API + "/user/" + this.dato2.id, {
-        name:this.dato2.name,
+        id:this.dato2.id,
+        nombres:this.dato2.nombres,
+        apellidos:this.dato2.apellidos,
         // password:this.dato2.password,
         // name:this.dato2.name,
         email:this.dato2.email,
