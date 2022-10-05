@@ -85,7 +85,7 @@ export default {
       this.$q.loading.hide()
     })
     this.$axios.get('/grupo').then(res=>{
-      // console.log(res.data)
+       console.log(res.data)
       this.grupos=res.data
     })
   },
@@ -149,17 +149,19 @@ export default {
         this.alumnos=res.data
         // console.log(res.data)
         this.$axios.post('/listmaterias/'+c.id).then(res=>{
-            console.log(res.data)
-            this.cursomat=res.data
+            //console.log(res.data[0])
+            this.cursomat=res.data[0].materias
             this.grupos.forEach(r=>{
-                this.cursomat.materias.forEach(d=>{
+                this.cursomat.forEach(d=>{
                   if(r.id==d.grupo_id){
                     this.materias.push(d)
                   }
                 })
+            //console.log(this.materias)
                 r.materias=this.materias
                 this.materias=[]
             })
+           // console.log(this.grupos)
         })
         
       })
