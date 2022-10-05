@@ -197,6 +197,7 @@ export default {
     registrarNota(){
       this.$axios.post('/nota',{curso:this.curso,trimestre:this.trimestre,materia:this.mat,notas:this.materia}).then(res=>{
           console.log(res.data)
+          this.dialog_nota=false
       })
 
     }
