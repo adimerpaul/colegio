@@ -238,7 +238,7 @@ export default {
         r.primero=r.primero==null?0:r.primero
         r.segundo=r.segundo==null?0:r.segundo
         r.tercero=r.tercero==null?0:r.tercero
-        promedio=Math.round(parseFloat(r.primero)+parseFloat(r.segundo)+parseFloat(r.tercero))
+        promedio=Math.round((parseFloat(r.primero)+parseFloat(r.segundo)+parseFloat(r.tercero))/3)
         a=miConversor.convertToText( parseInt(promedio));
         doc.text(2.5, y, r.nombre)
         doc.text(15, y, r.primero+'')
