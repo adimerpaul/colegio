@@ -17,6 +17,7 @@ class NotaSeeder extends Seeder
         DB::table('notas')->insert([
             [
                 'materia_id'=>"1",
+                'curso_id'=>"1",
                 'user_id'=>"3",
                 'periodo_id'=>"1",
                 'estudiante_id'=>"1",
@@ -27,6 +28,7 @@ class NotaSeeder extends Seeder
             ],
             [
                 'materia_id'=>"1",
+                'curso_id'=>"1",
                 'user_id'=>"3",
                 'periodo_id'=>"1",
                 'estudiante_id'=>"2",

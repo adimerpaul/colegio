@@ -55,6 +55,14 @@
 <!--        <q-tr :props="props">-->
           <q-td key="opcion" :props="props">
             <q-btn
+            dense
+            round
+            flat
+            color="accent"
+            @click="matRow(props)"
+            icon="class"
+          />
+            <q-btn
               dense
               round
               flat
@@ -123,6 +131,25 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
+
+    <q-dialog v-model="dialog_mat">
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="class" color="green" text-color="white" />
+          <span class="q-ml-sm">LISTA DE MATERIAS.</span>
+        </q-card-section>
+        <q-card-section class="q-pt-xs">
+          <div class="row">
+            <div class="col-6" v-for=" m in materias " :key="m" ><q-checkbox v-model="lmaterias" :val="m.id" :label="m.nombre" color="teal" /></div>
+          </div>
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn flat label="Modificar" color="yellow" @click="updateMat" />
+          <q-btn flat label="Cancelar" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
   </div>
 </template>
 
@@ -135,7 +162,9 @@ export default {
       alert: false,
       dialog_mod: false,
       dialog_del: false,
+      dialog_mat: false,
       filter:'',
+      lmaterias:[],
       dato: {
       },
       model:'',
@@ -145,6 +174,8 @@ export default {
       unidades:[],
       permisos:[],
       permisos2:[],
+      materias:[],
+      curso:{},
       modelpermiso:false,
       uni:{},
       columns: [
@@ -160,8 +191,32 @@ export default {
     //   // this.router.push('/')
     // }
     this.misdatos();
+    this.listMateria();
   },
   methods: {
+    updateMat(){
+      this.$axios.post(process.env.API + "/upMateriaCurso",{curso:this.curso.id,materias:this.lmaterias}).then((res) => {
+
+      })
+
+    },
+    matRow(c){
+      this.curso=c.row
+      this.lmaterias=[]
+      this.$axios.post(process.env.API + "/recperaMat",{curso:this.curso.id}).then((res) => {
+        console.log(res.data)
+        res.data.forEach(e => {
+          this.lmaterias.push(e.materia_id)
+          
+        });
+      this.dialog_mat=true})
+    },
+    listMateria(){
+      this.$axios.get(process.env.API + "/materia").then((res) => {
+        // console.log(res.data)
+        this.materias = res.data;
+      });
+    },
     misdatos() {
       this.$q.loading.show();
       this.$axios.get(process.env.API + "/curso").then((res) => {

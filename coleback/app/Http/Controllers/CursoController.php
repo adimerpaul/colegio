@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Curso;
 use App\Models\Estudiante;
+use App\Models\Periodo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -111,4 +112,16 @@ class CursoController extends Controller
         return DB::SELECT("SELECT e.* FROM curso_estudiante ce inner join estudiantes e on ce.estudiante_id=e.id where ce.periodo_id=(select p.id from periodos p where p.estado='ACTIVO') and ce.curso_id=$request->curso_id");
     }
 
+    public function upMateriaCurso(Request $request){
+        $periodo=Periodo::where('estado','ACTIVO')->first();
+
+        DB::SELECT("DELETE from curso_materia where curso_id=$request->curso");
+        foreach($request->materias as $m){
+        DB::SELECT("INSERT into curso_materia (curso_id,periodo_id,materia_id,profesor_id) values($request->curso,$periodo->id,$m,1)");
+        }
+
+    }
+    public function recperaMat(Request $request ){
+        return DB::SELECT("SELECT materia_id from curso_materia where curso_id=$request->curso");
+    }
 }

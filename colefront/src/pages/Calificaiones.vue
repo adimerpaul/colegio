@@ -145,6 +145,7 @@ export default {
     },
     listado(c){
       this.materias=[]
+      this.curso=c
       this.$axios.post('/listestudiante',{'curso_id':c.id}).then(res=>{
         this.alumnos=res.data
         // console.log(res.data)
@@ -171,7 +172,7 @@ export default {
     notas(mat){
       this.materia=[]
       this.mat=mat
-      this.alvumnos.forEach(r => {
+      this.alumnos.forEach(r => {
         r.promedio=0;
         r.materia_id=mat;
         r.trimestre=this.trimestre;
@@ -180,6 +181,8 @@ export default {
       });
       this.dialog_nota=true;
       this.$axios.post('/listnota',{curso:this.curso,trimestre:this.trimestre,materia:mat}).then(res=>{
+        console.log(res.data)
+        return false
         res.data.forEach(r=>{
             this.materia.forEach(l=>{
               if(r.estudiante_id==l.id){

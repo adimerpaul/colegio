@@ -16,7 +16,7 @@ class PeriodoSeeder extends Seeder
     {
         //
         DB::table("periodos")->insert([
-           'gestion'=>"2021", 'estado'=>"ACTIVO"
+           'gestion'=>"2022", 'estado'=>"ACTIVO"
         ]);
     }
 }

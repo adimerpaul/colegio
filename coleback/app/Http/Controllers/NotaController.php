@@ -65,8 +65,12 @@ class NotaController extends Controller
     }
 
     public function listnota(Request $request){
+        //return $request;
         $periodo=Periodo::where('estado','ACTIVO')->first();
-        return Nota::where('materia_id',$request->materia['id'])->where('curso_id',$request->curso['id'])->where('periodo_id',$periodo->id)->where('trimestre',$request->trimestre)->get();
+        return Nota::where('materia_id',$request->materia)
+        ->where('curso_id',$request->curso['id'])
+        ->where('periodo_id',$periodo->id)
+        ->where('trimestre',"$request->trimestre")->get();
         //$table->unsignedBigInteger('periodo_id');
         //$table->string('trimestre');
     }
