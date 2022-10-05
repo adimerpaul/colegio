@@ -196,7 +196,7 @@ export default {
   methods: {
     updateMat(){
       this.$axios.post(process.env.API + "/upMateriaCurso",{curso:this.curso.id,materias:this.lmaterias}).then((res) => {
-
+        this.dialog_mat=false
       })
 
     },
