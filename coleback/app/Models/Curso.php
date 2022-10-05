@@ -13,5 +13,9 @@ class Curso extends Model
         'paralelo',
     ];
 
+    public function materias(){
+        return $this->belongsToMany(Materia::class)->with('grupo');
+    }
+
     
 }

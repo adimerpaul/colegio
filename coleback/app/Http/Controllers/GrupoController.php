@@ -16,6 +16,7 @@ class GrupoController extends Controller
     {
         return Grupo::with('materias')->get();
     }
+    
 
     /**
      * Show the form for creating a new resource.

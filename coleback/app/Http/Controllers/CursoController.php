@@ -96,10 +96,12 @@ class CursoController extends Controller
     }
 
     public function listmaterias($id){
-        return DB::SELECT("SELECT * from curso_materia cm inner join materia m on cm.materia_id=m.id
+       return Curso::with('materias')->where('id',$id)->get();
+       /*return DB::SELECT("SELECT * from curso_materia cm inner join materia m on cm.materia_id=m.id
         inner join user u on cm.profesor_id = u.id
-        where cm.curso_id=$id");
+        where cm.curso_id=$id");*/
     }
+
 
     public function regmateria(Request $request){
         DB::table('curso_materia')->insert([["curso_id"=>$request->curso_id],["materia_id"=>$request->materia_id],["profesor_id"=>$request->user_id]]);

@@ -63,6 +63,8 @@ export default {
       grupos:[],
       alumnos:[],
       materia:[],
+      materias:[],
+      cursomat:[],
       calificacion:[],
       dialog_nota:false,
       mat:{},
@@ -142,9 +144,24 @@ export default {
         //console.log(XLSX.utils.sheet_to_json(reader.Sheets[reader.SheetNames[0]]))
     },
     listado(c){
+      this.materias=[]
       this.$axios.post('/listestudiante',{'curso_id':c.id}).then(res=>{
         this.alumnos=res.data
         // console.log(res.data)
+        this.$axios.post('/listmaterias/'+c.id).then(res=>{
+            console.log(res.data)
+            this.cursomat=res.data
+            this.grupos.forEach(r=>{
+                this.cursomat.materias.forEach(d=>{
+                  if(r.id==d.grupo_id){
+                    this.materias.push(d)
+                  }
+                })
+                r.materias=this.materias
+                this.materias=[]
+            })
+        })
+        
       })
 
 
