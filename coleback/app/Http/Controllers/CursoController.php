@@ -17,7 +17,7 @@ class CursoController extends Controller
      */
     public function index()
     {
-        return Curso::all();
+        return Curso::with('materias')->get();
     }
 
     /**

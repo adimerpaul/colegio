@@ -13,6 +13,7 @@ import Inscritos from "pages/Inscritos";
 import Calificaiones from "pages/Calificaiones";
 import Gestion from "pages/Gestion";
 import Inicio from "pages/Index";
+import Mejores from "pages/Mejores";
 
 const routes = [
   {
@@ -32,6 +33,7 @@ const routes = [
       { path: '/inscritos', component: Inscritos,meta: {requiresAuth: true,} },
       { path: '/calificaciones', component: Calificaiones,meta: {requiresAuth: true,} },
       { path: '/gestion', component: Gestion,meta: {requiresAuth: true,} },
+      { path: '/mejores', component: Mejores,meta: {requiresAuth: true,} },
       // { path: '/asiganacion', component: Asignacion,meta: {requiresAuth: true,} },
       // { path: '/misrecepciones', component: Misrecepciones,meta: {requiresAuth: true,} },
     ]

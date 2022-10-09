@@ -1,0 +1,143 @@
+<template>
+    <div class="q-pa-md">
+        <div class="row">
+            <div class="col-4"><q-select square outlined v-model="curso" :options="data" label="CURSO" /></div>
+            <div class="col-4"><q-select square outlined v-model="trimestre" :options="periodo" label="TRIMESTRE" /></div>
+            <div class="col-4"><q-btn  label="GENERAR" color="positive"  @click="generar"  icon="add_circle" class="q-mb-xs"/></div>
+            
+        </div>
+  
+  
+      <q-table dense :filter="filter" title="ESTUDIANTES" :rows="calificacion"  row-key="name" :rows-per-page-options="[50,100]">
+        <template v-slot:top-right>
+          <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+        </template>
+
+      </q-table>
+      <table>
+        <thead>
+          <tr id="htmlencabezado">
+            
+          </tr>
+        </thead>
+        <tbody id="cuerpo">
+
+        </tbody>
+      </table>
+
+    </div>
+  </template>
+  
+  <script>
+  import { date } from 'quasar'
+  const { addToDate } = date
+  export default {
+    data() {
+      return {
+        filter:'',
+        lmaterias:[],
+        dato: { },
+        trimestre:'PRIMER TRIMESTRE',
+        model:'',
+        dato2: {},
+        options: [],
+        props: [],
+        unidades:[],
+        permisos:[],
+        permisos2:[],
+        materias:[],
+        calificacion:[],
+        encabezado:'',
+        cuerponota:'',
+        numero:0,
+        periodo:['PRIMER TRIMESTRE','SEGUNDO TRIMESTRE','TERCER TRIMESTRE','ANUAL'],
+        curso:{},
+        modelpermiso:false,
+        uni:{},
+        columns: [
+          {name: "nombre", align: "left", label: "MATERIA ", field: "nombre", sortable: true,},
+          {name: "paralelo", align: "left", label: "paralelo", field: "paralelo", sortable: true,},
+          { name: "opcion", align:"center",label: "OPCIÓN", field: "action", sortable: false },
+        ],
+        data: [],
+      };
+    },
+    created() {
+      // if (!this.$store.state.boolusuario){
+      //   // this.router.push('/')
+      // }
+      
+      this.misdatos();
+    },
+    methods: {
+        generar(){
+            this.materias=[]
+            this.encabezado='<th>ESTUDIANTE</th>'
+            this.cuerponota=''
+            let campo=''
+            let color=''
+            this.curso.materias.forEach(r=>{
+                this.materias.push({id:r.id,nombre:r.nombre})
+            })
+            this.numero=this.materias.length
+            console.log(this.materias)
+          this.$axios.post(process.env.API + "/notaMejor",{curso:this.curso.id,materias:this.materias,trim:this.trimestre}).then((res) => {
+            console.log(res.data)
+            this.calificacion=res.data
+            for(let i=0;i<this.numero;i++){
+              this.encabezado+="<th>"+this.materias[i].nombre+"</th>"
+            }
+              this.encabezado+="<th>PROMEDIO</th>"
+            document.getElementById('htmlencabezado').innerHTML = this.encabezado
+            this.calificacion.forEach(r=>{
+              this.cuerponota+="<tr><td>"+r.paterno+' '+r.materno+' '+r.nombres+"</td>"
+                this.materias.forEach(m=>{
+                  campo=m.nombre
+                  console.log(r[campo])
+                  if(r[campo]==null) r[campo]=0
+                  if(r[campo]<51) color='red' 
+                  else color='black'
+                  this.cuerponota+="<td style='color:"+color+"'>"+r[campo]+"</td>"
+                })
+                if(r.promedio<51) color='red' 
+                  else color='black'
+                this.cuerponota+="<td style='color:"+color+"'>"+r.promedio+"</td></tr>"
+              console.log(r)
+            })
+            document.getElementById('cuerpo').innerHTML = this.cuerponota
+            console.log(this.cuerponota)
+            
+          })  
+        },
+      misdatos() {
+        this.data=[]
+        this.$q.loading.show();
+        this.$axios.get(process.env.API + "/curso").then((res) => {
+           console.log(res.data)
+           res.data.forEach(r=>{
+                r.label=r.nombre+' '+r.paralelo
+            this.data.push(r)
+
+           })
+           this.curso=this.data[0]
+          this.$q.loading.hide();
+        });
+      },
+
+    },
+  };
+  </script>
+  <style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  table, th, td {
+    border: 1px solid;
+  }
+  </style>
+  

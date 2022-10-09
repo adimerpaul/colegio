@@ -96,7 +96,34 @@ class NotaController extends Controller
     public function notaMejor(Request $request){
 
         $periodo=Periodo::where('estado','ACTIVO')->first();
+        $num=sizeof($request->materias);
+        $cadena='';
+        if ($request->trim=='ANUAL'){
+            foreach($request->materias as $m){
+                $cadena.=",(select ROUND(sum(n.promedio)/3) from notas n where n.curso_id=$request->curso and n.materia_id=".$m['id']." and n.periodo_id=$periodo->id and n.estudiante_id=e.id ) as '".$m['nombre']."'";
+            }
+    
+            return DB::SELECT( "SELECT e.id,e.paterno,e.materno,e.nombres ".$cadena." 
+            ,(select ROUND(sum(n.promedio)/($num*3)) from notas n where n.curso_id=$request->curso and n.periodo_id=$periodo->id and n.estudiante_id=e.id ) as promedio
+            from estudiantes e inner join curso_estudiante ce on e.id=ce.estudiante_id
+            where ce.curso_id=$request->curso and ce.periodo_id=$periodo->id order by e.paterno,e.materno,e.nombres");
+        }else {
+        foreach($request->materias as $m){
+            $cadena.=",(select IFNULL(n.promedio,0) from notas n where n.curso_id=$request->curso and n.materia_id=".$m['id']." and n.periodo_id=$periodo->id and n.estudiante_id=e.id and n.trimestre='$request->trim') as '".$m['nombre']."'";
+        }
+
+        return DB::SELECT( "SELECT e.id,e.paterno,e.materno,e.nombres ".$cadena." 
+        ,(select ROUND(sum(n.promedio)/$num) from notas n where n.curso_id=$request->curso and n.periodo_id=$periodo->id and n.estudiante_id=e.id and n.trimestre='$request->trim') as promedio
+        from estudiantes e inner join curso_estudiante ce on e.id=ce.estudiante_id
+        where ce.curso_id=$request->curso and ce.periodo_id=$periodo->id order by e.paterno,e.materno,e.nombres");
+    }
+
+
+
+
+        return $request;
        //return Nota::with('materia')->where('estudiante_id',$request->estudiante_id)->where('periodo_id',$periodo->id)->get();
+       return DB::SELECT("SELECT COUNT(*)as cantidad,sum(promedio) as total,estudiante_id,e.nombres,e.paterno,e.materno,c.nombre,c.paralelo from notas n inner join estudiantes e on n.estudiante_id=e.id inner join cursos c on n.curso_id=c.id where n.periodo_id=$periodo->id group by estudiante_id;");
        return DB::SELECT("SELECT m.grupo_id,m.id, m.nombre, 
        (SELECT n.promedio from notas n where n.materia_id=m.id and n.periodo_id=$periodo->id and n.estudiante_id=".$request->estudiante['id']." and n.trimestre='PRIMER TRIMESTRE') as primero, 
        (SELECT n.promedio from notas n where n.materia_id=m.id and n.periodo_id=$periodo->id and n.estudiante_id=".$request->estudiante['id']." and n.trimestre='SEGUNDO TRIMESTRE') as segundo,

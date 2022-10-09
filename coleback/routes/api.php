@@ -48,6 +48,7 @@ Route::group(['middleware'=>'auth:sanctum'],function (){
     Route::post('/listmaterias/{id}',[\App\Http\Controllers\CursoController::class,'listmaterias']);
     Route::post('/upMateriaCurso',[\App\Http\Controllers\CursoController::class,'upMateriaCurso']);
     Route::post('/recperaMat',[\App\Http\Controllers\CursoController::class,'recperaMat']);
+    Route::post('/notaMejor',[\App\Http\Controllers\NotaController::class,'notaMejor']);
 
     Route::resource('/padre',\App\Http\Controllers\PadreController::class);
     Route::resource('/materia',\App\Http\Controllers\MateriaController::class);

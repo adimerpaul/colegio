@@ -53,7 +53,7 @@ class EstudianteController extends Controller
 //        return $request;
         $estudiante=new Estudiante();
         $estudiante->carnet=$request->carnet;
-        $estudiante->domicilio=$request->domicilio;
+        $estudiante->domicilio=strtoupper($request->domicilio);
         $estudiante->paterno= strtoupper($request->paterno);
         $estudiante->materno=strtoupper($request->materno);
         $estudiante->nombres=strtoupper($request->nombres);
@@ -117,7 +117,7 @@ class EstudianteController extends Controller
     {
         //
         $estudiante=Estudiante::find($request->id);
-        $estudiante->domicilio=$request->domicilio;
+        $estudiante->domicilio=strtoupper($request->domicilio);
         $estudiante->paterno=strtoupper($request->paterno);
         $estudiante->materno=strtoupper($request->materno);
         $estudiante->nombres=strtoupper($request->nombres);
