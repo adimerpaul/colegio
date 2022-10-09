@@ -280,6 +280,25 @@
             </q-item-section>
           </q-item>
 
+          <q-item
+          v-if="$store.state.login.boolgestionarcalificaciones"
+          clickable
+          to="/mejores"
+          active-class="my-menu-link"
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon name="history_edu" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Notas Promedio</q-item-label>
+            <q-item-label caption>
+              Calificaciones
+            </q-item-label>
+          </q-item-section>
+        </q-item>
 
           <q-item
             v-if="$store.getters['login/isLoggedIn']"

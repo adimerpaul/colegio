@@ -117,7 +117,7 @@ export default {
 
               if (i>=10 && e.__EMPTY!=undefined && e.__EMPTY.trim()!='' && e.__EMPTY.trim()!=' ' && e.__EMPTY!=null){
                 let nombre=e.__EMPTY.replace('  ',' ')
-                let nota=e.__EMPTY_25
+                let nota=e.__EMPTY_26
                 cm.calificacion.push(e)
                 let indexFind= (cm.materia.findIndex(e=>e.nombreCompleto==nombre))
                 if (indexFind>=0){

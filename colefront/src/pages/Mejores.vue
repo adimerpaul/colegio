@@ -103,6 +103,7 @@
                   else color='black'
                   this.cuerponota+="<td style='color:"+color+"'>"+r[campo]+"</td>"
                 })
+                if(r.promedio==null) r.promedio=0
                 if(r.promedio<51) color='red' 
                   else color='black'
                 this.cuerponota+="<td style='color:"+color+"'>"+r.promedio+"</td></tr>"
