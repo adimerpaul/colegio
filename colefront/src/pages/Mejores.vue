@@ -18,6 +18,7 @@
         </template>
 
       </q-table>
+      <div id="impnota">
       <table>
         <thead>
           <tr id="htmlencabezado">
@@ -28,13 +29,16 @@
 
         </tbody>
       </table>
-
+    </div>
     </div>
   </template>
   
   <script>
   import { date } from 'quasar'
+import {Printd} from "printd";
+
   const { addToDate } = date
+
   export default {
     data() {
       return {
@@ -76,7 +80,25 @@
     methods: {
         generar(){
             this.materias=[]
-            this.encabezado='<th>ESTUDIANTE</th>'
+            this.cadena='<style>\
+              table {\
+                font-size: 10 px;\
+                width: 100%;\
+                border-collapse: collapse;\
+              }\
+              table, th, td {\
+                border: 1px solid;\
+              }\
+              thead{\
+                background-color: #12EA00;\
+              }\
+              .titulo{fontsize:14px;\
+                text-align: center;\
+                font-weight: bold;}\
+              </style>\
+              <div class="titulo">CENTRALIZADOR DE NOTAS'+this.trimestre+' CURSO: '+this.curso.label+'</div>\
+            <table><thead>\
+            <tr ><th>No</th><th>ESTUDIANTE</th>'
             this.cuerponota=''
             let campo=''
             let color=''
@@ -89,29 +111,33 @@
             console.log(res.data)
             this.calificacion=res.data
             for(let i=0;i<this.numero;i++){
-              this.encabezado+="<th>"+this.materias[i].nombre+"</th>"
+              this.cadena+="<th>"+this.materias[i].nombre+"</th>"
             }
-              this.encabezado+="<th>PROMEDIO</th>"
-            document.getElementById('htmlencabezado').innerHTML = this.encabezado
+              this.cadena+="<th>PROMEDIO</th> </tr></thead><tbody >"
+            let i=1
             this.calificacion.forEach(r=>{
-              this.cuerponota+="<tr><td>"+r.paterno+' '+r.materno+' '+r.nombres+"</td>"
+              this.cadena+="<tr><td>"+i+"</td><td>"+r.paterno+' '+r.materno+' '+r.nombres+"</td>"
                 this.materias.forEach(m=>{
                   campo=m.nombre
                   console.log(r[campo])
                   if(r[campo]==null) r[campo]=0
                   if(r[campo]<51) color='red' 
                   else color='black'
-                  this.cuerponota+="<td style='color:"+color+"'>"+r[campo]+"</td>"
+                  this.cadena+="<td style='color:"+color+"'>"+r[campo]+"</td>"
                 })
                 if(r.promedio==null) r.promedio=0
                 if(r.promedio<51) color='red' 
                   else color='black'
-                this.cuerponota+="<td style='color:"+color+"'>"+r.promedio+"</td></tr>"
+                this.cadena+="<td style='color:"+color+"'>"+r.promedio+"</td></tr>"
               console.log(r)
+              i++
             })
-            document.getElementById('cuerpo').innerHTML = this.cuerponota
+            this.cadena+="</tbody></table>"
+            document.getElementById('impnota').innerHTML = this.cadena
             console.log(this.cuerponota)
-            
+            const d = new Printd()
+            d.print( document.getElementById('impnota') )
+
           })  
         },
       misdatos() {
@@ -132,13 +158,5 @@
     },
   };
   </script>
-  <style>
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  table, th, td {
-    border: 1px solid;
-  }
-  </style>
+
   
