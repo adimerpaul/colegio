@@ -91,8 +91,9 @@ import {Printd} from "printd";
               }\
               thead{\
                 background-color: #12EA00;\
+                font-size: 8 px;\
               }\
-              .titulo{fontsize:14px;\
+              .titulo{font-size:14px;\
                 text-align: center;\
                 font-weight: bold;}\
               </style>\
