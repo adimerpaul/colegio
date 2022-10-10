@@ -82,22 +82,24 @@ import {Printd} from "printd";
             this.materias=[]
             this.cadena='<style>\
               table {\
-                font-size: 10 px;\
                 width: 100%;\
                 border-collapse: collapse;\
               }\
               table, th, td {\
                 border: 1px solid;\
               }\
-              thead{\
-                background-color: #12EA00;\
+              tbody{\
                 font-size: 8 px;\
+              }\
+              thead, th{\
+                background-color: #12EA00;\
+                font-size: 6 px;\
               }\
               .titulo{font-size:14px;\
                 text-align: center;\
                 font-weight: bold;}\
               </style>\
-              <div class="titulo">CENTRALIZADOR DE NOTAS'+this.trimestre+' CURSO: '+this.curso.label+'</div>\
+              <div class="titulo">CENTRALIZADOR DE NOTAS '+this.trimestre+' CURSO: '+this.curso.label+'</div>\
             <table><thead>\
             <tr ><th>No</th><th>ESTUDIANTE</th>'
             this.cuerponota=''
