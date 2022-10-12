@@ -18,6 +18,17 @@
         </template>
 
       </q-table>
+      <div class="row">
+        <div class="col-6">
+          <q-table title="Porcentajes" :rows="porcentaje" />
+          
+        </div>
+        <div class="col-6">
+          <canvas id="bar-chart"></canvas>
+
+        </div>
+      </div>
+      <div class="hidden">
       <div id="impnota">
       <table>
         <thead>
@@ -31,12 +42,13 @@
       </table>
     </div>
     </div>
+    </div>
   </template>
   
   <script>
   import { date } from 'quasar'
 import {Printd} from "printd";
-
+import Chart from 'chart.js/auto';
   const { addToDate } = date
 
   export default {
@@ -44,6 +56,7 @@ import {Printd} from "printd";
       return {
         filter:'',
         lmaterias:[],
+        porcentaje:[],
         dato: { },
         trimestre:'PRIMER TRIMESTRE',
         model:'',
@@ -58,6 +71,8 @@ import {Printd} from "printd";
         encabezado:'',
         cuerponota:'',
         numero:0,
+        aprobado:0,
+        reprobado:0,
         periodo:['PRIMER TRIMESTRE','SEGUNDO TRIMESTRE','TERCER TRIMESTRE','ANUAL'],
         curso:{},
         modelpermiso:false,
@@ -68,6 +83,13 @@ import {Printd} from "printd";
           { name: "opcion", align:"center",label: "OPCIÓN", field: "action", sortable: false },
         ],
         data: [],
+        chartData : {
+      labels: [ 'January', 'February', 'March' ],
+      datasets: [ { data: [40, 20, 12] } ]
+    },      
+    chartOptions: {
+        responsive: true
+      }
       };
     },
     created() {
@@ -79,6 +101,8 @@ import {Printd} from "printd";
     },
     methods: {
         generar(){
+            this.aprobado=0
+            this.reprobado=0
             this.materias=[]
             this.cadena='<style>\
               table {\
@@ -88,12 +112,12 @@ import {Printd} from "printd";
               table, th, td {\
                 border: 1px solid;\
               }\
-              tbody{\
-                font-size: 8 px;\
+              tbody,tr,td{\
+                font-size: 8px;\
               }\
-              thead, th{\
+              th{\
                 background-color: #12EA00;\
-                font-size: 6 px;\
+                font-size: 6px;\
               }\
               .titulo{font-size:14px;\
                 text-align: center;\
@@ -129,8 +153,10 @@ import {Printd} from "printd";
                   this.cadena+="<td style='color:"+color+"'>"+r[campo]+"</td>"
                 })
                 if(r.promedio==null) r.promedio=0
-                if(r.promedio<51) color='red' 
-                  else color='black'
+                if(r.promedio<51) {color='red' 
+                 this.reprobado++}
+                  else {color='black'
+                this.aprobado++}
                 this.cadena+="<td style='color:"+color+"'>"+r.promedio+"</td></tr>"
               console.log(r)
               i++
@@ -141,8 +167,38 @@ import {Printd} from "printd";
             const d = new Printd()
             d.print( document.getElementById('impnota') )
 
+
+            this.porcentaje=[{DETALLE:'APROBADOS',CANTIDAD:this.aprobado},{DETALLE:'REPROBADOS',CANTIDAD:this.reprobado}]
+            this.createChart('bar-chart');
+
           })  
         },
+        createChart (chartId) {
+      const ctx = document.getElementById(chartId);
+      const myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['APROBADOS','REPROBADOS'],
+          datasets: [
+            {
+              label: 'Formularios (cantidad)',
+              backgroundColor: ['green','red'],
+              data: [this.aprobado,this.reprobado]
+            }
+          ]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          title: {
+            display: true,
+            text: 'Total de Formularios registraados'
+          }
+        }
+      })
+      return myChart;
+    },
       misdatos() {
         this.data=[]
         this.$q.loading.show();
