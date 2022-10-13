@@ -18,6 +18,11 @@ class PadreController extends Controller
         return User::where('tipo','PADRE')->orWhere('tipo','TUTOR')->get();
     }
 
+    public function hijos(Request $request)
+    {
+        return User::where('id',$request->user()->id)->where('tipo','PADRE')->orWhere('tipo','TUTOR')->with('estudiantes')->get();
+    }
+
     /**
      * Store a newly created resource in storage.
      *

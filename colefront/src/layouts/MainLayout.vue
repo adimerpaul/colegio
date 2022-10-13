@@ -181,6 +181,26 @@
           </q-item>
 
           <q-item
+          v-if="$store.getters['login/isLoggedIn']"
+          clickable
+          to="/publicar"
+          active-class="my-menu-link"
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon name="picture_as_pdf" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Calificacion Hijo</q-item-label>
+            <q-item-label caption>
+              Listado
+            </q-item-label>
+          </q-item-section>
+        </q-item>
+
+          <q-item
             v-if="$store.getters['login/isLoggedIn']"
             clickable
             to="/biblioteca"

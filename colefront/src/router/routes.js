@@ -14,6 +14,7 @@ import Calificaiones from "pages/Calificaiones";
 import Gestion from "pages/Gestion";
 import Inicio from "pages/Index";
 import Mejores from "pages/Mejores";
+import Publicar from "pages/Publicar";
 
 const routes = [
   {
@@ -34,6 +35,7 @@ const routes = [
       { path: '/calificaciones', component: Calificaiones,meta: {requiresAuth: true,} },
       { path: '/gestion', component: Gestion,meta: {requiresAuth: true,} },
       { path: '/mejores', component: Mejores,meta: {requiresAuth: true,} },
+      { path: '/publicar', component: Publicar,meta: {requiresAuth: true,} },
       // { path: '/asiganacion', component: Asignacion,meta: {requiresAuth: true,} },
       // { path: '/misrecepciones', component: Misrecepciones,meta: {requiresAuth: true,} },
     ]
