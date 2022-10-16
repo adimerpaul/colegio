@@ -108,6 +108,7 @@ export default {
       url:process.env.API,
       cursos:[],
       curso:{},
+      gestion:{},
       columns:[
         { name: 'id', label: 'id', field: 'id', sortable: true },
         { name: 'nombre', label: 'nombre', field: 'nombre', sortable: true },
@@ -136,6 +137,10 @@ export default {
       this.curso=this.cursos[0]
       this.misalumnos(this.curso.id)
     })
+    this.$axios.post('/gestion').then(res=>{
+      this.gestion=res.data
+    })
+
   },
   methods:{
     uppublicar(){
@@ -215,7 +220,7 @@ export default {
     },
     libreta(estud){
       this.$axios.post('/libreta',{estudiante:estud,curso:this.curso}).then(res=>{
-
+        console.log(res.data)
       var doc = new jsPDF('L','cm','legal')
       let cm=this;
         var img = new Image()
@@ -230,7 +235,7 @@ export default {
         doc.setFont(undefined,'bold')
         doc.setFontSize(12);
         doc.text(15, 1, 'LIBRETA ESCOLAR')
-        doc.text(14, 1.5, 'Educacion Secundaria')
+        doc.text(13, 1.5, 'Educacion Secundaria '+ cm.curso.label)
         doc.text(5, 2, 'Unidad Educativa:')
         doc.text(5, 2.5, 'Distrito Escolar:')
         doc.text(5, 3, 'Turno:')
@@ -243,7 +248,7 @@ export default {
         doc.text(10, 3, 'TARDE')
         doc.text(25, 2, 'ORURO')
         doc.text(25, 2.5, 'FISCAL')
-        doc.text(25, 3, '2021')
+        doc.text(25, 3, ''+cm.gestion.gestion)
         doc.setLineWidth(0.01)
         doc.line(1,3.1,33,3.1)
         doc.setFont(undefined,'bold')

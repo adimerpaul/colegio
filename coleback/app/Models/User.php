@@ -58,7 +58,7 @@ class User extends Authenticatable
     }
 
     public function estudiantes(){
-        return $this->belongsToMany(Estudiante::class);
+        return $this->belongsToMany(Estudiante::class)->with('curso');
     }
 
     public function cursos(){

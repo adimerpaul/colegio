@@ -29,6 +29,10 @@ class PeriodoController extends Controller
         //
     }
 
+    public function gestion(){
+        return Periodo::where('estado','ACTIVO')->first();
+
+    }
     /**
      * Store a newly created resource in storage.
      *

@@ -62,5 +62,6 @@ Route::group(['middleware'=>'auth:sanctum'],function (){
     Route::post('/upocultarnota',[\App\Http\Controllers\CursoController::class,'upocultarnota']);
     Route::post('/upverestudiante',[\App\Http\Controllers\CursoController::class,'upverestudiante']);
     Route::post('/hijos',[\App\Http\Controllers\PadreController::class,'hijos']);
+    Route::post('/gestion',[\App\Http\Controllers\PeriodoController::class,'gestion']);
 });
 
