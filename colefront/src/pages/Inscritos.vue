@@ -4,7 +4,11 @@
     <div class="col-3 q-pa-xs">
       <q-select outlined dense label="Seleccionar Curso" :options="cursos" v-model="curso" @update:model-value="actualizar"></q-select>
 <!--      <pre>{{cursos}}</pre>-->
+        
+  
     </div>
+    <div class="col-3"><q-btn color="green"  label="Publicar Notas" @click="uppublicar"/></div>
+    <div class="col-3"><q-btn color="red"  label="Ocultar Notas" @click="upnopublicar"/></div>
     <div class="col-12">
 
       <q-table dense :title="curso.nombre" :rows="estudiantes" :columns="columns" :filter="filter">
@@ -53,6 +57,11 @@
 <!--              {{ props.row.imagen}}-->
               <q-img :src="url+'../../imagenes/'+props.row.imagen" width="30px"/>
             </q-td>
+            <q-td key="vernota" :props="props">
+              <!--              {{ props.row.imagen}}-->
+              <q-badge :color="props.row.vernota=='SI'?'green':'red'"  @click="publicarestudiante(props.row)">{{props.row.vernota}}</q-badge>
+                            
+              </q-td>
             <q-td key="opciones" :props="props">
                  <q-btn color="green" label="libreta" @click="libreta(props.row)"/>
                 
@@ -107,6 +116,7 @@ export default {
         { name: 'celular', label: 'celular', field: 'celular', sortable: true },
         { name: 'direccion', label: 'direccion', field: 'direccion', sortable: true },
         { name: 'foto', label: 'foto', field: 'foto', sortable: true },
+        { name: 'vernota', label: 'vernota', field: 'vernota', sortable: true },
         { name: 'opciones', label: 'opciones', field: 'opciones', sortable: true },
       ]
     }
@@ -128,6 +138,37 @@ export default {
     })
   },
   methods:{
+    uppublicar(){
+      this.$axios.post('/upvernota',{id:this.curso.id}).then(res=>{
+        this.$q.notify({
+          message: 'Ver Notas ',
+          color: 'green',
+          icon: 'info'
+        })
+       this.misalumnos(this.curso.id)
+      })
+
+    },
+    upnopublicar(){
+      this.$axios.post('/upocultarnota',{id:this.curso.id}).then(res=>{
+        this.$q.notify({
+          message: 'Ocultar Notas ',
+          color: 'green',
+          icon: 'info'
+        })
+       this.misalumnos(this.curso.id)
+    })
+    },
+    publicarestudiante(est){
+      this.$axios.post('/upverestudiante',est).then(res=>{
+        this.$q.notify({
+          message: 'Actualizado ',
+          color: 'green',
+          icon: 'info'
+        })
+       this.misalumnos(this.curso.id)
+    })
+    },
     exportarPDF(){
       let cm=this;
       function header(){
@@ -286,6 +327,7 @@ export default {
     },
     misalumnos(id){
       this.$axios.get('/curso/'+id).then(res=>{
+        //console.log(res.data)
         this.$q.loading.hide()
         this.estudiantes=[]
         res.data.forEach(r=>{

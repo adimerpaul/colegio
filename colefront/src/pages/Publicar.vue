@@ -15,7 +15,7 @@
             <template v-slot:body-cell-opcion="props">
 
                 <q-td key="opcion" :props="props">
-                     <q-btn color="green" label="libreta" @click="libreta(props.row)"/>
+                     <q-btn color="green" label="libreta" @click="libreta(props.row)" v-if="props.row.vernota=='SI'"/>
                     
                 </q-td>
             </template>

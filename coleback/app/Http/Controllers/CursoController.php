@@ -52,8 +52,51 @@ class CursoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Curso $curso)
+    {   
+        //return $curso->id;
+        $periodo=Periodo::where('estado','ACTIVO')->first();
+        return DB::SELECT("SELECT 
+        e.id	,
+        e.carnet,	
+        e.domicilio	,
+        e.paterno	,
+        e.materno	,
+        e.nombres	,
+        e.sexo	,
+        e.celular,	
+        e.fechanac,	
+        e.rude	,
+        e.fecha	,
+        e.estado,	
+        e.imagen,	
+        e.vernota,	
+        e.curso_id	
+         from estudiantes e inner join curso_estudiante ce on e.id=ce.estudiante_id where ce.curso_id=$curso->id and ce.periodo_id=$periodo->id");
+    }
+
+    public function upvernota(Request $request)
     {
-        return Estudiante::where('curso_id',$curso->id)->get();
+        $periodo=Periodo::where('estado','ACTIVO')->first();
+        DB::SELECT("UPDATE estudiantes set vernota='SI' where id in (select estudiante_id from curso_estudiante where curso_id=$request->id and periodo_id=$periodo->id)");
+    }
+
+    public function upocultarnota(Request $request)
+    {
+        $periodo=Periodo::where('estado','ACTIVO')->first();
+        DB::SELECT("Update estudiantes set vernota='NO' where id in (select estudiante_id from curso_estudiante where curso_id=$request->id and periodo_id=$periodo->id)");
+    }
+
+    public function upverestudiante(Request $request)
+    {
+        //$periodo=Periodo::where('estado','ACTIVO')->first();
+        $estudiante=Estudiante::find($request->id);
+        if($estudiante->vernota=='SI'){
+            $estudiante->vernota='NO';
+        }
+        else{
+            $estudiante->vernota='SI';
+        }
+        $estudiante->save();
     }
 
     /**
