@@ -58,6 +58,7 @@ class EstudianteController extends Controller
         $estudiante->materno=strtoupper($request->materno);
         $estudiante->nombres=strtoupper($request->nombres);
         $estudiante->celular=$request->celular;
+        $estudiante->rude=$request->rude;
         $estudiante->sexo=$request->sexo;
         $estudiante->fechanac=$request->fechanac;
 //        $estudiante->tipo=$request->tipo;
@@ -123,6 +124,7 @@ class EstudianteController extends Controller
         $estudiante->nombres=strtoupper($request->nombres);
         $estudiante->celular=$request->celular;
         $estudiante->fechanac=$request->fechanac;
+        $estudiante->rude=$request->rude;
         $estudiante->fecha=date('Y-m-d');
         $estudiante->curso_id=$request->curso_id;
         $estudiante->save();

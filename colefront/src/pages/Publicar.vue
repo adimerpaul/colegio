@@ -106,7 +106,8 @@
         doc.setFont(undefined,'bold')
         doc.setFontSize(12);
         doc.text(15, 1, 'LIBRETA ESCOLAR')
-        doc.text(13, 1.5, 'Educacion Secundaria '+ estud.curso.nombre +' '+estud.curso.paralelo)
+        doc.text(13, 1.5, 'Educacion Secundaria ')
+        doc.text(20, 1.5,  estud.curso.nombre +' '+estud.curso.paralelo)
         doc.text(5, 2, 'Unidad Educativa:')
         doc.text(5, 2.5, 'Distrito Escolar:')
         doc.text(5, 3, 'Turno:')
