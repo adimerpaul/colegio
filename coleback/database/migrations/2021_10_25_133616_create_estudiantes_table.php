@@ -31,8 +31,6 @@ class CreateEstudiantesTable extends Migration
             $table->string('estado')->default('ACTIVO');
             $table->string('vernota')->default('NO');
             $table->string('imagen')->default('user.png');
-            $table->unsignedBigInteger('curso_id')->default(1);
-            $table->foreign('curso_id')->references('id')->on('cursos');
             $table->timestamps();
         });
     }

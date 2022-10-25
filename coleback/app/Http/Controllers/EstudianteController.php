@@ -20,7 +20,8 @@ class EstudianteController extends Controller
         return Estudiante::all();
     }
 
-    public function listado(request $request){
+    public function listado(){
+        $periodo=Periodo::where('estado','ACTIVO')->first();
         return Estudiante::with('curso')->get();
     }
 
@@ -32,12 +33,14 @@ class EstudianteController extends Controller
     public function create()
     {
 //        return DB::select("select c.id,c.nombre,c.paralelo,count(*) as cantidad from cursos c INNER JOIN estudiantes e ON e.curso_id=c.id GROUP BY c.id,c.nombre,c.paralelo");
+            $periodo=Periodo::where('estado','ACTIVO')->first();
+
         return DB::select("
-                select c.id,c.nombre,c.paralelo,count(*) as cantidad , (
-        SELECT count(*) from estudiantes where curso_id=c.id AND sexo='M'
-        ) as m,(SELECT count(*) from estudiantes where curso_id=c.id AND sexo='F'
-        ) as f
-        from cursos c INNER JOIN estudiantes e ON e.curso_id=c.id
+        select c.id,c.nombre,c.paralelo,count(*) as cantidad ,
+        (SELECT count(*) from estudiantes e2 inner join curso_estudiante ce2 on e2.id=ce2.estudiante_id where ce2.curso_id=c.id AND e2.sexo='M') as m,
+        (SELECT count(*) from estudiantes e2 inner join curso_estudiante ce2 on e2.id=ce2.estudiante_id where ce2.curso_id=c.id AND e2.sexo='F') as f
+        from cursos c inner join curso_estudiante ce on ce.curso_id=c.id INNER JOIN estudiantes e ON ce.estudiante_id=e.id
+        where ce.periodo_id=$periodo->id
         GROUP BY c.id,c.nombre,c.paralelo
         ");
     }
@@ -51,6 +54,7 @@ class EstudianteController extends Controller
     public function store(Request $request)
     {
 //        return $request;
+
         $estudiante=new Estudiante();
         $estudiante->carnet=$request->carnet;
         $estudiante->domicilio=strtoupper($request->domicilio);
@@ -65,7 +69,6 @@ class EstudianteController extends Controller
         $estudiante->fecha=date('Y-m-d');
 //        $estudiante->estado=$request->estado;
 //        $estudiante->imagen=$request->imagen;
-        $estudiante->curso_id=$request->curso_id;
         $estudiante->save();
         $periodo=Periodo::where('estado',"ACTIVO")->get()[0];
 //        return [
@@ -126,10 +129,9 @@ class EstudianteController extends Controller
         $estudiante->fechanac=$request->fechanac;
         $estudiante->rude=$request->rude;
         $estudiante->fecha=date('Y-m-d');
-        $estudiante->curso_id=$request->curso_id;
         $estudiante->save();
         $periodo=Periodo::where('estado',"ACTIVO")->get()[0];
-        $curest=DB::table('curso_estudiante')->where("estudiante_id",$estudiante->id)->where("periodo_id",$periodo->id)->get();
+        $curest=DB::table('curso_estudiante')->where("estudiante_id",$estudiante->id)->where("periodo_id",)->get();
         if(sizeof($curest)>0){
         DB::table('curso_estudiante')->where("estudiante_id",$estudiante->id)->where("periodo_id",$periodo->id)->update(["curso_id"=>$request->curso_id]);}
        else

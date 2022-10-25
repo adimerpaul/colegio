@@ -114,15 +114,15 @@
           </div>
         </div>
       </q-form>
-      <q-table dense  title="Estudiantes" :rows="estudiantes" :columns="columns"       :filter="filter" >
+      <q-table dense  title="Estudiantes" :rows="estudiantes" :columns="columns"  :filter="filter" >
         <template v-slot:body-cell-curso="props">
           <q-td :props="props">
-            {{props.row.curso.nombre}}
+            {{props.row.curso[0].nombre}}
           </q-td>
         </template>
         <template v-slot:body-cell-paralelo="props">
           <q-td :props="props">
-            {{props.row.curso.paralelo}}
+            {{props.row.curso[0].paralelo}}
           </q-td>
         </template>
         <template v-slot:body-cell-opcion="props">
@@ -199,8 +199,8 @@ export default {
         { name: 'nombres', align: 'center', label: 'nombres', field: 'nombres', sortable: true },
         { name: 'paterno', align: 'center', label: 'paterno', field: 'paterno', sortable: true },
         { name: 'materno', align: 'center', label: 'materno', field: 'materno', sortable: true },
-        { name: 'curso', align: 'center', label: 'curso', field: row=>row.nombre, sortable: true },
-        { name: 'paralelo', align: 'center', label: 'paralelo', field: row=>row.paralelo, sortable: true },
+        { name: 'curso', align: 'center', label: 'curso', field: row=>row.curso[0].nombre, sortable: true },
+        { name: 'paralelo', align: 'center', label: 'paralelo', field: row=>row.curso[0].paralelo, sortable: true },
         { name: 'opcion', align: 'center', label: 'opcion', field: 'opcion', sortable: true },
 ]
     }
@@ -266,10 +266,14 @@ export default {
     },
     listado(){
       this.$q.loading.show()
+      this.estudiantes=[]
       this.$axios.post(process.env.API+'/listado').then(res=>{
-        this.estudiantes=res.data;
+        res.data.forEach(r => {
+          if(r.curso.length>0)
+          this.estudiantes.push(r)
+        });
         this.$q.loading.hide()
-        // console.log(this.estudiantes)
+         console.log(this.estudiantes)
       })
       this.$axios.get(process.env.API+'/estudiante/create').then(res=>{
         // console.log(res.data)

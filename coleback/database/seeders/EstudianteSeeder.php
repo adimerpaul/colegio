@@ -29,7 +29,6 @@ class EstudianteSeeder extends Seeder
                 'fecha'=>'2021-10-25',
                 'estado'=>'ACTIVO',
                 'imagen'=>'user.png',
-                'curso_id'=>1,
                 'sexo'=>'M'
             ],
             [
@@ -46,7 +45,6 @@ class EstudianteSeeder extends Seeder
                 'fecha'=>'2021-10-25',
                 'estado'=>'ACTIVO',
                 'imagen'=>'user.png',
-                'curso_id'=>1,
                 'sexo'=>'M'
             ]
         ]);

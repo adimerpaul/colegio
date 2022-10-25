@@ -28,7 +28,8 @@ class Estudiante extends Model
     }
 
     public function curso(){
-        return $this->belongsTo(Curso::class);
+        return $this->belongsToMany(Curso::class)->withPivot('periodo_id','estudiante_id','curso_id');
+        ;
     }
 
 
