@@ -70,7 +70,7 @@ class CursoController extends Controller
         e.estado,	
         e.imagen,	
         e.vernota,	
-        e.curso_id	
+        ce.curso_id	
          from estudiantes e inner join curso_estudiante ce on e.id=ce.estudiante_id where ce.curso_id=$curso->id and ce.periodo_id=$periodo->id");
     }
 
