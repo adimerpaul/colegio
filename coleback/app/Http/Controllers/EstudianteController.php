@@ -130,8 +130,8 @@ class EstudianteController extends Controller
         $estudiante->rude=$request->rude;
         $estudiante->fecha=date('Y-m-d');
         $estudiante->save();
-        $periodo=Periodo::where('estado',"ACTIVO")->get()[0];
-        $curest=DB::table('curso_estudiante')->where("estudiante_id",$estudiante->id)->where("periodo_id",)->get();
+        $periodo=Periodo::where('estado',"ACTIVO")->first();
+        $curest=DB::table('curso_estudiante')->where("estudiante_id",$estudiante->id)->where("periodo_id",$periodo->id)->get();
         if(sizeof($curest)>0){
         DB::table('curso_estudiante')->where("estudiante_id",$estudiante->id)->where("periodo_id",$periodo->id)->update(["curso_id"=>$request->curso_id]);}
        else
