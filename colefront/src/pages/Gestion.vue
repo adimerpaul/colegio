@@ -75,24 +75,13 @@
           <q-form @submit="onMod" class="q-gutter-md">
             <q-input
               filled
-              v-model="dato2.nombre"
+              v-model="dato2.gestio"
               type="text"
-              label="Nombre "
+              label="gestion "
               hint="Ingresar Nombre"
               lazy-rules
               :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"
             />
-            <q-input
-              filled
-              v-model="dato2.codigo"
-              type="text"
-              label="Codigo"
-              hint="cod"
-              lazy-rules
-              :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"
-            />
-            <q-select outlined v-model="grupo" :options="grupos" label="Grupo" 
-                                 />
             <div>
               <q-btn label="Modificar" type="submit" color="positive" icon="add_circle" />
               <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
@@ -151,7 +140,7 @@ export default {
   },
   created() {
     this.misdatos();
-    this.misgrupos();
+   // this.misgrupos();
   },
   methods: {
     misgrupos(){
@@ -162,8 +151,8 @@ export default {
         });
         this.grupo=this.grupos[0];
       })
-
     },
+
     misdatos() {
       this.$q.loading.show();
       this.$axios.get(process.env.API + "/periodo").then((res) => {
@@ -174,8 +163,6 @@ export default {
     },
     editRow(item) {
       this.dato2 = item.row
-      this.grupo={"label":this.dato2.grupo.nombre,"grupo":this.dato2.grupo};
-      this.dato2.unid_id = item.row.unid
       this.dialog_mod = true;
     },
     deleteRow(item) {
@@ -205,8 +192,7 @@ export default {
     },
     onMod() {
       this.$q.loading.show();
-      this.dato2.grupo_id=this.grupo.grupo.id;
-      this.$axios.put(process.env.API + "/materia/" + this.dato2.id, this.dato2).then((res) => {
+      this.$axios.put(process.env.API + "/periodo/" + this.dato2.id, this.dato2).then((res) => {
         // console.log(res.daa)
         this.$q.notify({
           color: "green-4",
@@ -220,7 +206,7 @@ export default {
     },
     onDel() {
       this.$q.loading.show();
-      this.$axios.delete(process.env.API + "/materia/" + this.dato2.id)
+      this.$axios.delete(process.env.API + "/periodo/" + this.dato2.id)
         .then((res) => {
           this.$q.notify({
             color: "green-4",
@@ -240,8 +226,7 @@ export default {
       })
     },
     onReset() {
-      this.dato.nombre = '';
-      this.dato.codigo = '';
+      this.dato.gestion = '';
     },
   },
 };
