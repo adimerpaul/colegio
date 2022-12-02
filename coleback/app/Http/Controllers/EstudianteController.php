@@ -155,8 +155,9 @@ class EstudianteController extends Controller
 
         $datos= DB::SELECT("SELECT e.carnet,e.nombres,e.paterno,e.materno,u.nombres as tnom,u.apellidos,u.email,u.carnet as tci,c.nombre as curs,c.paralelo 
          From estudiantes e inner join estudiante_user es on e.id=es.estudiante_id inner join users u on u.id=es.user_id 
-         inner join cursos c on e.curso_id=c.id 
-         where e.id=$id and es.periodo_id=$periodo->id"  )[0];
+         inner join curso_estudiante ce on e.id=ce.estudiante_id
+         inner join  cursos c on ce.curso_id=c.id
+         where e.id=$id and .periodo_id=$periodo->id"  )[0];
         $cadena="<style>
         *{
         padding: 0px,
