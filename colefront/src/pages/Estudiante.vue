@@ -266,11 +266,11 @@ export default {
         });*/
         this.estudiantes=res.data
 
-        this.$q.loading.hide()
          console.log(this.estudiantes)
          this.$axios.get(process.env.API+'/estudiante/create').then(res=>{
         // console.log(res.data)
         this.cantidadcursos=res.data
+        this.$q.loading.hide()
       })
       })
 

@@ -75,7 +75,7 @@
           <q-form @submit="onMod" class="q-gutter-md">
             <q-input
               filled
-              v-model="dato2.gestio"
+              v-model="dato2.gestion"
               type="text"
               label="gestion "
               hint="Ingresar Nombre"
@@ -143,15 +143,7 @@ export default {
    // this.misgrupos();
   },
   methods: {
-    misgrupos(){
-      this.$axios.get(process.env.API + "/grupo").then((res) => {
-        res.data.forEach(element => {
-          this.grupos.push({'label':element.nombre,"grupo":element});
-          
-        });
-        this.grupo=this.grupos[0];
-      })
-    },
+
 
     misdatos() {
       this.$q.loading.show();
