@@ -157,7 +157,7 @@ class EstudianteController extends Controller
          From estudiantes e inner join estudiante_user es on e.id=es.estudiante_id inner join users u on u.id=es.user_id 
          inner join curso_estudiante ce on e.id=ce.estudiante_id
          inner join  cursos c on ce.curso_id=c.id
-         where e.id=$id and .periodo_id=$periodo->id"  )[0];
+         where e.id=$id and ce.periodo_id=$periodo->id"  )[0];
         $cadena="<style>
         *{
         padding: 0px,
