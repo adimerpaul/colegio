@@ -47,8 +47,8 @@ class PeriodoController extends Controller
             $periodo=new Periodo;
             $periodo->gestion=$request->gestion;
             $periodo->save();
-            $curmat=DB::table('curso_materia')->where('periodo_id',intval($periodo->id) - 1);
-            foreach ($curmat as $row) {
+           // $curmat=DB::table('curso_materia')->where('periodo_id',intval($periodo->id) - 1);
+            /*foreach ($curmat as $row) {
                 DB::table('curso_materia')->insert([
 
             'curso_id'=>$row->curso_id,
@@ -56,7 +56,7 @@ class PeriodoController extends Controller
             'profesor_id'=>$row->profesor_id,
             'periodo_id'=>$periodo->id
                 ]);
-            }
+            }*/
         }
     }
 
@@ -108,5 +108,6 @@ class PeriodoController extends Controller
     public function destroy(Periodo $periodo)
     {
         //
+        return $periodo->delete();
     }
 }

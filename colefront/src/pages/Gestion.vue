@@ -69,7 +69,7 @@
     <q-dialog v-model="dialog_mod">
       <q-card style="max-width: 80%; width: 50%">
         <q-card-section class="bg-warning text-white">
-          <div class="text-h7"> <q-icon name="edit"/> MODIFICAR DATOS DE MATERIA</div>
+          <div class="text-h7"> <q-icon name="edit"/> MODIFICAR DATOS DE Gestion</div>
         </q-card-section>
         <q-card-section class="q-pt-xs">
           <q-form @submit="onMod" class="q-gutter-md">
@@ -82,6 +82,7 @@
               lazy-rules
               :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"
             />
+            <q-toggle v-model="dato2.estado" color="green" true-value="ACTIVO" false-value="INACTIVO" label="Estado"/>
             <div>
               <q-btn label="Modificar" type="submit" color="positive" icon="add_circle" />
               <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
