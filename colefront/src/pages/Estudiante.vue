@@ -260,10 +260,12 @@ export default {
       this.estudiantes=[]
       this.$axios.post(process.env.API+'/listado').then(res=>{
         console.log(res.data)
-        res.data.forEach(r => {
+        /*res.data.forEach(r => {
           if(r.curso.length>0)
           this.estudiantes.push(r)
-        });
+        });*/
+        this.estudiantes=res.data
+
         this.$q.loading.hide()
          console.log(this.estudiantes)
          this.$axios.get(process.env.API+'/estudiante/create').then(res=>{
