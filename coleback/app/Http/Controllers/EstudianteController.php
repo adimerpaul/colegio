@@ -151,7 +151,12 @@ class EstudianteController extends Controller
     }
 
     public function boleta($id){
-        $datos= DB::SELECT("SELECT e.carnet,e.nombres,e.paterno,e.materno,u.nombres as tnom,u.apellidos,u.email,u.carnet as tci,c.nombre as curs,c.paralelo  From estudiantes e inner join estudiante_user es on e.id=es.estudiante_id inner join users u on u.id=es.user_id inner join cursos c on e.curso_id=c.id where e.id=$id")[0];
+        $periodo=Periodo::where('estado','ACTIVO')->first();
+
+        $datos= DB::SELECT("SELECT e.carnet,e.nombres,e.paterno,e.materno,u.nombres as tnom,u.apellidos,u.email,u.carnet as tci,c.nombre as curs,c.paralelo 
+         From estudiantes e inner join estudiante_user es on e.id=es.estudiante_id inner join users u on u.id=es.user_id 
+         inner join cursos c on e.curso_id=c.id 
+         where e.id=$id and es.periodo_id=$periodo->id"  )[0];
         $cadena="<style>
         *{
         padding: 0px,
@@ -181,7 +186,7 @@ class EstudianteController extends Controller
             <tr><td><b>Correo:</b></td><td>$datos->email </td></tr>
             <tr><td><b>Password:</b></td><td>$datos->tci </td></tr>
             <tr><td><b>Estudiante:</b></td><td>$datos->nombres $datos->paterno $datos->materno </td></tr>
-            <tr><td><b>Curso:</b></td><td>$datos->curs $datos->paralelo </td></tr></td></tr>
+            <tr><td><b>Curso:</b></td><td>$datos->curso $datos->paralelo </td></tr></td></tr>
             <tr><td><b>Consultas:</b></td><td>77159262 </td></tr>
             </table>
         </td>
