@@ -117,12 +117,12 @@
       <q-table dense  title="Estudiantes" :rows="estudiantes" :columns="columns"  :filter="filter" >
         <template v-slot:body-cell-curso="props">
           <q-td :props="props">
-            {{props.row.curso[0].nombre}}
+            {{props.row.curso}}
           </q-td>
         </template>
         <template v-slot:body-cell-paralelo="props">
           <q-td :props="props">
-            {{props.row.curso[0].paralelo}}
+            {{props.row.paralelo}}
           </q-td>
         </template>
         <template v-slot:body-cell-opcion="props">

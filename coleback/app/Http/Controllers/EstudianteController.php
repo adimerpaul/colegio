@@ -22,7 +22,12 @@ class EstudianteController extends Controller
 
     public function listado(){
         $periodo=Periodo::where('estado','ACTIVO')->first();
-        return Estudiante::with('curso')->get();
+        //return Estudiante::with('curso')->get();
+        return DB::SELECT("SELECT e.id,e.carnet,e.nombres,e.paterno,e.materno,u.nombres ,c.nombre as curso,c.paralelo
+        From estudiantes e inner join estudiante_user es on e.id=es.estudiante_id inner join users u on u.id=es.user_id
+        inner join curso_estudiante ce on e.id=ce.estudiante_id
+        inner join  cursos c on ce.curso_id=c.id
+        where  ce.periodo_id=$periodo->id");
     }
 
     /**
@@ -153,8 +158,8 @@ class EstudianteController extends Controller
     public function boleta($id){
         $periodo=Periodo::where('estado','ACTIVO')->first();
 
-        $datos= DB::SELECT("SELECT e.carnet,e.nombres,e.paterno,e.materno,u.nombres as tnom,u.apellidos,u.email,u.carnet as tci,c.nombre as curs,c.paralelo 
-         From estudiantes e inner join estudiante_user es on e.id=es.estudiante_id inner join users u on u.id=es.user_id 
+        $datos= DB::SELECT("SELECT e.carnet,e.nombres,e.paterno,e.materno,u.nombres as tnom,u.apellidos,u.email,u.carnet as tci,c.nombre as curs,c.paralelo
+         From estudiantes e inner join estudiante_user es on e.id=es.estudiante_id inner join users u on u.id=es.user_id
          inner join curso_estudiante ce on e.id=ce.estudiante_id
          inner join  cursos c on ce.curso_id=c.id
          where e.id=$id and ce.periodo_id=$periodo->id"  )[0];
