@@ -115,16 +115,7 @@
         </div>
       </q-form>
       <q-table dense  title="Estudiantes" :rows="estudiantes" :columns="columns"  :filter="filter" >
-        <template v-slot:body-cell-curso="props">
-          <q-td :props="props">
-            {{props.row.curso}}
-          </q-td>
-        </template>
-        <template v-slot:body-cell-paralelo="props">
-          <q-td :props="props">
-            {{props.row.paralelo}}
-          </q-td>
-        </template>
+
         <template v-slot:body-cell-opcion="props">
           <q-td :props="props">
 <!--            {{props.row}}-->
@@ -199,8 +190,8 @@ export default {
         { name: 'nombres', align: 'center', label: 'nombres', field: 'nombres', sortable: true },
         { name: 'paterno', align: 'center', label: 'paterno', field: 'paterno', sortable: true },
         { name: 'materno', align: 'center', label: 'materno', field: 'materno', sortable: true },
-        { name: 'curso', align: 'center', label: 'curso', field: row=>row.curso[0].nombre, sortable: true },
-        { name: 'paralelo', align: 'center', label: 'paralelo', field: row=>row.curso[0].paralelo, sortable: true },
+        { name: 'curso', align: 'center', label: 'curso', field: row=>row.curso, sortable: true },
+        { name: 'paralelo', align: 'center', label: 'paralelo', field: row=>row.paralelo, sortable: true },
         { name: 'opcion', align: 'center', label: 'opcion', field: 'opcion', sortable: true },
 ]
     }
