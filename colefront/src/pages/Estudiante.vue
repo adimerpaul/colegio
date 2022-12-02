@@ -199,8 +199,8 @@ export default {
         { name: 'nombres', align: 'center', label: 'nombres', field: 'nombres', sortable: true },
         { name: 'paterno', align: 'center', label: 'paterno', field: 'paterno', sortable: true },
         { name: 'materno', align: 'center', label: 'materno', field: 'materno', sortable: true },
-        { name: 'curso', align: 'center', label: 'curso', field: row=>row.curso.nombre, sortable: true },
-        { name: 'paralelo', align: 'center', label: 'paralelo', field: row=>row.curso.paralelo, sortable: true },
+        { name: 'curso', align: 'center', label: 'curso', field: row=>row.curso[0].nombre, sortable: true },
+        { name: 'paralelo', align: 'center', label: 'paralelo', field: row=>row.curso[0].paralelo, sortable: true },
         { name: 'opcion', align: 'center', label: 'opcion', field: 'opcion', sortable: true },
 ]
     }
