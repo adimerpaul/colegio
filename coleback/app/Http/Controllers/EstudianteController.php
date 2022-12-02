@@ -187,7 +187,7 @@ class EstudianteController extends Controller
             <tr><td><b>Correo:</b></td><td>$datos->email </td></tr>
             <tr><td><b>Password:</b></td><td>$datos->tci </td></tr>
             <tr><td><b>Estudiante:</b></td><td>$datos->nombres $datos->paterno $datos->materno </td></tr>
-            <tr><td><b>Curso:</b></td><td>$datos->curso $datos->paralelo </td></tr></td></tr>
+            <tr><td><b>Curso:</b></td><td>$datos->curs $datos->paralelo </td></tr></td></tr>
             <tr><td><b>Consultas:</b></td><td>77159262 </td></tr>
             </table>
         </td>
