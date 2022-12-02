@@ -275,11 +275,12 @@ export default {
         });
         this.$q.loading.hide()
          console.log(this.estudiantes)
-      })
-      this.$axios.get(process.env.API+'/estudiante/create').then(res=>{
+         this.$axios.get(process.env.API+'/estudiante/create').then(res=>{
         // console.log(res.data)
         this.cantidadcursos=res.data
       })
+      })
+
     },
     buscarestudiante(){
 
