@@ -1,5 +1,5 @@
 {
-  "name": "UE Santa rosa",
+  "name": "colefront",
   "version": "0.0.1",
   "description": "A Quasar Framework app",
   "productName": "UE Santa rosa",
@@ -24,7 +24,9 @@
     "pdfmake": "^0.2.2",
     "printd": "^1.5.1",
     "quasar": "^2.0.0",
+    "vue": "^3.2.45",
     "vue-chartjs": "^4.1.2",
+    "vue-router": "^4.1.6",
     "vuex": "^4.0.1",
     "xlsx": "^0.18.5"
   },
